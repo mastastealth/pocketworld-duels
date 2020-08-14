@@ -1,6 +1,7 @@
 <script>
 	import Player from './Player.svelte';
-	import { score } from './WarStore';
+	import WarBar from './WarBar.svelte';
+	import { score, top5, top2, bot5, bot2 } from './WarStore';
 
 	// Define the Player object and all its props
 	class PlayerObj {
@@ -14,12 +15,6 @@
 		}
 	}
 
-	// Setup the War Score
-	let wscore = 0;
-	const warscore = score.subscribe(n => {
-		wscore = n;
-	})
-
 	// Setup the rest of the game state
 	let gameState = {};
 	let p1 = new PlayerObj(true);
@@ -32,19 +27,37 @@
 	}
 
 	function doIt2() {
+		let flipped = false;
 		score.update(n => n + 1);
+
+		// Check for a war win
+		if ($score === 9 || $score === -9) {
+			// ...
+		}
+
+		if ($score === 6 && !$top5) { top5.update(n => true); flipped = true; }
+		if ($score === 3 && !$top2) { top2.update(n => true); flipped = true; }
+		if ($score === -6 && !$bot5) { bot5.update(n => true); flipped = true; }
+		if ($score === -3 && !$bot2) { bot2.update(n => true); flipped = true; }
+
+		// Deduct coins
+		if (flipped) { 
+			// ...
+		}
 	}
 </script>
 
 <main>
 	<div class="game">
-		<Player className="you" player={p2} ws={wscore} />
-		<aside class="war-bar">
+		<Player className="you" player={p2} ws={$score} />
+		<WarBar ws={$score} />
+
+		<main class="table">
 			<button on:click={doIt}>Add Score</button>
 			<button on:click={doIt2}>Add War Score</button>
-		</aside>
-		<main class="table"></main>
-		<Player className="me" player={p1} ws={wscore} />
+		</main>
+
+		<Player className="me" player={p1} ws={$score} />
 	</div>
 </main>
 
@@ -60,15 +73,10 @@
 	height: 100vh;
 }
 
-.war-bar { 
-	background: red;
-	height: 100%;
-	grid-area: ws;
-}
-
 .table {
 	background: #FAFAFA;
 	height: 100%;
 	grid-area: tb;
+	padding: 48px 20px;
 }
 </style>
