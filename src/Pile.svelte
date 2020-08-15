@@ -1,16 +1,40 @@
 <script>
-	let cards = [
-		false, false, true, true, false, false,
-		false, true, true, true, false, false,
-		false, true, true, true, true, false,
-		true, true, true, true, true, false,
-		true, true, true, true, true, true
-	]
+	export let cards = [];
+	export let gs = {};
+
+	function adjustCards() {
+		const c = [...cards];
+		
+		switch(gs.age) {
+			case 1:
+				c.unshift(false);
+				c.unshift(false);
+				c.splice(4, 0, false, false, false);
+				c.splice(10, 0, false, false, false);
+				c.splice(17, 0, false);
+				c.splice(23, 0, false);
+				return c;
+			default:
+				return c;
+		}
+	}
+
+	$: finalCards = adjustCards();
+
+	// Age 1 Structure looks like:
+	// 	false, false, true, true, false, false,
+	// 	false, true, true, true, false, false,
+	// 	false, true, true, true, true, false,
+	// 	true, true, true, true, true, false,
+	// 	true, true, true, true, true, true
 </script>
 
 <div class="pile">
-	{#each cards as card}
-		<div class="card" data-hidden="{!card}"></div>
+	{#each finalCards as card}
+		{#if !card}<div class="card" data-hidden></div>{/if}
+		{#if card}
+			<div class="card"></div>
+		{/if}
 	{/each}
 </div>
 
@@ -32,7 +56,7 @@
 	position: relative;
 	width: calc((100vh - 200px) / 5);
 }
-	.card[data-hidden="true"] { opacity: 0.1; }
+	.card[data-hidden] { opacity: 0.1; }
 
 	.card:nth-child(n+7) { top: -40%; left: 50%; }
 	.card:nth-child(n+13) { top: -80%; left: 0; }

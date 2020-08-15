@@ -2,6 +2,8 @@
 	import Player from './Player.svelte';
 	import WarBar from './WarBar.svelte';
 	import Pile from './Pile.svelte';
+
+	import age1 from './age1.json';
 	import { score, top5, top2, bot5, bot2 } from './WarStore';
 
 	// Define the Player object and all its props
@@ -17,9 +19,12 @@
 	}
 
 	// Setup the rest of the game state
-	let gameState = {};
-	let p1 = new PlayerObj(true);
-	let p2 = new PlayerObj();
+	const gameState = {
+		age: 1
+	};
+	const p1 = new PlayerObj(true);
+	const p2 = new PlayerObj();
+	const cards = shuffle(age1).slice(3);
 
 	// Fn
 	function doIt() {
@@ -46,6 +51,18 @@
 			// ...
 		}
 	}
+
+	function shuffle(arr) {
+		const shuffled = [...arr];
+
+		// Durstenfled shuffle
+		for (let i = shuffled.length - 1; i > 0; i -= 1) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+		}
+
+		return shuffled;
+	}
 </script>
 
 <main>
@@ -54,7 +71,7 @@
 		<WarBar />
 
 		<main class="table">
-			<Pile />
+			<Pile cards={cards} gs={gameState} />
 			<div class="test-bar">
 				<button on:click={doIt}>Add Score</button>
 				<button on:click={doIt2}>Add War Score</button>
