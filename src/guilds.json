@@ -1,0 +1,99 @@
+[
+	{
+		"id": "shipowners",
+		"cost": {
+			"clay": 1,
+			"stone": 1,
+			"glass": 1,
+			"paper": 1
+		},
+		"type": "guild",
+		"earn": {
+			"from": "res",
+			"vp": 1,
+			"coin": 1
+		}
+	},
+	{
+		"id": "magistrates",
+		"cost": {
+			"wood": 2,
+			"clay": 1,
+			"paper": 1
+		},
+		"type": "guild",
+		"earn": {
+			"from": "civ",
+			"vp": 1,
+			"coin": 1
+		}
+	},
+	{
+		"id": "scientist",
+		"cost": {
+			"clay": 2,
+			"wood": 2
+		},
+		"type": "guild",
+		"earn": {
+			"from": "sci",
+			"vp": 1,
+			"coin": 1
+		}
+	},
+	{
+		"id": "tacticians",
+		"cost": {
+			"clay": 1,
+			"stone": 2,
+			"paper": 1
+		},
+		"type": "guild",
+		"earn": {
+			"from": "war",
+			"vp": 1,
+			"coin": 1
+		}
+	},
+	{
+		"id": "merchants",
+		"cost": {
+			"clay": 1,
+			"wood": 1,
+			"glass": 1,
+			"paper": 1
+		},
+		"type": "guild",
+		"earn": {
+			"from": "eco",
+			"vp": 1,
+			"coin": 1
+		}
+	},
+	{
+		"id": "builders",
+		"cost": {
+			"clay": 1,
+			"wood": 1,
+			"glass": 1,
+			"stone": 2
+		},
+		"type": "guild",
+		"earn": {
+			"from": "wonder",
+			"vp": 2
+		}
+	},
+	{
+		"id": "moneylenders",
+		"cost": {
+			"wood": 2,
+			"stone": 2
+		},
+		"type": "guild",
+		"earn": {
+			"from": "coin",
+			"vp": 1
+		}
+	}
+]

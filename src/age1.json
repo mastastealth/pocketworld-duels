@@ -2,7 +2,8 @@
 	{
 		"id": "claypit",
 		"cost": 1,
-		"type": "res"
+		"type": "res",
+		"res": "clay"
 	},
 	{
 		"id": "stoneres",
@@ -53,6 +54,107 @@
 		},
 		"type": "sci",
 		"sci": "wheel",
+		"vp": 1
+	},
+	{
+		"id": "loggingcamp",
+		"cost": 1,
+		"type": "res",
+		"res": "wood"
+	},
+	{
+		"id": "press",
+		"cost": 1,
+		"type": "man",
+		"res": "paper"
+	},
+	{
+		"id": "stonepit",
+		"cost": 1,
+		"type": "res",
+		"res": "stone"
+	},
+	{
+		"id": "quarry",
+		"cost": 0,
+		"type": "res",
+		"res": "stone"
+	},
+	{
+		"id": "baths",
+		"cost": {
+			"stone": 1
+		},
+		"type": "civ",
+		"vp": 3,
+		"link": "drop"
+	},
+	{
+		"id": "clayreserve",
+		"cost": 3,
+		"type": "eco",
+		"trade": "clay"
+	},
+	{
+		"id": "guardtower",
+		"cost": 0,
+		"type": "war",
+		"war": 1
+	},
+	{
+		"id": "theater",
+		"cost": 0,
+		"type": "civ",
+		"vp": 3,
+		"link": "mask"
+	},
+	{
+		"id": "claypool",
+		"cost": 0,
+		"type": "res",
+		"res": "clay"
+	},
+	{
+		"id": "altar",
+		"cost": 0,
+		"type": "civ",
+		"link": "moon"
+	},
+	{
+		"id": "lumberyard",
+		"cost": 0,
+		"type": "res",
+		"res": "wood"
+	},
+	{
+		"id": "stable",
+		"cost": {
+			"wood": 1
+		},	
+		"type": "war",
+		"war": 1,
+		"link": "horseshoe"
+	},
+	{
+		"id": "woodreserve",
+		"cost": 3,
+		"type": "eco",
+		"trade": "wood"
+	},
+	{
+		"id": "scriptorium",
+		"cost": 2,
+		"type": "sci",
+		"sci": "quill",
+		"link": "book"
+	},
+	{
+		"id": "workshop",
+		"cost": {
+			"paper": 1
+		},
+		"type": "sci",
+		"sci": "level",
 		"vp": 1
 	}
 ]

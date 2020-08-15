@@ -34,5 +34,185 @@
 			"paper",
 			"glass"
 		]
+	},
+	{
+		"id": "courthouse",
+		"cost": {
+			"wood": 2,
+			"glass": 1
+		},
+		"type": "civ",
+		"vp": 5
+	},
+	{
+		"id": "archeryrange",
+		"cost": {
+			"stone": 1,
+			"wood": 1,
+			"paper": 1
+		},
+		"type": "war",
+		"war": 2,
+		"link": "target"
+	},
+	{
+		"id": "shelfquarry",
+		"cost": 2,
+		"type": "res",
+		"res": "stone",
+		"rescount": 2
+	},{
+		"id": "walls",
+		"cost": {
+			"stone": 2
+		},
+		"type": "war",
+		"war": 2
+	},
+	{
+		"id": "brickyard",
+		"cost": 2,
+		"type": "res",
+		"res": "clay",
+		"rescount": 2
+	},
+	{
+		"id": "dryingroom",
+		"cost": 0,
+		"type": "man",
+		"res": "paper"
+	},
+	{
+		"id": "barracks",
+		"cost": {
+			"coin": 3,
+			"link": "sword"
+		},
+		"type": "war",
+		"war": 1
+	},
+	{
+		"id": "dispensary",
+		"cost": {
+			"clay": 2,
+			"stone": 1,
+			"link": "cog"
+		},
+		"type": "sci",
+		"sci": "bowl",
+		"vp": 2
+	},
+	{
+		"id": "aqueduct",
+		"cost": {
+			"stone": 3,
+			"link": "drop"
+		},
+		"type": "civ",
+		"vp": 5
+	},
+	{
+		"id": "library",
+		"cost": {
+			"wood": 1,
+			"stone": 1,
+			"glass": 1,
+			"link": "book"
+		},
+		"type": "sci",
+		"sci": "quill",
+		"vp": 2
+	},
+	{
+		"id": "rostrum",
+		"cost": {
+			"stone": 1,
+			"wood": 1	
+		},
+		"type": "civ",
+		"vp": 4,
+		"link": "courthouse"
+	},
+	{
+		"id": "brewery",
+		"cost": 0,
+		"type": "eco",
+		"instant": 6,
+		"link": "barrel"
+	},
+	{
+		"id": "temple",
+		"cost": {
+			"wood": 1,
+			"paper": 1,
+			"link": "moon"
+		},
+		"type": "civ",
+		"vp": 4,
+		"link": "sun"
+	},
+	{
+		"id": "sawmill",
+		"cost": 2,
+		"type": "res",
+		"res": "wood",
+		"rescount": 2
+	},
+	{
+		"id": "horsebreeders",
+		"cost": {
+			"clay": 1,
+			"wood": 1,
+			"link": "horseshoe"
+		},
+		"type": "war",
+		"war": 1
+	},
+	{
+		"id": "laboratory",
+		"cost": {
+			"wood": 1,
+			"glass": 2
+		},
+		"type": "sci",
+		"sci": "level",
+		"vp": 1,
+		"link": "lamp"
+	},
+	{
+		"id": "glassblower",
+		"cost": 0,
+		"type": "man",
+		"res": "glass"
+	},
+	{
+		"id": "paradeground",
+		"cost": {
+			"clay": 2,
+			"glass": 1
+		},
+		"type": "war",
+		"war": 2,
+		"link": "helmet"
+	},
+	{
+		"id": "customshouse",
+		"cost": 4,
+		"type": "eco",
+		"trade": [
+			"paper",
+			"glass"
+		]
+	},
+	{
+		"id": "school",
+		"cost": {
+			"wood": 1,
+			"paper": 2
+		},
+		"type": "sci",
+		"sci": "wheel",
+		"vp": 1,
+		"link": "lyre"
 	}
 ]
