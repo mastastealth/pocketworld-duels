@@ -4,9 +4,7 @@
 
 	function takeCard() {
 		if (!card.blocked) card.taken = true;
-
-		// Unblock a bit
-		unblock(card);
+		unblock(card); // Unblock a bit
 	}
 </script>
 

@@ -1,5 +1,5 @@
 <script>
-	import { score, top5, top2, bot5, bot2 } from './WarStore';
+	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 
 	$: markerPos = 9 - $score;
 </script>

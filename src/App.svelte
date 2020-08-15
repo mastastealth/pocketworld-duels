@@ -3,8 +3,9 @@
 	import WarBar from './WarBar.svelte';
 	import Pile from './Pile.svelte';
 
-	import age1 from './age1.json';
-	import { score, top5, top2, bot5, bot2 } from './WarStore';
+	import age1 from './json/age1.json';
+	import { score, top5, top2, bot5, bot2 } from './store/warStore';
+	import { gs } from './store/gameState';
 
 	// Define the Player object and all its props
 	class PlayerObj {
@@ -18,13 +19,14 @@
 		}
 	}
 
-	// Setup the rest of the game state
-	const gameState = {
-		age: 1
-	};
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
 	const cards = shuffle(age1).slice(3);
+	gs.set({
+		...$gs,
+		p1,
+		p2
+	});
 
 	// Fn
 	function doIt() {
@@ -41,10 +43,10 @@
 			// ...
 		}
 
-		if ($score === 6 && !$top5) { top5.update(n => true); flipped = true; }
-		if ($score === 3 && !$top2) { top2.update(n => true); flipped = true; }
-		if ($score === -6 && !$bot5) { bot5.update(n => true); flipped = true; }
-		if ($score === -3 && !$bot2) { bot2.update(n => true); flipped = true; }
+		if ($score === 6 && !$top5) { top5.set(true); flipped = true; }
+		if ($score === 3 && !$top2) { top2.set(true); flipped = true; }
+		if ($score === -6 && !$bot5) { bot5.set(true); flipped = true; }
+		if ($score === -3 && !$bot2) { bot2.set(true); flipped = true; }
 
 		// Deduct coins
 		if (flipped) { 
@@ -71,7 +73,7 @@
 		<WarBar />
 
 		<main class="table">
-			<Pile cards={cards} gs={gameState} />
+			<Pile cards={cards} />
 			<div class="test-bar">
 				<button on:click={doIt}>Add Score</button>
 				<button on:click={doIt2}>Add War Score</button>

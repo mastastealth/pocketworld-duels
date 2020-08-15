@@ -1,13 +1,14 @@
 <script>
 	import Card from './Card.svelte';
-	
+	import { gs } from './store/gameState';
+
 	export let cards = [];
-	export let gs = {};
 
 	function sortCards() {
 		const c = [...cards];
+		console.log($gs);
 		
-		switch(gs.age) {
+		switch($gs.age) {
 			case 1:
 				c.unshift(false);
 				c.unshift(false);
@@ -53,6 +54,12 @@
 			finalCards[i + 1].blocked -= 1;
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
+
+		adjustScore(card); // Calculate earnings
+	}
+
+	function adjustScore(card) {
+		// ...
 	}
 
 	// Age 1 Structure looks like:
