@@ -1,0 +1,38 @@
+[
+	{
+		"id": "statue",
+		"cost": {
+			"clay": 2,
+			"link": "mask"
+		},
+		"type": "civ",
+		"link": "statue",
+		"vp": 4
+	},
+	{
+		"id": "caravansery",
+		"cost": {
+			"glass": 1,
+			"paper": 1,
+			"coin": 2
+		},
+		"type": "eco",
+		"provides": [
+			"wood",
+			"clay",
+			"brick"
+		]
+	},
+	{
+		"id": "forum",
+		"cost": {
+			"clay": 1,
+			"coin": 3
+		},
+		"type": "eco",
+		"provides": [
+			"paper",
+			"glass"
+		]
+	}
+]

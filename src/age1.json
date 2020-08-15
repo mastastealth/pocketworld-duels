@@ -1,0 +1,58 @@
+[
+	{
+		"id": "claypit",
+		"cost": 1,
+		"type": "res"
+	},
+	{
+		"id": "stoneres",
+		"cost": 3,
+		"type": "eco",
+		"trade": "stone"
+	},
+	{
+		"id": "palisade",
+		"cost": 2,
+		"type": "war",
+		"war": 1,
+		"link": "castle"
+	},
+	{
+		"id": "garrison",
+		"cost": {
+			"clay": 1
+		},
+		"type": "war",
+		"war": 1,
+		"link": "sword"
+	},
+	{
+		"id": "pharmacist",
+		"cost": 2,
+		"type": "sci",
+		"sci": "bowl",
+		"link": "cog"
+	},
+	{
+		"id": "glassworks",
+		"cost": 1,
+		"type": "man",
+		"res": "glass"
+	},
+	{
+		"id": "tavern",
+		"cost": 0,
+		"type": "eco",
+		"instant": 4,
+		"link": "jar"
+	},
+	{
+		"id": "apothecary",
+		"cost": {
+			"glass": 1
+		},
+		"type": "sci",
+		"sci": "wheel",
+		"vp": 1
+	}
+]
