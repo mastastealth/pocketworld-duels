@@ -78,7 +78,6 @@
 
 .table {
 	align-items: center;
-	background: #FAFAFA;
 	display: flex;
 	height: 100%;
 	grid-area: tb;

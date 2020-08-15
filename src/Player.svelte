@@ -108,7 +108,7 @@
 
 		.card[data-type="res"]:before {
 			background: url('/assets/res.png') no-repeat;
-			background-size: 60px 20px;
+			background-size: 80px 20px;
 			height: 20px;
 			position: absolute;
 			top: 4px; left: 6px;
