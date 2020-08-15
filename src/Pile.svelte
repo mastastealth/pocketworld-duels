@@ -4,6 +4,7 @@
 	import age1 from './json/age1.json';
 	import age2 from './json/age2.json';
 	import age3 from './json/age2.json';
+	import guilds from './json/guilds.json';
 
 	let cards = $gs.shuffle(age1).slice(3);
 
@@ -163,11 +164,16 @@
 			cardsleft: 20
 		});
 
-		cards = [...$gs.shuffle(age === 2 ? age2 : age3).slice(3)];
+		const agedeck = age === 2 ? age2 : age3;
+		const g = $gs.shuffle(guilds);
+		const nextdeck = age === 2 
+			? age2.slice(3)
+			: [...age3.slice(6), ...g.slice(4)];
+		cards = [...$gs.shuffle(nextdeck)];
 	}
 </script>
 
-<div class="pile" data-myturn={$gs.myturn}>
+<div class="pile" data-myturn={$gs.myturn} data-age={$gs.age}>
 	{#each finalCards as card}
 		{#if !card}
 			<div class="card" data-empty></div>
@@ -186,4 +192,19 @@
 	transform: translateY(15%);
 	width: 100vh;
 }
+
+	.pile[data-age="1"] :global(.card[data-hidden]) {
+		background-color: rgb(230, 79, 9);
+		background-blend-mode: hard-light;
+	}
+
+	.pile[data-age="2"] :global(.card[data-hidden]) {
+		background-color: rgb(27, 105, 230);
+		background-blend-mode: hard-light;
+	}
+
+	.pile[data-age="3"] :global(.card[data-hidden]) {
+		background-color: rgb(29, 149, 59);
+		background-blend-mode: hard-light;
+	}
 </style>

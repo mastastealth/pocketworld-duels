@@ -37,18 +37,19 @@
 	.card[data-type="man"] { background: var(--man); }
 	.card[data-type="guild"] { background: var(--guild); }
 
-	.card[data-hidden] { 
-		background: #ABC;
-	}
-	
-	.card[data-taken] { 
-		opacity: 0; 
-		pointer-events: none; 
-	}
-	
 	.card[data-blocked] { 
 		filter: grayscale(0.1) brightness(75%);
 		pointer-events: none;
+	}
+	.card[data-hidden] { 
+		background: url('/assets/card_bg.png') no-repeat right bottom;
+		background-size: auto 200%;
+		filter: none;
+	}
+
+	.card[data-taken] { 
+		opacity: 0; 
+		pointer-events: none; 
 	}
 
 	.card:nth-child(n+7) { top: -40%; left: 50%; }

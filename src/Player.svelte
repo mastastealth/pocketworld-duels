@@ -91,7 +91,7 @@
 }
 	.card:after { font-weight: bold; }
 	.card[data-type="war"] { background: var(--war); }
-	.card[data-type="sci"] { background: var(--civ); }
+	.card[data-type="sci"] { background: var(--sci); }
 	.card[data-type="civ"] { background: var(--civ); }
 	.card[data-type="eco"] { background: var(--eco); }
 	.card[data-type="res"] { background: var(--res); }
