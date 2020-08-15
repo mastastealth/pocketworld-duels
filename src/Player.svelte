@@ -83,6 +83,7 @@
 	.player.you .cards { padding: 5px 20px 15px 0; }
 	.player.me .cards { padding: 15px 20px 5px 0; }
 .card {
+	border: 1px solid black;
 	border-radius: 3px;
 	position: relative;
 	text-align: center;

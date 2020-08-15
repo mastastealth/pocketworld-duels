@@ -5,6 +5,7 @@ export const gs = writable({
 	p1: null,
 	p2: null,
 	myturn: true,
+	cardsleft: 20,
 	// Methods,
 	shuffle(arr) {
 		const shuffled = [...arr];

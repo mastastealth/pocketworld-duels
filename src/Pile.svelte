@@ -2,10 +2,12 @@
 	import Card from './Card.svelte';
 	import { gs } from './store/gameState';
 	import age1 from './json/age1.json';
+	import age2 from './json/age2.json';
+	import age3 from './json/age2.json';
 
 	let cards = $gs.shuffle(age1).slice(3);
 
-	function sortCards() {
+	function sortCards(cards) {
 		const c = [...cards];
 		
 		switch($gs.age) {
@@ -17,6 +19,46 @@
 				c.splice(17, 0, false);
 				c.splice(23, 0, false);
 				return adjustCards(c);
+				// Age 1 Structure looks like:
+				// 0, 0, 1, 1, 0, 0,
+				//   0, 1, 1, 1, 0, 0,
+				// 0, 1, 1, 1, 1, 0,
+				//   1, 1, 1, 1, 1, 0,
+				// 1, 1, 1, 1, 1, 1
+			case 2:
+				c.splice(11, 0, false, false);
+				c.splice(17, 0, false, false);
+				c.splice(22, 0, false, false, false, false);
+				c.push(false);
+				c.push(false);
+				return adjustCards(c);
+				// Age 2 Structure looks like:
+				// 1, 1, 1, 1, 1, 1
+				//   1, 1, 1, 1, 1, 0,
+				// 0, 1, 1, 1, 1, 0,
+				//   0, 1, 1, 1, 0, 0,
+				// 0, 0, 1, 1, 0, 0,
+			case 3:
+				c.unshift(false);
+				c.unshift(false);
+				c.splice(4, 0, false, false, false);
+				c.splice(10, 0, false, false, false);
+				c.splice(17, 0, false, false);
+				c.splice(20, 0, false);
+				c.splice(22, 0, false, false, false);
+				c.splice(29, 0, false, false);
+				c.splice(34, 0, false, false, false, false);
+				c.push(false);
+				c.push(false);
+				return adjustCards(c);
+				// Age 3 Structure looks like:
+				// 0, 0, 1, 1, 0, 0,
+				//   0, 1, 1, 1, 0, 0,
+				// 0, 1, 1, 1, 1, 0,
+				//   0, 1, 0, 1, 0, 0
+				// 0, 1, 1, 1, 1, 0,
+				//   0, 1, 1, 1, 0, 0,
+				// 0, 0, 1, 1, 0, 0,
 			default:
 				return c;
 		}
@@ -32,19 +74,44 @@
 			c.taken = false;
 			// Every other row is flipped
 			if (Math.floor(i / 6) % 2 === 1) c.flipped = true;
+
 			// Calculate who is blocked
-			if (i < 24) c.blocked = 2;
+			if (i < 24 && $gs.age < 3) { // Ignore last row
+				// Age 1 default, everything is blocked by 2
+				c.blocked = 2;
+				// Edge cards only blocked by one, in Age 2
+				if ($gs.age === 2) {
+					if (
+						!cards[i - 1] 
+						|| !cards[i + 1] 
+						|| i === 5 
+						|| i === 6
+					) c.blocked = 1;
+				}
+			}
+
+			// Age 3
+			if ($gs.age === 3 && i < 37) {
+				c.blocked = 2;
+
+				if (
+					(i > 12 && i < 17) // Row 3
+					|| i === 25 || i === 28 // Row 5
+					|| i === 31 || i === 33 // Row 6
+				) c.blocked = 1;
+			}
 
 			return c;
 		});
 	}
 
-	$: finalCards = sortCards();
+	$: finalCards = sortCards(cards);
 
 	function unblock(card) {
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
 		const i = card.index - (7 - isOdd);
 
+		console.log(i, i+1)
 		if (finalCards[i]) {
 			finalCards[i].blocked -= 1;
 			if (!finalCards[i].blocked) finalCards[i].flipped = false;
@@ -74,23 +141,30 @@
 			...$gs,
 			p1: $gs.myturn ? p : $gs.p1,
 			p2: $gs.myturn ? $gs.p2 : p,
-			myturn: !$gs.myturn
+			myturn: !$gs.myturn,
+			cardsleft: $gs.cardsleft - 1
 		});
 
 		// No more cards, next "age"
-		if ($gs.p1.cards.length + $gs.p2.cards.length === 20) nextAge();
+		if (!$gs.cardsleft) nextAge();
 	}
 
 	function nextAge() {
-		console.log('Toot')
-	}
+		const age = $gs.age + 1;
 
-	// Age 1 Structure looks like:
-	// 0, 0, 1, 1, 0, 0,
-	//   0, 1, 1, 1, 0, 0,
-	// 0, 1, 1, 1, 1, 0,
-	//   1, 1, 1, 1, 1, 0,
-	// 1, 1, 1, 1, 1, 1
+		if (age === 4) {
+			endGame();
+			return false;
+		}
+
+		gs.set({
+			...$gs,
+			age,
+			cardsleft: 20
+		});
+
+		cards = [...$gs.shuffle(age === 2 ? age2 : age3).slice(3)];
+	}
 </script>
 
 <div class="pile" data-myturn={$gs.myturn}>

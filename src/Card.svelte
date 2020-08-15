@@ -30,7 +30,7 @@
 	width: calc((100vh - 200px) / 5);
 }
 	.card[data-type="war"] { background: var(--war); }
-	.card[data-type="sci"] { background: var(--civ); }
+	.card[data-type="sci"] { background: var(--sci); }
 	.card[data-type="civ"] { background: var(--civ); }
 	.card[data-type="eco"] { background: var(--eco); }
 	.card[data-type="res"] { background: var(--res); }
@@ -55,6 +55,8 @@
 	.card:nth-child(n+13) { top: -80%; left: 0; }
 	.card:nth-child(n+19) { top: -120%; left: 50%; }
 	.card:nth-child(n+25) { top: -160%; left: 0; }
+	.card:nth-child(n+31) { top: -200%; left: 50%; }
+	.card:nth-child(n+37) { top: -240%; left: 0; }
 
 	.card:before { content: attr(data-index); }
 </style>
