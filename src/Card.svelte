@@ -21,25 +21,24 @@
 <style>
 .card {
 	background: #EEE;
-	border: 1px solid blue;
 	border-radius: 5px;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 	height: calc((100vh - 200px) / 5);
 	max-width: calc(10vw);
 	position: relative;
 	width: calc((100vh - 200px) / 5);
 }
-	.card[data-type="war"] { background: green; }
-	.card[data-type="sci"] { background: goldenrod; }
-	.card[data-type="civ"] { background: red; }
-	.card[data-type="eco"] { background: blue; }
-	.card[data-type="res"] { background: tan; }
-	.card[data-type="man"] { background: #666; }
-	.card[data-type="guild"] { background: purple; }
+	.card[data-type="war"] { background: var(--war); }
+	.card[data-type="sci"] { background: var(--civ); }
+	.card[data-type="civ"] { background: var(--civ); }
+	.card[data-type="eco"] { background: var(--eco); }
+	.card[data-type="res"] { background: var(--res); }
+	.card[data-type="man"] { background: var(--man); }
+	.card[data-type="guild"] { background: var(--guild); }
 
 	.card[data-hidden] { 
 		background: #ABC;
-		border-color: teal;
 	}
 	
 	.card[data-taken] { 
@@ -48,7 +47,7 @@
 	}
 	
 	.card[data-blocked] { 
-		border: 2px solid black; 
+		filter: grayscale(0.1) brightness(75%);
 		pointer-events: none;
 	}
 

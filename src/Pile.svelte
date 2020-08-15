@@ -1,12 +1,12 @@
 <script>
 	import Card from './Card.svelte';
 	import { gs } from './store/gameState';
+	import age1 from './json/age1.json';
 
-	export let cards = [];
+	let cards = $gs.shuffle(age1).slice(3);
 
 	function sortCards() {
 		const c = [...cards];
-		console.log($gs);
 		
 		switch($gs.age) {
 			case 1:
@@ -59,7 +59,30 @@
 	}
 
 	function adjustScore(card) {
-		// ...
+		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
+		let pCards = [...p.cards, card];
+
+		// Doesn't sort??
+		// p1Cards.sort((a, b) => {
+		// 	return a.type - b.type;
+		// });
+
+		p.cards = pCards;
+		if (card.vp) p.score += card.vp;
+
+		gs.set({
+			...$gs,
+			p1: $gs.myturn ? p : $gs.p1,
+			p2: $gs.myturn ? $gs.p2 : p,
+			myturn: !$gs.myturn
+		});
+
+		// No more cards, next "age"
+		if ($gs.p1.cards.length + $gs.p2.cards.length === 20) nextAge();
+	}
+
+	function nextAge() {
+		console.log('Toot')
 	}
 
 	// Age 1 Structure looks like:
@@ -70,7 +93,7 @@
 	// 1, 1, 1, 1, 1, 1
 </script>
 
-<div class="pile">
+<div class="pile" data-myturn={$gs.myturn}>
 	{#each finalCards as card}
 		{#if !card}
 			<div class="card" data-empty></div>
@@ -87,6 +110,6 @@
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	transform: translateY(15%);
-	width: 80%;
+	width: 100vh;
 }
 </style>

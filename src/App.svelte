@@ -3,7 +3,6 @@
 	import WarBar from './WarBar.svelte';
 	import Pile from './Pile.svelte';
 
-	import age1 from './json/age1.json';
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
 
@@ -11,7 +10,7 @@
 	class PlayerObj {
 		constructor(primary = false) {
 			this.primary = primary;
-			this.food = 0; // Coins
+			this.food = 7; // Coins
 			this.score = 0; // VPs
 			this.cards = [];
 			this.tokens = [];
@@ -21,7 +20,6 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	const cards = shuffle(age1).slice(3);
 	gs.set({
 		...$gs,
 		p1,
@@ -29,11 +27,6 @@
 	});
 
 	// Fn
-	function doIt() {
-		p1.cards = [...p1.cards, { label: "Toot" }];
-		p1.score += 1;
-	}
-
 	function doIt2() {
 		let flipped = false;
 		score.update(n => n + 1);
@@ -53,34 +46,21 @@
 			// ...
 		}
 	}
-
-	function shuffle(arr) {
-		const shuffled = [...arr];
-
-		// Durstenfled shuffle
-		for (let i = shuffled.length - 1; i > 0; i -= 1) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-		}
-
-		return shuffled;
-	}
 </script>
 
 <main>
 	<div class="game">
-		<Player className="you" player={p2} ws={$score} />
+		<Player className="you" player={$gs.p2} ws={$score} />
 		<WarBar />
 
 		<main class="table">
-			<Pile cards={cards} />
+			<Pile />
 			<div class="test-bar">
-				<button on:click={doIt}>Add Score</button>
 				<button on:click={doIt2}>Add War Score</button>
 			</div>
 		</main>
 
-		<Player className="me" player={p1} ws={$score} />
+		<Player className="me" player={$gs.p1} ws={$score} />
 	</div>
 </main>
 

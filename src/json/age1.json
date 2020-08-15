@@ -118,7 +118,8 @@
 		"id": "altar",
 		"cost": 0,
 		"type": "civ",
-		"link": "moon"
+		"link": "moon",
+		"vp": 3
 	},
 	{
 		"id": "lumberyard",
