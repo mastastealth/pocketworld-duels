@@ -51,7 +51,7 @@
 
 		if (finalCards[i + 1]) {
 			finalCards[i + 1].blocked -= 1;
-			if (!finalCards[i + 1].blocked) finalCards[i].flipped = false;
+			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 	}
 

@@ -47,6 +47,7 @@
 
 .score {
 	font-size: 4em;
+	font-weight: bold;
 	line-height: 80px;
 	text-align: center;
 	width: 190px;
