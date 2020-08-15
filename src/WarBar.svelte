@@ -1,8 +1,7 @@
 <script>
-	import { top5, top2, bot5, bot2 } from './WarStore';
-	export let ws = 0;
+	import { score, top5, top2, bot5, bot2 } from './WarStore';
 
-	$: markerPos = 9 - ws;
+	$: markerPos = 9 - $score;
 </script>
 
 <aside class="war-bar">

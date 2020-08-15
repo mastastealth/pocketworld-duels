@@ -1,6 +1,7 @@
 <script>
 	import Player from './Player.svelte';
 	import WarBar from './WarBar.svelte';
+	import Pile from './Pile.svelte';
 	import { score, top5, top2, bot5, bot2 } from './WarStore';
 
 	// Define the Player object and all its props
@@ -50,11 +51,14 @@
 <main>
 	<div class="game">
 		<Player className="you" player={p2} ws={$score} />
-		<WarBar ws={$score} />
+		<WarBar />
 
 		<main class="table">
-			<button on:click={doIt}>Add Score</button>
-			<button on:click={doIt2}>Add War Score</button>
+			<Pile />
+			<div class="test-bar">
+				<button on:click={doIt}>Add Score</button>
+				<button on:click={doIt2}>Add War Score</button>
+			</div>
 		</main>
 
 		<Player className="me" player={p1} ws={$score} />
@@ -74,9 +78,20 @@
 }
 
 .table {
+	align-items: center;
 	background: #FAFAFA;
+	display: flex;
 	height: 100%;
 	grid-area: tb;
+	justify-content: center;
+	max-height: calc(100vh - 200px);
 	padding: 48px 20px;
+}
+
+.test-bar { 
+	position: fixed;
+	bottom: 0; 
+	right: 0;
+	z-index: 1;
 }
 </style>
