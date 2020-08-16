@@ -21,21 +21,28 @@
 	data-sci={card.sci}
 	on:click={selectCard(card)}
 >
-	<main>
+	<header>
 		{#if card.cost}
 			<div class="food">
 				{#if typeof card.cost === 'number' || coinCost}
-					<strong>{card.cost}</strong>
-				{:else}
+					<strong>{card.cost || coinCost}</strong>
+				{/if}
+				{#if card.cost.length}
 					<ul class="res-list">
 						{#each fullCost as cost}
-							<li data-res={cost}>{cost}</li>
+							<li class="pog" data-res={cost}>{cost}</li>
 						{/each}
 					</ul>
 				{/if}
 			</div>
 		{/if}
-	</main>
+
+		{#if card.res}
+			<div class="pog"></div>
+		{/if}
+	</header>
+
+	<main></main>
 </div>
 
 <style>
@@ -71,8 +78,7 @@
 		filter: grayscale(0.1) brightness(75%);
 		pointer-events: none;
 	}
-	.card[data-blocked]:before,
-	.card[data-blocked]:after { 
+	.card[data-blocked] .pog { 
 		filter: grayscale(0.1) brightness(75%);
 	}
 
@@ -81,9 +87,8 @@
 		background-size: auto 200%;
 		filter: none;
 	}
-	.card[data-hidden]:before,
-	.card[data-hidden]:after,
-	.card[data-hidden] main { display: none !important; }
+	.card[data-hidden] .pog,
+	.card[data-hidden] .food { display: none !important; }
 
 	.card[data-taken] { 
 		opacity: 0; 
@@ -97,58 +102,74 @@
 	.card:nth-child(n+31) { top: -200%; left: 50%; }
 	.card:nth-child(n+37) { top: -240%; left: 0; }
 
-	.card[data-type="man"]:before,
-	.card[data-type="man"]:after,
-	.card[data-type="res"]:before,
-	.card[data-type="res"]:after { 
-		background: url('/assets/pog.png');
-		background-size: 100% auto;
-		content: '';
-		display: block;
-		height: 40px;
-		left: calc(50% - 20px);
-		position: absolute;
-		top: 6px;
-		width: 40px;
-	}
+.pog { 
+	background: url('/assets/pog.png');
+	background-size: 100% auto;
+	display: grid;
+	height: 40px;
+	position: relative;
+	width: 40px;
+}
 
-	.card[data-type="man"]:before,
-	.card[data-type="res"]:before {
+	.pog:before {
 		background: url('/assets/res.png') no-repeat;
 		background-size: 120px 30px;
+		content: '';
 		height: 30px;
-		top: 10px; left: calc(50% - 16px);
+		margin: auto;
 		width: 30px;
 		z-index: 1;
 	}
-		.card[data-res="stone"]:before { background-position: -30px 0; }
-		.card[data-res="wood"]:before { background-position: -60px 0; }
+		.card[data-res="stone"] .pog:before { background-position: -30px 0; }
+		.card[data-res="wood"] .pog:before { background-position: -60px 0; }
+		.card[data-res="paper"] .pog:before { background-position: 0 -30px; }
+		.card[data-res="glass"] .pog:before { background-position: -30px -60px 0; }
 
-/* footer {
-	position: absolute;
-	bottom: 0; left: 0;
-	width: 100%;
-} */
-main {
-	height: 100%;
-	padding-top: 10px;
+header {
+	align-items: center;
+	display: flex;
+	height: 5.5vh;
+	justify-content: center;
+	margin-bottom: 0.5vh;
 	position: relative;
+	top: 0; left: 0;
 	width: 100%;
+}
+
+main {
+	height: 5vh;
+	position: relative;
 }
 
 .food {
-	background: url('/assets/res.png') no-repeat -90px 0;
-	background-size: 120px 30px;
-	height: 30px;
-	padding-left: 10px;
-	position: relative;
-	bottom: 3px; left: 7px;
-	width: 30px;
+	position: absolute;
+	top: 0; left: 8px;
 }
 	.food strong {
-		line-height: 26px;
-		padding-left: 3px; 
+		background: url('/assets/res.png') no-repeat -90px center;
+		background-size: 120px 30px;
+		display: block;
+		line-height: 4.5vh;
+		height: 5.5vh;
+		text-align: center;
+		text-indent: 2px;
+		width: 30px;
 	}
+
+	.food .pog {
+		height: 30px;
+		width: 30px;
+	}
+		.food .pog:before {
+			background-size: 80px 20px;
+			height: 20px;
+			margin: auto;
+			width: 20px;
+		}
+			.food .pog[data-res="stone"]:before { background-position: -30px 0; }
+			.food .pog[data-res="wood"]:before { background-position: -60px 0; }
+			.food .pog[data-res="paper"]:before { background-position: 0 -30px; }
+			.food .pog[data-res="glass"]:before { background-position: -30px -60px 0; }
 
 .res-list {
 	margin: 0;

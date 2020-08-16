@@ -151,6 +151,12 @@
 			if (card.res === "glass") p.glass += 1 * rescount;
 			if (card.res === "paper") p.paper += 1 * rescount;
 
+			// Building additions
+			if (card.type === "civ") p.civ += 1;
+			if (card.type === "eco") p.eco += 1;
+			if (card.type === "sci") p.sci += 1;
+			if (card.type === "war") p.war += 1;
+
 			if (!card.cost.length) {
 				p.food -= card.cost; // Deduct food, ez mode
 			} else {
@@ -168,7 +174,7 @@
 						p.food -= need[res];
 					} else {
 						const opp = $gs.myturn ? $gs.p2 : $gs.p1;
-						p.food -= ((need[res] - p[res]) * 2) + opp[res];
+						p.food -= ((need[res] - p[res]) * 2) + (opp[res] - p[res]);
 					}
 				}
 			}
