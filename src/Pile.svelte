@@ -168,8 +168,7 @@
 						p.food -= need[res];
 					} else {
 						const opp = $gs.myturn ? $gs.p2 : $gs.p1;
-						console.log(need[res] * 2, p[res], opp[res])
-						p.food -= (need[res] * 2) - p[res] + opp[res];
+						p.food -= ((need[res] - p[res]) * 2) + opp[res];
 					}
 				}
 			}
