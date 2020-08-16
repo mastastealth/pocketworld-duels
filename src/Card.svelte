@@ -30,7 +30,7 @@
 				{#if card.cost.length}
 					<ul class="res-list">
 						{#each fullCost as cost}
-							<li class="pog" data-res={cost}>{cost}</li>
+							<li class="pog" data-res={cost}></li>
 						{/each}
 					</ul>
 				{/if}
@@ -113,7 +113,7 @@
 
 	.pog:before {
 		background: url('/assets/res.png') no-repeat;
-		background-size: 120px 30px;
+		background-size: 120px 60px;
 		content: '';
 		height: 30px;
 		margin: auto;
@@ -123,7 +123,7 @@
 		.card[data-res="stone"] .pog:before { background-position: -30px 0; }
 		.card[data-res="wood"] .pog:before { background-position: -60px 0; }
 		.card[data-res="paper"] .pog:before { background-position: 0 -30px; }
-		.card[data-res="glass"] .pog:before { background-position: -30px -60px 0; }
+		.card[data-res="glass"] .pog:before { background-position: -30px -30px; }
 
 header {
 	align-items: center;
@@ -146,8 +146,8 @@ main {
 	top: 0; left: 8px;
 }
 	.food strong {
-		background: url('/assets/res.png') no-repeat -90px center;
-		background-size: 120px 30px;
+		background: url('/assets/res.png') no-repeat -90px 10px;
+		background-size: 120px 60px;
 		display: block;
 		line-height: 4.5vh;
 		height: 5.5vh;
@@ -161,19 +161,19 @@ main {
 		width: 30px;
 	}
 		.food .pog:before {
-			background-size: 80px 20px;
+			background-size: 80px 40px;
 			height: 20px;
 			margin: auto;
 			width: 20px;
 		}
-			.food .pog[data-res="stone"]:before { background-position: -30px 0; }
-			.food .pog[data-res="wood"]:before { background-position: -60px 0; }
-			.food .pog[data-res="paper"]:before { background-position: 0 -30px; }
-			.food .pog[data-res="glass"]:before { background-position: -30px -60px 0; }
+			.food .pog[data-res="stone"]:before { background-position: -20px 0; }
+			.food .pog[data-res="wood"]:before { background-position: -40px 0; }
+			.food .pog[data-res="paper"]:before { background-position: 0 -20px; }
+			.food .pog[data-res="glass"]:before { background-position: -20px -20px; }
 
 .res-list {
 	margin: 0;
-	padding: 40px 0 0 0;
+	padding: 5.5vh 0 0 0;
 	list-style: none;
 }
 </style>

@@ -174,7 +174,10 @@
 						p.food -= need[res];
 					} else {
 						const opp = $gs.myturn ? $gs.p2 : $gs.p1;
-						p.food -= ((need[res] - p[res]) * 2) + (opp[res] - p[res]);
+						const oppres = opp[res] - p[res] >= 0 
+							? opp[res] - p[res] 
+							: 0;
+						p.food -= ((need[res] - p[res]) * 2) + oppres;
 					}
 				}
 			}

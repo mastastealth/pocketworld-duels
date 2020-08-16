@@ -80,7 +80,7 @@
 
 .food {
 	background: url('/assets/res.png') no-repeat -120px 0;
-	background-size: 160px 40px;
+	background-size: 160px 80px;
 	display: block;
 	font-size: 1rem;
 	height: 40px;

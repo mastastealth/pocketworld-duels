@@ -20,7 +20,7 @@
 			this.clay = 0; // Bones
 			this.stone = 0; 
 			this.paper = 0; // Orn
-			this.glass = 0; // Metal
+			this.glass = 0; // Ammo
 			// "Buildings"
 			this.eco = 0;
 			this.civ = 0;
