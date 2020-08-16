@@ -12,6 +12,9 @@
 <section class="player {className}">
 	<aside class="score">
 		{realScore}
+		<span class="food">
+			{player.food}
+		</span>
 	</aside>
 
 	<div class="cards">
@@ -70,8 +73,23 @@
 	font-size: 4em;
 	font-weight: bold;
 	line-height: 75px;
+	position: relative;
 	text-align: center;
 	width: 190px;
+}
+
+.food {
+	background: url('/assets/res.png') no-repeat -120px 0;
+	background-size: 160px 40px;
+	display: block;
+	font-size: 1rem;
+	height: 40px;
+	line-height: 36px;
+	position: absolute;
+	text-align: center;
+	text-indent: 5px;
+	top: 30%; left: 5px;
+	width: 40px;
 }
 
 .cards {

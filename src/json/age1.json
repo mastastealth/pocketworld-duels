@@ -20,9 +20,7 @@
 	},
 	{
 		"id": "garrison",
-		"cost": {
-			"clay": 1
-		},
+		"cost": ["clay"],
 		"type": "war",
 		"war": 1,
 		"link": "sword"
@@ -49,9 +47,7 @@
 	},
 	{
 		"id": "apothecary",
-		"cost": {
-			"glass": 1
-		},
+		"cost": ["glass"],
 		"type": "sci",
 		"sci": "wheel",
 		"vp": 1
@@ -82,9 +78,7 @@
 	},
 	{
 		"id": "baths",
-		"cost": {
-			"stone": 1
-		},
+		"cost": ["stone"],
 		"type": "civ",
 		"vp": 3,
 		"link": "drop"
@@ -129,9 +123,7 @@
 	},
 	{
 		"id": "stable",
-		"cost": {
-			"wood": 1
-		},	
+		"cost": ["wood"],	
 		"type": "war",
 		"war": 1,
 		"link": "horseshoe"
@@ -151,9 +143,7 @@
 	},
 	{
 		"id": "workshop",
-		"cost": {
-			"paper": 1
-		},
+		"cost": ["paper"],
 		"type": "sci",
 		"sci": "level",
 		"vp": 1

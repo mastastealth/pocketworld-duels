@@ -15,6 +15,17 @@
 			this.cards = [];
 			this.tokens = [];
 			this.missions = {}; // Wonders
+			// Resources
+			this.wood = 0;
+			this.clay = 0; // Bones
+			this.stone = 0; 
+			this.paper = 0; // Orn
+			this.glass = 0; // Metal
+			// "Buildings"
+			this.eco = 0;
+			this.civ = 0;
+			this.sci = [];
+			this.war = 0;
 		}
 	}
 

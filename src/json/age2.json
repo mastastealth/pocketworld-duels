@@ -1,21 +1,23 @@
 [
 	{
 		"id": "statue",
-		"cost": {
-			"clay": 2,
-			"link": "mask"
-		},
+		"cost": [
+			"clay",
+			"clay"
+		],
+		"linkcost": "mask",
 		"type": "civ",
 		"link": "statue",
 		"vp": 4
 	},
 	{
 		"id": "caravansery",
-		"cost": {
-			"glass": 1,
-			"paper": 1,
-			"coin": 2
-		},
+		"cost": [
+			"glass",
+			"paper",
+			"coin",
+			"coin"
+		],
 		"type": "eco",
 		"provides": [
 			"wood",
@@ -25,10 +27,12 @@
 	},
 	{
 		"id": "forum",
-		"cost": {
-			"clay": 1,
-			"coin": 3
-		},
+		"cost": [
+			"clay",
+			"coin",
+			"coin",
+			"coin"
+		],
 		"type": "eco",
 		"provides": [
 			"paper",
@@ -37,20 +41,21 @@
 	},
 	{
 		"id": "courthouse",
-		"cost": {
-			"wood": 2,
-			"glass": 1
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"glass"
+		],
 		"type": "civ",
 		"vp": 5
 	},
 	{
 		"id": "archeryrange",
-		"cost": {
-			"stone": 1,
-			"wood": 1,
-			"paper": 1
-		},
+		"cost": [
+			"stone",
+			"wood",
+			"paper"
+		],
 		"type": "war",
 		"war": 2,
 		"link": "target"
@@ -63,9 +68,10 @@
 		"rescount": 2
 	},{
 		"id": "walls",
-		"cost": {
-			"stone": 2
-		},
+		"cost": [
+			"stone",
+			"stone"
+		],
 		"type": "war",
 		"war": 2
 	},
@@ -84,51 +90,56 @@
 	},
 	{
 		"id": "barracks",
-		"cost": {
-			"coin": 3,
-			"link": "sword"
-		},
+		"cost": [
+			"coin",
+			"coin",
+			"coin"
+		],
+		"linkcost": "sword",
 		"type": "war",
 		"war": 1
 	},
 	{
 		"id": "dispensary",
-		"cost": {
-			"clay": 2,
-			"stone": 1,
-			"link": "cog"
-		},
+		"cost": [
+			"clay",
+			"clay",
+			"stone"
+		],
+		"linkcost": "cog",
 		"type": "sci",
 		"sci": "bowl",
 		"vp": 2
 	},
 	{
 		"id": "aqueduct",
-		"cost": {
-			"stone": 3,
-			"link": "drop"
-		},
+		"cost": [
+			"stone",
+			"stone",
+			"stone"
+		],
+		"linkcost": "drop",
 		"type": "civ",
 		"vp": 5
 	},
 	{
 		"id": "library",
-		"cost": {
-			"wood": 1,
-			"stone": 1,
-			"glass": 1,
-			"link": "book"
-		},
+		"cost": [
+			"wood",
+			"stone",
+			"glass"
+		],
+		"linkcost": "book",
 		"type": "sci",
 		"sci": "quill",
 		"vp": 2
 	},
 	{
 		"id": "rostrum",
-		"cost": {
-			"stone": 1,
-			"wood": 1	
-		},
+		"cost": [
+			"wood",
+			"stone"
+		],
 		"type": "civ",
 		"vp": 4,
 		"link": "courthouse"
@@ -142,11 +153,11 @@
 	},
 	{
 		"id": "temple",
-		"cost": {
-			"wood": 1,
-			"paper": 1,
-			"link": "moon"
-		},
+		"cost": [
+			"wood",
+			"paper"
+		],
+		"linkcost": "moon",
 		"type": "civ",
 		"vp": 4,
 		"link": "sun"
@@ -160,20 +171,21 @@
 	},
 	{
 		"id": "horsebreeders",
-		"cost": {
-			"clay": 1,
-			"wood": 1,
-			"link": "horseshoe"
-		},
+		"cost": [
+			"wood",
+			"clay"
+		],
+		"linkcost": "horseshoe",
 		"type": "war",
 		"war": 1
 	},
 	{
 		"id": "laboratory",
-		"cost": {
-			"wood": 1,
-			"glass": 2
-		},
+		"cost": [
+			"wood",
+			"glass",
+			"glass"
+		],
 		"type": "sci",
 		"sci": "level",
 		"vp": 1,
@@ -187,10 +199,11 @@
 	},
 	{
 		"id": "paradeground",
-		"cost": {
-			"clay": 2,
-			"glass": 1
-		},
+		"cost": [
+			"glass",
+			"clay",
+			"clay"
+		],
 		"type": "war",
 		"war": 2,
 		"link": "helmet"
@@ -206,10 +219,11 @@
 	},
 	{
 		"id": "school",
-		"cost": {
-			"wood": 1,
-			"paper": 2
-		},
+		"cost": [
+			"wood",
+			"paper",
+			"paper"
+		],
 		"type": "sci",
 		"sci": "wheel",
 		"vp": 1,

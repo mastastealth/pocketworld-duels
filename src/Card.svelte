@@ -1,11 +1,13 @@
 <script>
 	export let card = {};
-	export let unblock;
+	export let selectCard = () => {};
 
-	function takeCard() {
-		if (!card.blocked) card.taken = true;
-		unblock(card); // Unblock a bit
-	}
+	$: fullCost = card.cost.length 
+		? card.cost.filter(c => c !== "coin") 
+		: card.cost;
+	$: coinCost = card.cost.length 
+		? card.cost.filter(c => c === "coin").length 
+		: false;
 </script>
 
 <div
@@ -17,12 +19,20 @@
 	data-type={card.type}
 	data-res={card.res}
 	data-sci={card.sci}
-	on:click={takeCard}
+	on:click={selectCard(card)}
 >
 	<main>
 		{#if card.cost}
 			<div class="food">
-				{#if typeof card.cost === 'number'}<strong>{card.cost}</strong>{/if}
+				{#if typeof card.cost === 'number' || coinCost}
+					<strong>{card.cost}</strong>
+				{:else}
+					<ul class="res-list">
+						{#each fullCost as cost}
+							<li data-res={cost}>{cost}</li>
+						{/each}
+					</ul>
+				{/if}
 			</div>
 		{/if}
 	</main>
@@ -139,4 +149,10 @@ main {
 		line-height: 26px;
 		padding-left: 3px; 
 	}
+
+.res-list {
+	margin: 0;
+	padding: 40px 0 0 0;
+	list-style: none;
+}
 </style>

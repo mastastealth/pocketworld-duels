@@ -1,5 +1,6 @@
 <script>
 	import Card from './Card.svelte';
+	import Modal from './Modal.svelte';
 	import { gs } from './store/gameState';
 	import age1 from './json/age1.json';
 	import age2 from './json/age2.json';
@@ -108,11 +109,10 @@
 
 	$: finalCards = sortCards(cards);
 
-	function unblock(card) {
+	function chooseCard(card, sell = false, build = false) {
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
 		const i = card.index - (7 - isOdd);
 
-		console.log(i, i+1)
 		if (finalCards[i]) {
 			finalCards[i].blocked -= 1;
 			if (!finalCards[i].blocked) finalCards[i].flipped = false;
@@ -123,27 +123,69 @@
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 
-		adjustScore(card); // Calculate earnings
+		adjustScore(card, sell, build); // Calculate earnings
 	}
 
-	function adjustScore(card) {
+	function adjustScore(card, sell, build) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let pCards = [...p.cards, card];
+
+		// Mark as taken, so it disappears, regardless of action
+		finalCards[card.index].taken = true;
 
 		// Doesn't sort??
 		// p1Cards.sort((a, b) => {
 		// 	return a.type - b.type;
 		// });
 
-		p.cards = pCards;
-		if (card.vp) p.score += card.vp;
+		p.cards = pCards; // Update "taken" status into main array
+
+		if (!sell && !build) { // If buying card
+			if (card.vp) p.score += card.vp; // Add VP
+
+			// Resource addition
+			const rescount = card.rescount || 1;
+			if (card.res === "stone") p.stone += 1 * rescount;
+			if (card.res === "wood") p.wood += 1 * rescount;
+			if (card.res === "clay") p.clay += 1 * rescount;
+			if (card.res === "glass") p.glass += 1 * rescount;
+			if (card.res === "paper") p.paper += 1 * rescount;
+
+			if (!card.cost.length) {
+				p.food -= card.cost; // Deduct food, ez mode
+			} else {
+				// Calculate how much is spent from missing resources
+				let need = {};
+
+				// Construct cost object
+				card.cost.forEach(res => {
+					if (!need[res]) need[res] = 0;
+					need[res] += 1;
+				});
+
+				for (const res in need) {
+					if (res === "coin") {
+						p.food -= need[res];
+					} else {
+						const opp = $gs.myturn ? $gs.p2 : $gs.p1;
+						console.log(need[res] * 2, p[res], opp[res])
+						p.food -= (need[res] * 2) - p[res] + opp[res];
+					}
+				}
+			}
+		} else if (sell) { // If selling card
+			p.food += 2 + p.eco;
+		} else {
+			// Build wonder junk
+		}
 
 		gs.set({
 			...$gs,
 			p1: $gs.myturn ? p : $gs.p1,
 			p2: $gs.myturn ? $gs.p2 : p,
 			myturn: !$gs.myturn,
-			cardsleft: $gs.cardsleft - 1
+			cardsleft: $gs.cardsleft - 1,
+			selected: null
 		});
 
 		// No more cards, next "age"
@@ -171,7 +213,27 @@
 			: [...age3.slice(6), ...g.slice(4)];
 		cards = [...$gs.shuffle(nextdeck)];
 	}
+
+	function selectCard(card) {
+		gs.set({
+			...$gs,
+			selected: card
+		});
+	}
+
+	function deselectModal() {
+		gs.set({
+			...$gs,
+			selected: null
+		});
+	}
 </script>
+
+{#if $gs.selected}
+	<div class="overlay" on:click|self={deselectModal}>
+		<Modal chooseCard={chooseCard} />
+	</div>
+{/if}
 
 <div class="pile" data-myturn={$gs.myturn} data-age={$gs.age}>
 	{#each finalCards as card}
@@ -179,7 +241,7 @@
 			<div class="card" data-empty></div>
 		{/if}
 		{#if card}
-			<Card card={card} unblock={unblock} />
+			<Card card={card} selectCard={selectCard} />
 		{/if}
 	{/each}
 </div>
@@ -207,4 +269,14 @@
 		background-color: rgb(29, 149, 59);
 		background-blend-mode: hard-light;
 	}
+
+.overlay {
+	background: rgba(0, 0, 0, 0.5);
+	display: grid;
+	height: 100vh;
+	position: fixed;
+	top: 0; left: 0;
+	width: 100vw;
+	z-index: 99;
+}
 </style>
