@@ -8,6 +8,12 @@
 	$: coinCost = card.cost.length 
 		? card.cost.filter(c => c === "coin").length 
 		: false;
+
+	function warLen() {
+		const x = [];
+		x.length = card.war;
+		return x;
+	}
 </script>
 
 <div
@@ -41,6 +47,10 @@
 			<div class="pog"></div>
 		{:else if card.vp}
 			<div class="vp">{card.vp}</div>
+		{:else if card.war}
+			{#each warLen() as star}
+				<img src="/assets/star.png" alt="⭐" class="star">
+			{/each}
 		{/if}
 
 		{#if card.sci}
@@ -102,7 +112,7 @@
 		background-size: auto 200%;
 		filter: none;
 	}
-	.card[data-hidden] div { display: none !important; }
+	.card[data-hidden] * { display: none !important; }
 
 	.card[data-taken] { 
 		opacity: 0; 
@@ -149,6 +159,10 @@ header {
 	position: relative;
 	top: 0; left: 0;
 	width: 100%;
+}
+
+.star {
+	width: 30px;
 }
 
 .vp { 
