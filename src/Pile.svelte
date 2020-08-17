@@ -142,6 +142,7 @@
 
 		if (!sell && !build) { // If buying card
 			if (card.vp) p.score += card.vp; // Add VP
+			if (card.instant) p.food += card.instant; // Add Eco monies
 
 			// Resource addition
 			const rescount = card.rescount || 1;

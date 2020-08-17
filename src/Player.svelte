@@ -25,6 +25,7 @@
 				data-type={card.type}
 				data-vp={card.vp}
 				data-res={card.res}
+				data-war={card.war}
 			></div>
 		{/each}
 	</div>
@@ -51,6 +52,7 @@
 	padding: 0 10px;
 	position: relative;
 	transition: filter 0.2s;
+	user-select: none;
 	width: 100%;
 	z-index: 1;
 }
@@ -71,7 +73,7 @@
 	.player.you { padding-bottom: 20px; }
 		.player.you:after { transform: rotateX(180deg); }
 	
-	.player:not([data-myturn]) {
+	.player:not([data-myturn]):not(:hover) {
 		filter: brightness(50%) saturate(0.5);
 	}
 
@@ -106,6 +108,7 @@
 }
 	.player.you .cards { padding: 5px 20px 15px 0; }
 	.player.me .cards { padding: 15px 20px 5px 0; }
+
 .card {
 	border: 1px solid black;
 	border-radius: 3px;
@@ -119,8 +122,8 @@
 	.card[data-type="civ"] { background: var(--civ); }
 	.card[data-type="eco"] { background: var(--eco); }
 	.card[data-type="res"] { background: var(--res); }
-		.card[data-type="res"]:before,
-		.card[data-type="res"]:after { 
+		.card[data-res]:before,
+		.card[data-res]:after { 
 			background: url('/assets/pog.png');
 			background-size: 100% auto;
 			content: '';
@@ -130,9 +133,9 @@
 			vertical-align: middle;
 		}
 
-		.card[data-type="res"]:before {
+		.card[data-res]:before {
 			background: url('/assets/res.png') no-repeat;
-			background-size: 80px 20px;
+			background-size: 80px 40px;
 			height: 20px;
 			position: absolute;
 			top: 4px; left: 6px;
@@ -140,12 +143,16 @@
 		}
 			.card[data-res="stone"]:before { background-position: -20px 0; }
 			.card[data-res="wood"]:before { background-position: -40px 0; }
+			.card[data-res="paper"]:before { background-position: 0 -20px; }
+			.card[data-res="glass"]:before { background-position: -20px -20px; }
 
 	.card[data-type="man"] { background: var(--man); }
 	.card[data-type="guild"] { background: var(--guild); }
 
 	.card[data-type="civ"]:after,
 	.card[data-type="sci"]:after { content: attr(data-vp); }
+
+	.card[data-war]:after { content: attr(data-war); }
 
 .tokens {
 	align-items: center;

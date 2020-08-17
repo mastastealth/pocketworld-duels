@@ -36,27 +36,6 @@
 		p1,
 		p2
 	});
-
-	// Fn
-	function doIt2() {
-		let flipped = false;
-		score.update(n => n + 1);
-
-		// Check for a war win
-		if ($score === 9 || $score === -9) {
-			// ...
-		}
-
-		if ($score === 6 && !$top5) { top5.set(true); flipped = true; }
-		if ($score === 3 && !$top2) { top2.set(true); flipped = true; }
-		if ($score === -6 && !$bot5) { bot5.set(true); flipped = true; }
-		if ($score === -3 && !$bot2) { bot2.set(true); flipped = true; }
-
-		// Deduct coins
-		if (flipped) { 
-			// ...
-		}
-	}
 </script>
 
 <main>
@@ -66,9 +45,6 @@
 
 		<main class="table">
 			<Pile />
-			<div class="test-bar">
-				<button on:click={doIt2}>Add War Score</button>
-			</div>
 		</main>
 
 		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
