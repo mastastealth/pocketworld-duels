@@ -43,10 +43,12 @@
 			</div>
 		{/if}
 
-		{#if card.res}
-			<div class="pog"></div>
+		{#if card.res || card.trade}
+			<div class="pog" data-trade={card.trade}></div>
 		{:else if card.vp}
 			<div class="vp">{card.vp}</div>
+		{:else if card.instant}
+			<div class="instant">{card.instant}</div>
 		{:else if card.war}
 			{#each warLen() as star}
 				<img src="/assets/star.png" alt="⭐" class="star">
@@ -134,7 +136,6 @@
 	position: relative;
 	width: 40px;
 }
-
 	.pog:before {
 		background: url('/assets/res.png') no-repeat;
 		background-size: 120px 60px;
@@ -148,6 +149,19 @@
 		.card[data-res="wood"] .pog:before { background-position: -60px 0; }
 		.card[data-res="paper"] .pog:before { background-position: 0 -30px; }
 		.card[data-res="glass"] .pog:before { background-position: -30px -30px; }
+
+	.pog[data-trade]:after {
+		background: rgba(0, 0, 0, 0.5);
+		border-radius: 3px;
+		content: "1";
+		display: block;
+		font-size: 0.7em;
+		padding: 0 8px;
+		position: absolute;
+		bottom: 1px; left: 20%;
+		text-align: center;
+		z-index: 1;
+	}
 
 header {
 	align-items: center;
@@ -165,10 +179,17 @@ header {
 	width: 30px;
 }
 
-.vp { 
+.vp, .instant { 
 	font-size: 1.5em; 
 	mix-blend-mode: soft-light;
 }
+	.instant {
+		background: url('/assets/res.png') no-repeat -120px -3px;
+		background-size: 160px 80px;
+		mix-blend-mode: unset;
+		text-align: center;
+		width: 40px;
+	}
 
 .sci-icon {
 	height: 100%;
