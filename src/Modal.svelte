@@ -37,6 +37,8 @@
 </script>
 
 <div class="modal">
+	<h2>What would you like to do?</h2>
+
 	<Card card={$gs.selected} />
 
 	<button 
@@ -50,11 +52,17 @@
 <style>
 .modal {
 	background: url('/assets/modal_bg.png') no-repeat;
-	height: 470px;
+	background-size: 100% 100%;
+	color: white;
+	height: 350px;
 	margin: auto;
 	max-height: 95vh;
 	max-width: 80vw;
 	padding: 35px;
+	text-align: center;
 	width: 800px;
 }
+
+.modal :global(.card) { margin: 0 auto 20px; }
+
 </style>

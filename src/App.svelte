@@ -61,7 +61,7 @@
 
 <main>
 	<div class="game">
-		<Player className="you" player={$gs.p2} ws={$score} />
+		<Player className="you" player={$gs.p2} ws={$score} turn={!$gs.myturn} />
 		<WarBar />
 
 		<main class="table">
@@ -71,7 +71,7 @@
 			</div>
 		</main>
 
-		<Player className="me" player={$gs.p1} ws={$score} />
+		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
 	</div>
 </main>
 

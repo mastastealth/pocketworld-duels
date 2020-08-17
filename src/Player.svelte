@@ -2,6 +2,7 @@
 	export let className = "";
 	export let player = {};
 	export let ws = 0;
+	export let turn = null;
 
 	$: realScore = player.primary ?
 		player.score + ws
@@ -9,7 +10,7 @@
 </script>
 
 
-<section class="player {className}">
+<section class="player {className}" data-myturn={turn ? '' : null}>
 	<aside class="score">
 		{realScore}
 		<span class="food">
@@ -49,6 +50,7 @@
 	height: 100%;
 	padding: 0 10px;
 	position: relative;
+	transition: filter 0.2s;
 	width: 100%;
 	z-index: 1;
 }
@@ -68,6 +70,10 @@
 		.player.me .missions { top: auto; bottom: 100%; }
 	.player.you { padding-bottom: 20px; }
 		.player.you:after { transform: rotateX(180deg); }
+	
+	.player:not([data-myturn]) {
+		filter: brightness(50%) saturate(0.5);
+	}
 
 .score {
 	font-size: 4em;
