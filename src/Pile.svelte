@@ -274,7 +274,7 @@
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	transform: translateY(15%);
-	width: 100vh;
+	width: 100%;
 }
 
 	.pile[data-age="1"] :global(.card[data-hidden]) {

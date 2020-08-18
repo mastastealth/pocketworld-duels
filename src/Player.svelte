@@ -59,7 +59,7 @@
 }
 	.player:after {
 		background: url('/assets/player_panel.png') no-repeat center top;
-		background-size: 100% auto;
+		background-size: 100% 100%;
 		content: '';
 		display: block;
 		position: absolute;

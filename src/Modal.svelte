@@ -9,23 +9,20 @@
 
 	function calcCost(cardCost) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
+		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
+		total = cardCost;
 
 		// For complicated cost forms
 		if (cardCost.length) {
 			const t = canAfford(cardCost);
 			total = t;
-			return t <= $gs[$gs.myturn ? 'p1' : 'p2'].food
+			return t <= pfood;
 		} else {
 			// Normal cost calculation (pure cash)
-			if (
-				!cardCost 
-				|| cardCost <= $gs[$gs.myturn ? 'p1' : 'p2'].food
-			) {
-				total = cardCost;
-			}
+			if (!cardCost || cardCost <= pfood) return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	$: affordable = calcCost($gs.selected.cost);
@@ -39,7 +36,7 @@
 	<button 
 		disabled={affordable ? null : true}
 		on:click={chooseCard($gs.selected)}
-	>{total <= 0 ? "Get for Free" : `Buy for ${total}`}</button>
+	>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 
 	<button on:click={chooseCard($gs.selected, true)}>Trade</button>
 </div>

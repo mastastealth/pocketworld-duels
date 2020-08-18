@@ -76,7 +76,7 @@
 	color: white;
 	cursor: pointer;
 	height: calc((100vh - 200px) / 5);
-	max-width: calc(10vw);
+	max-width: calc(11vw);
 	min-height: 144px;
 	position: relative;
 	width: calc((100vh - 200px) / 5);
