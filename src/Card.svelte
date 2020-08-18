@@ -24,6 +24,7 @@
 	data-index={card.index}
 	data-type={card.type}
 	data-res={card.res}
+	data-trade={card.trade}
 	data-sci={card.sci}
 	on:click={selectCard(card)}
 >
@@ -44,7 +45,9 @@
 		{/if}
 
 		{#if card.res || card.trade}
-			<div class="pog" data-trade={card.trade}></div>
+			<div class="pog"></div>
+			{#if card.rescount === 2}<div class="pog"></div>{/if}
+			{#if card.rescount === 3}<div class="pog"></div>{/if}
 		{:else if card.vp}
 			<div class="vp">{card.vp}</div>
 		{:else if card.instant}
@@ -74,6 +77,7 @@
 	cursor: pointer;
 	height: calc((100vh - 200px) / 5);
 	max-width: calc(10vw);
+	min-height: 144px;
 	position: relative;
 	width: calc((100vh - 200px) / 5);
 	z-index: 1;
@@ -145,12 +149,16 @@
 		width: 30px;
 		z-index: 1;
 	}
-		.card[data-res="stone"] .pog:before { background-position: -30px 0; }
-		.card[data-res="wood"] .pog:before { background-position: -60px 0; }
-		.card[data-res="paper"] .pog:before { background-position: 0 -30px; }
-		.card[data-res="glass"] .pog:before { background-position: -30px -30px; }
+		.card[data-res="stone"] .pog:before,
+		.card[data-trade="stone"] .pog:before { background-position: -30px 0; }
+		.card[data-res="wood"] .pog:before,
+		.card[data-trade="wood"] .pog:before { background-position: -60px 0; }
+		.card[data-res="paper"] .pog:before,
+		.card[data-trade="paper"] .pog:before { background-position: 0 -30px; }
+		.card[data-res="glass"] .pog:before,
+		.card[data-trade="glass"] .pog:before { background-position: -30px -30px; }
 
-	.pog[data-trade]:after {
+	.card[data-trade] .pog:after {
 		background: rgba(0, 0, 0, 0.5);
 		border-radius: 3px;
 		content: "1";

@@ -126,6 +126,35 @@
 		adjustScore(card, sell, build); // Calculate earnings
 	}
 
+	function canAfford(cardCost) {
+		const need = {};
+		let total = 0;
+
+		// Construct cost object
+		cardCost.forEach(res => {
+			if (!need[res]) need[res] = 0;
+			need[res] += 1;
+		});
+
+		// Tally up coins needed per resource
+		for (const res in need) {
+			if (res === "coin") {
+				total += need[res]; // Coins are simple enough
+			} else {
+				// Calculate how much a resource costs us
+				const me = $gs.myturn ? $gs.p1 : $gs.p2;
+				const opp = $gs.myturn ? $gs.p2 : $gs.p1;
+				const totalNeeded = need[res] - me[res]; // Amount of res - what we have
+				// Check for trade card (1 per res) otherwise use default (2 per res + enemy count)
+				const perRes = me.trade.find(r => r === res) ? 1 : 2 + opp[res]; 
+
+				total += totalNeeded * perRes;
+			}
+		}
+
+		return total;
+	}
+
 	function adjustScore(card, sell, build) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let pCards = [...p.cards, card];
@@ -151,6 +180,7 @@
 			if (card.res === "clay") p.clay += 1 * rescount;
 			if (card.res === "glass") p.glass += 1 * rescount;
 			if (card.res === "paper") p.paper += 1 * rescount;
+			if (card.trade && !p.trade.includes(card.trade)) p.trade.push(card.trade);
 
 			// Building additions
 			if (card.type === "civ") p.civ += 1;
@@ -162,25 +192,8 @@
 				p.food -= card.cost; // Deduct food, ez mode
 			} else {
 				// Calculate how much is spent from missing resources
-				let need = {};
-
-				// Construct cost object
-				card.cost.forEach(res => {
-					if (!need[res]) need[res] = 0;
-					need[res] += 1;
-				});
-
-				for (const res in need) {
-					if (res === "coin") {
-						p.food -= need[res];
-					} else {
-						const opp = $gs.myturn ? $gs.p2 : $gs.p1;
-						const oppres = opp[res] - p[res] >= 0 
-							? opp[res] - p[res] 
-							: 0;
-						p.food -= ((need[res] - p[res]) * 2) + oppres;
-					}
-				}
+				const total = canAfford(card.cost);
+				p.food -= total;
 			}
 		} else if (sell) { // If selling card
 			p.food += 2 + p.eco;
@@ -240,7 +253,7 @@
 
 {#if $gs.selected}
 	<div class="overlay" on:click|self={deselectModal}>
-		<Modal chooseCard={chooseCard} />
+		<Modal chooseCard={chooseCard} canAfford={canAfford} />
 	</div>
 {/if}
 

@@ -90,11 +90,7 @@
 	},
 	{
 		"id": "barracks",
-		"cost": [
-			"coin",
-			"coin",
-			"coin"
-		],
+		"cost": 3,
 		"linkcost": "sword",
 		"type": "war",
 		"war": 1

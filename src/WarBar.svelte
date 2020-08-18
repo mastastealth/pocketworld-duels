@@ -14,25 +14,25 @@
 		if (warTotal === 6 && !$top5) { 
 			top5.set(true); // Flag checkpoint
 			const p2 = {...$gs.p2}; // Copy player data
-			p2.food -= 5; // Adjust food
+			p2.food -= p2.food >= 5 ? 5 : p2.food; // Adjust food
 			gs.set({...$gs, p2 }); // Set player data back
 		}
 		if (warTotal === 3 && !$top2) { 
 			top2.set(true);
 			const p2 = {...$gs.p2};
-			p2.food -= 2;
+			p2.food -= p2.food >= 2 ? 2 : p2.food;
 			gs.set({...$gs, p2 });
 		}
 		if (warTotal === -6 && !$bot5) { 
 			bot5.set(true);
 			const p1 = {...$gs.p1};
-			p1.food -= 5;
+			p1.food -= p1.food >= 5 ? 5 : p1.food;
 			gs.set({...$gs, p1 });
 		}
 		if (warTotal === -3 && !$bot2) { 
 			bot2.set(true);
 			const p1 = {...$gs.p1};
-			p1.food -= 2;
+			p1.food -= p1.food >= 2 ? 2 : p1.food;
 			gs.set({...$gs, p1 });
 		}
 	}

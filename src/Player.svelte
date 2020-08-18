@@ -26,6 +26,7 @@
 				data-vp={card.vp}
 				data-res={card.res}
 				data-war={card.war}
+				data-trade={card.trade}
 			></div>
 		{/each}
 	</div>
@@ -123,7 +124,9 @@
 	.card[data-type="eco"] { background: var(--eco); }
 	.card[data-type="res"] { background: var(--res); }
 		.card[data-res]:before,
-		.card[data-res]:after { 
+		.card[data-res]:after,
+		.card[data-trade]:before,
+		.card[data-trade]:after { 
 			background: url('/assets/pog.png');
 			background-size: 100% auto;
 			content: '';
@@ -133,7 +136,8 @@
 			vertical-align: middle;
 		}
 
-		.card[data-res]:before {
+		.card[data-res]:before,
+		.card[data-trade]:before {
 			background: url('/assets/res.png') no-repeat;
 			background-size: 80px 40px;
 			height: 20px;
@@ -141,10 +145,14 @@
 			top: 4px; left: 6px;
 			width: 20px;
 		}
-			.card[data-res="stone"]:before { background-position: -20px 0; }
-			.card[data-res="wood"]:before { background-position: -40px 0; }
-			.card[data-res="paper"]:before { background-position: 0 -20px; }
-			.card[data-res="glass"]:before { background-position: -20px -20px; }
+			.card[data-res="stone"]:before,
+			.card[data-trade="stone"]:before { background-position: -20px 0; }
+			.card[data-res="wood"]:before,
+			.card[data-trade="wood"]:before { background-position: -40px 0; }
+			.card[data-res="paper"]:before,
+			.card[data-trade="paper"]:before { background-position: 0 -20px; }
+			.card[data-res="glass"]:before,
+			.card[data-trade="glass"]:before { background-position: -20px -20px; }
 
 	.card[data-type="man"] { background: var(--man); }
 	.card[data-type="guild"] { background: var(--guild); }

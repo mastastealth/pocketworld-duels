@@ -21,6 +21,7 @@
 			this.stone = 0; 
 			this.paper = 0; // Orn
 			this.glass = 0; // Ammo
+			this.trade = [];
 			// "Buildings"
 			this.eco = 0;
 			this.civ = 0;
@@ -71,12 +72,5 @@
 	justify-content: center;
 	max-height: calc(100vh - 200px);
 	padding: 48px 20px;
-}
-
-.test-bar { 
-	position: fixed;
-	bottom: 0; 
-	right: 0;
-	z-index: 1;
 }
 </style>

@@ -3,37 +3,32 @@
 	import { gs } from './store/gameState';
 
 	export let chooseCard = null;
+	export let canAfford = () => {};
+
+	let total = 0;
 
 	function calcCost(cardCost) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
 
-		// Normal cost calculation (pure cash)
-		if (
-			!cardCost 
-			|| cardCost <= $gs[$gs.myturn ? 'p1' : 'p2'].food
-		) return true;
-
 		// For complicated cost forms
 		if (cardCost.length) {
-			let need = 0;
-
-			// Loop through each resource required
-			cardCost.forEach(res => {
-				if (res === "coin") {
-					need += 1;
-				} else {
-					need += 2;
-					// TODO - Check opponent's count 
-				}
-			});
-
-			return need <= $gs[$gs.myturn ? 'p1' : 'p2'].food
+			const t = canAfford(cardCost);
+			total = t;
+			return t <= $gs[$gs.myturn ? 'p1' : 'p2'].food
+		} else {
+			// Normal cost calculation (pure cash)
+			if (
+				!cardCost 
+				|| cardCost <= $gs[$gs.myturn ? 'p1' : 'p2'].food
+			) {
+				total = cardCost;
+			}
 		}
 
-		return false;
+		return true;
 	}
 
-	$: canAfford = calcCost($gs.selected.cost);
+	$: affordable = calcCost($gs.selected.cost);
 </script>
 
 <div class="modal">
@@ -42,9 +37,9 @@
 	<Card card={$gs.selected} />
 
 	<button 
-		disabled={canAfford ? null : true}
+		disabled={affordable ? null : true}
 		on:click={chooseCard($gs.selected)}
-	>Buy</button>
+	>{total <= 0 ? "Get for Free" : `Buy for ${total}`}</button>
 
 	<button on:click={chooseCard($gs.selected, true)}>Trade</button>
 </div>
@@ -54,7 +49,7 @@
 	background: url('/assets/modal_bg.png') no-repeat;
 	background-size: 100% 100%;
 	color: white;
-	height: 350px;
+	height: 320px;
 	margin: auto;
 	max-height: 95vh;
 	max-width: 80vw;
