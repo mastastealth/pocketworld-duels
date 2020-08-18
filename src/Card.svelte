@@ -5,6 +5,7 @@
 	$: fullCost = card.cost.length 
 		? card.cost.filter(c => c !== "coin") 
 		: card.cost;
+
 	$: coinCost = card.cost.length 
 		? card.cost.filter(c => c === "coin").length 
 		: false;
@@ -32,13 +33,18 @@
 		{#if card.cost}
 			<div class="food">
 				{#if typeof card.cost === 'number' || coinCost}
-					<strong>{card.cost || coinCost}</strong>
+					<strong>{coinCost || card.cost}</strong>
 				{/if}
 				{#if card.cost.length}
 					<ul class="res-list">
-						{#each fullCost as cost}
-							<li><div class="pog" data-res={cost}></div></li>
-						{/each}
+						<li>
+							{#each fullCost as cost}
+								<div class="pog" data-res={cost}></div>
+							{/each}
+						</li>
+						{#if card.linkcost}
+							<li>{card.linkcost}</li>
+						{/if}
 					</ul>
 				{/if}
 			</div>
@@ -76,10 +82,10 @@
 	color: white;
 	cursor: pointer;
 	height: calc((100vh - 200px) / 5);
-	max-width: calc(11vw);
 	min-height: 144px;
+	min-width: calc((100vh - 200px) / 5);
 	position: relative;
-	width: calc((100vh - 200px) / 5);
+	width: 80%;
 	z-index: 1;
 }
 	.card[data-type="war"],
@@ -228,16 +234,17 @@ header {
 		.food li:before {
 			background: url('/assets/bar.png') no-repeat;
 			background-blend-mode: hard-light;
-			background-size: auto 100%;
+			background-size: 100% 100%;
 			content: '';
 			height: 20px;
 			position: absolute;
 			left: -5px; top: 4px;
-			width: 50%;
+			width: 90%;
 			z-index: -1 !important;
 		}
 
 	.food .pog {
+		display: inline-grid;
 		height: 30px;
 		left: 2px;
 		width: 30px;
@@ -259,6 +266,7 @@ header {
 	padding: 5.5vh 0 0 0;
 	list-style: none;
 }
+	.food strong + .res-list { padding-top: 0; }
 
 main {
 	height: 5vh;

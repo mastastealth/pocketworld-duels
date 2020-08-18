@@ -46,7 +46,7 @@
 	background: url('/assets/modal_bg.png') no-repeat;
 	background-size: 100% 100%;
 	color: white;
-	height: 320px;
+	height: 340px;
 	margin: auto;
 	max-height: 95vh;
 	max-width: 80vw;
@@ -55,6 +55,9 @@
 	width: 800px;
 }
 
-.modal :global(.card) { margin: 0 auto 20px; }
+.modal :global(.card) {
+	margin: 0 auto 20px;
+	max-width: 200px;
+}
 
 </style>
