@@ -272,6 +272,7 @@
 .pile {
 	column-gap: 5px;
 	display: grid;
+	justify-items: center;
 	grid-template-columns: repeat(6, 1fr);
 	transform: translateY(15%);
 	width: 100%;
