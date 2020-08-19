@@ -64,6 +64,9 @@
 			{/each}
 		{/if}
 
+		{#if card.link}
+			<div class="link-icon">{card.link[0]}</div>
+		{/if}
 		{#if card.sci}
 			<div class="sci-icon" data-sci="card.sci">{card.sci[0]}</div>
 		{/if}
@@ -205,7 +208,8 @@ header {
 		width: 40px;
 	}
 
-.sci-icon {
+.sci-icon,
+.link-icon {
 	height: 100%;
 	line-height: 5vh;
 	position: absolute;
@@ -214,6 +218,18 @@ header {
 	text-transform: uppercase;
 	width: 40px;
 }
+	.link-icon + .sci-icon {
+		right: 30px;
+	}
+
+	.link-icon {
+		background: rgba(0, 0, 0, 0.5);
+		border-radius: 100%;
+		height: 30px;
+		line-height: 30px;
+		margin: 5px;
+		width: 30px;
+	}
 
 .food {
 	position: absolute;

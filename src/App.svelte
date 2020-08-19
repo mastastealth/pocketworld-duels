@@ -27,6 +27,8 @@
 			this.civ = 0;
 			this.sci = [];
 			this.war = 0;
+			// Other
+			this.links = [];
 		}
 	}
 
@@ -42,11 +44,16 @@
 <main>
 	<div class="game">
 		<Player className="you" player={$gs.p2} ws={$score} turn={!$gs.myturn} />
+
 		<WarBar />
 
 		<main class="table">
 			<Pile />
 		</main>
+
+		<aside class="tokens war-bar">
+			
+		</aside>
 
 		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
 	</div>
@@ -56,10 +63,10 @@
 .game {
 	display: grid;
 	grid-template-areas:
-		"p2 p2 p2 p2"
-		"ws tb tb tb"
-		"p1 p1 p1 p1";
-	grid-template-columns: 200px 1fr;
+		"p2 p2 p2"
+		"ws tb ts"
+		"p1 p1 p1";
+	grid-template-columns: 100px 1fr 100px;
 	grid-template-rows: 100px 1fr 100px;
 	height: 100vh;
 }
@@ -72,5 +79,12 @@
 	justify-content: center;
 	max-height: calc(100vh - 200px);
 	padding: 48px 20px;
+}
+
+.tokens {
+	background: url('/assets/board.png');
+	background-size: 100% 100%;
+	height: 100%;
+	grid-area: ts;
 }
 </style>

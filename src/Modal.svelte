@@ -7,25 +7,25 @@
 
 	let total = 0;
 
-	function calcCost(cardCost) {
+	function calcCost(card) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
 		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
-		total = cardCost;
+		total = card.cost;
 
 		// For complicated cost forms
-		if (cardCost.length) {
-			const t = canAfford(cardCost);
+		if (card.cost.length) {
+			const t = canAfford(card);
 			total = t;
 			return t <= pfood;
 		} else {
 			// Normal cost calculation (pure cash)
-			if (!cardCost || cardCost <= pfood) return true;
+			if (!card.cost || card.cost <= pfood) return true;
 		}
 
 		return false;
 	}
 
-	$: affordable = calcCost($gs.selected.cost);
+	$: affordable = calcCost($gs.selected);
 </script>
 
 <div class="modal">
@@ -56,8 +56,10 @@
 }
 
 .modal :global(.card) {
+	max-height: 150px;
 	margin: 0 auto 20px;
 	max-width: 200px;
+	pointer-events: none;
 }
 
 </style>

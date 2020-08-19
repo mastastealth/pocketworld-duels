@@ -97,7 +97,7 @@
 	border-radius: 5px;
 	height: calc((100% / 19) * 3);
 	position: absolute;
-	left: 50px;
+	left: 25px;
 	top: calc(100% / 19);
 	transform: scale(0.9);
 	width: 50%;

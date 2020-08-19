@@ -27,7 +27,18 @@
 				data-res={card.res}
 				data-war={card.war}
 				data-trade={card.trade}
-			></div>
+			>
+				<span class="emblems">
+					{#if card.sci}
+						<span>{card.sci?.[0]}</span>
+					{/if}
+					{#if card.rescount}
+						<span class="extra">{card.rescount}</span>
+					{:else if card.link}
+						<span class="extra">{card.link[0]}</span>
+					{/if}
+				</span>
+			</div>
 		{/each}
 	</div>
 
@@ -38,7 +49,14 @@
 	</div>
 
 	<div class="missions">
-	
+		<span>Wood: {player.wood}</span>
+		<span>Bones: {player.clay}</span>
+		<span>Stone: {player.stone}</span>
+		<span>Orn: {player.paper}</span>
+		<span>Ammo: {player.glass}</span>
+		<span>Eco: {player.eco}</span>
+		<span>Civ: {player.civ}</span>
+		<span>Sci: {player.sci.length}</span>
 	</div>
 </section>
 
@@ -70,7 +88,7 @@
 	}
 
 	.player.me { padding-top: 20px; }
-		.player.me .missions { top: auto; bottom: 100%; }
+		.player.me .missions { top: auto; bottom: 90%; }
 	.player.you { padding-bottom: 20px; }
 		.player.you:after { transform: rotateX(180deg); }
 	
@@ -107,12 +125,14 @@
 	grid-template-rows: 1fr 1fr;
 	gap: 1px;
 }
-	.player.you .cards { padding: 5px 20px 15px 0; }
-	.player.me .cards { padding: 15px 20px 5px 0; }
+	.player.you .cards { padding: 5px 20px 10px 0; }
+	.player.me .cards { padding: 10px 20px 5px 0; }
 
 .card {
 	border: 1px solid black;
 	border-radius: 3px;
+	display: grid;
+	line-height: calc(59px / 2);
 	position: relative;
 	text-align: center;
 	width: 32px;
@@ -132,8 +152,8 @@
 			content: '';
 			display: inline-block;
 			height: 24px;
+			margin: auto;
 			width: 24px;
-			vertical-align: middle;
 		}
 
 		.card[data-res]:before,
@@ -142,7 +162,7 @@
 			background-size: 80px 40px;
 			height: 20px;
 			position: absolute;
-			top: 4px; left: 6px;
+			top: 5px; left: 5px;
 			width: 20px;
 		}
 			.card[data-res="stone"]:before,
@@ -158,9 +178,30 @@
 	.card[data-type="guild"] { background: var(--guild); }
 
 	.card[data-type="civ"]:after,
-	.card[data-type="sci"]:after { content: attr(data-vp); }
+	.card[data-type="sci"]:after { 
+		content: attr(data-vp);
+	}
 
 	.card[data-war]:after { content: attr(data-war); }
+
+.emblems {
+	font-size: 10px;
+	font-weight: bold;
+	position: absolute;
+	top: -1px; right: 0;
+	text-transform: uppercase;
+	width: 100%;
+}
+	.emblems span {
+		border-radius: 3px;
+		float: left;
+		line-height: 14px;
+		padding: 0 3px;
+	}
+		.emblems span.extra { 
+			background: rgba(0, 0, 0, 0.5);
+			float: right; 
+		}
 
 .tokens {
 	align-items: center;
@@ -178,7 +219,7 @@
 .missions {
 	height: 48px;
 	position: absolute;
-	top: 100%;
+	top: 90%;
 	right: 0;
 	width: calc(100% - 200px);
 }
