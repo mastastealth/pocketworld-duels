@@ -184,8 +184,15 @@
 			(me.provision === 1 || me.provision === 3 )
 			&& (need.wood || need.stone || need.clay)
 		) {
-			save += 2; // We will always save at least 2 food
-			if ( // But if opponent has one of the resources we need, we can save 1 more food
+			save += 1; // We will always save at least 1 food
+
+			if ( // If I don't have the trade card for that resource
+				(need.wood && !me.trade.includes('wood'))
+				|| (need.stone && !me.trade.includes('stone'))
+				|| (need.clay && !me.trade.includes('clay'))
+			) save += 1;
+		
+			if ( // And if opponent has one of the resources we need, we can save 1 more food
 				need.wood && opp.wood
 				|| (need.clay && opp.clay)
 				|| (need.stone && opp.stone)
@@ -194,11 +201,15 @@
 
 		// Now do same check on manufactured resources
 		if (me.provision > 1 && (need.paper || need.glass)) {
-			save += 2;
-			if (
-				need.glass && opp.glass
-				|| (need.paper && opp.paper)
-			) save += 1;
+			if (me.trade.includes('paper')) {
+				save += 1; // With the trade cost, we'd only be saving 1 food
+			} else {
+				save += 2;
+				if (
+					need.glass && opp.glass
+					|| (need.paper && opp.paper)
+				) save += 1;
+			}
 		}
 
 		return total - save;
@@ -237,6 +248,7 @@
 			if (card.res === "glass") p.glass += 1 * rescount;
 			if (card.res === "paper") p.paper += 1 * rescount;
 			if (card.trade) p.trade.push(card.trade);
+			if (typeof card.trade !== 'string') p.trade.flat();
 			if (card.provides?.includes('wood')) p.provision = !p.provision ? 1 : 3;
 			if (card.provides?.includes('paper')) p.provision = !p.provision ? 2 : 3;
 
