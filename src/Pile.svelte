@@ -9,6 +9,10 @@
 
 	let cards = $gs.shuffle(age1).slice(3);
 
+	/**
+	 * Sorts an array of cards, depending on age, to a certain layout.
+	 * @param {array} cards
+	 */
 	function sortCards(cards) {
 		const c = [...cards];
 		
@@ -66,6 +70,10 @@
 		}
 	}
 
+	/**
+	 * Calculates and sets the flipped and blocked properties of cards
+	 * @param {array} cards
+	 */
 	function adjustCards(cards) {
 		return cards.map((c, i) => {
 			if (!c) return c;
@@ -107,8 +115,15 @@
 		});
 	}
 
+	/** The computed property that sorts the shuffled cards per age */
 	$: finalCards = sortCards(cards);
 
+	/**
+	 * Fired when a player chooses an action on a card. Readjusts "blocked" state for newly revealed cards. This is passed down into the modal.
+	 * @param {Object} card - The card that was chosen
+	 * @param {Boolean} sell - Whether the card was chosen to be sold
+	 * @param {Boolean} build - Whether the card was chosen to build a wonder
+	 */
 	function chooseCard(card, sell = false, build = false) {
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
 		const i = card.index - (7 - isOdd);
@@ -126,8 +141,13 @@
 		adjustScore(card, sell, build); // Calculate earnings
 	}
 
+	/**
+	 * Calculates whether or not the player can afford the card with their current resources/money.
+	 * @param {Object} card
+	 */
 	function canAfford(card) {
 		const me = $gs.myturn ? $gs.p1 : $gs.p2;
+		const opp = $gs.myturn ? $gs.p2 : $gs.p1;
 		const need = {};
 		let total = 0;
 
@@ -149,7 +169,6 @@
 				total += need[res]; // Coins are simple enough
 			} else {
 				// Calculate how much a resource costs us
-				const opp = $gs.myturn ? $gs.p2 : $gs.p1;
 				const totalNeeded = Math.max(0, need[res] - me[res]); // Amount of res - what we have
 				// Check for trade card (1 per res) otherwise use default (2 per res + enemy count)
 				const perRes = me.trade.find(r => r === res) ? 1 : 2 + opp[res]; 
@@ -158,11 +177,41 @@
 			}
 		}
 
-		return total;
+		// Reduce total if we have any providing eco cards
+		let save = 0;
+
+		if ( // If we have the right eco card and can use it
+			(me.provision === 1 || me.provision === 3 )
+			&& (need.wood || need.stone || need.clay)
+		) {
+			save += 2; // We will always save at least 2 food
+			if ( // But if opponent has one of the resources we need, we can save 1 more food
+				need.wood && opp.wood
+				|| (need.clay && opp.clay)
+				|| (need.stone && opp.stone)
+			) save += 1;
+		}
+
+		// Now do same check on manufactured resources
+		if (me.provision > 1 && (need.paper || need.glass)) {
+			save += 2;
+			if (
+				need.glass && opp.glass
+				|| (need.paper && opp.paper)
+			) save += 1;
+		}
+
+		return total - save;
 	}
 
+	/**
+	 * Fired after the player has chosen a card. Does the tallying for player and states. Sets next age if needed.
+	 * @param {Object} card - The card that was chosen
+	 * @param {Boolean} sell - Whether the card was chosen to be sold
+	 * @param {Boolean} build - Whether the card was chosen to build a wonder
+	 */
 	function adjustScore(card, sell, build) {
-		console.log(card);
+		// console.log(card);
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let discarded = [...$gs.discarded];
 
@@ -188,6 +237,8 @@
 			if (card.res === "glass") p.glass += 1 * rescount;
 			if (card.res === "paper") p.paper += 1 * rescount;
 			if (card.trade) p.trade.push(card.trade);
+			if (card.provides?.includes('wood')) p.provision = !p.provision ? 1 : 3;
+			if (card.provides?.includes('paper')) p.provision = !p.provision ? 2 : 3;
 
 			// Building additions
 			if (card.type === "civ") p.civ += 1;
@@ -223,6 +274,7 @@
 		if (!$gs.cardsleft) nextAge();
 	}
 
+	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
 	function nextAge() {
 		const age = $gs.age + 1;
 
@@ -245,6 +297,9 @@
 		cards = [...$gs.shuffle(nextdeck)];
 	}
 
+	/** Marks a card as selected in the gameState 
+	 * @param {Object} card
+	*/
 	function selectCard(card) {
 		gs.set({
 			...$gs,
@@ -252,6 +307,7 @@
 		});
 	}
 
+	/** Closes the modal */
 	function deselectModal() {
 		gs.set({
 			...$gs,

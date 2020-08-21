@@ -7,6 +7,14 @@
 	$: realScore = player.primary ?
 		player.score + ws
 		: player.score - ws;
+
+	function prov(c) {
+		if (!c.provides) return null;
+
+		return c.provides.includes('wood')
+			? 'res'
+			: 'man';
+	}
 </script>
 
 
@@ -27,6 +35,7 @@
 				data-res={card.res}
 				data-war={card.war}
 				data-trade={card.trade}
+				data-provides={prov(card)}
 			>
 				<span class="emblems">
 					{#if card.sci}
@@ -146,7 +155,8 @@
 		.card[data-res]:before,
 		.card[data-res]:after,
 		.card[data-trade]:before,
-		.card[data-trade]:after { 
+		.card[data-trade]:after,
+		.card[data-provides]:after { 
 			background: url('/assets/pog.png');
 			background-size: 100% auto;
 			content: '';
@@ -183,6 +193,7 @@
 	}
 
 	.card[data-war]:after { content: attr(data-war); }
+	.card[data-provides="res"]:after { filter: sepia(1); }
 
 .emblems {
 	font-size: 10px;

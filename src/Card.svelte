@@ -54,6 +54,14 @@
 			<div class="pog"></div>
 			{#if card.rescount === 2}<div class="pog"></div>{/if}
 			{#if card.rescount === 3}<div class="pog"></div>{/if}
+		{:else if card.provides}
+			<div class="provided">
+				<span class="pog" data-res={card.provides[0]}></span>
+				<span class="pog" data-res={card.provides[1]}></span>
+				{#if card.provides.length === 3}
+					<span class="pog" data-res={card.provides[2]}></span>
+				{/if}
+			</div>
 		{:else if card.vp}
 			<div class="vp">{card.vp}</div>
 		{:else if card.instant}
@@ -78,7 +86,7 @@
 <style>
 .card {
 	background: url('/assets/card.png');
-	background-size: 100% 200% !important;
+	background-size: 100% 200%;
 	background-blend-mode: hard-light;
 	border-radius: 5px;
 	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
@@ -96,11 +104,11 @@
 	.card[data-type="sci"],
 	.card[data-type="sci"] .food li:before { background-color: var(--sci); }
 	.card[data-type="civ"] { 
-		background: linear-gradient(var(--civ), var(--civ)), url('/assets/card.png'); 
+		background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/card.png'); 
 		background-blend-mode: color;
 	}
 		.card[data-type="civ"] .food li:before {
-			background: linear-gradient(var(--civ), var(--civ)), url('/assets/bar.png'); 
+			background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/bar.png'); 
 			background-blend-mode: color;
 		}
 	.card[data-type="eco"],
@@ -159,13 +167,17 @@
 		z-index: 1;
 	}
 		.card[data-res="stone"] .pog:before,
-		.card[data-trade="stone"] .pog:before { background-position: -30px 0; }
+		.card[data-trade="stone"] .pog:before,
+		.pog[data-res="stone"]:before { background-position: -30px 0; }
 		.card[data-res="wood"] .pog:before,
-		.card[data-trade="wood"] .pog:before { background-position: -60px 0; }
+		.card[data-trade="wood"] .pog:before,
+		.pog[data-res="wood"]:before { background-position: -60px 0; }
 		.card[data-res="paper"] .pog:before,
-		.card[data-trade="paper"] .pog:before { background-position: 0 -30px; }
+		.card[data-trade="paper"] .pog:before,
+		.pog[data-res="paper"]:before { background-position: 0 -30px; }
 		.card[data-res="glass"] .pog:before,
-		.card[data-trade="glass"] .pog:before { background-position: -30px -30px; }
+		.card[data-trade="glass"] .pog:before,
+		.pog[data-res="glass"]:before { background-position: -30px -30px; }
 
 	.card[data-trade] .pog:after {
 		background: rgba(0, 0, 0, 0.5);
@@ -179,6 +191,14 @@
 		text-align: center;
 		z-index: 1;
 	}
+
+
+.provided { text-align: right; }
+	.provided .pog { display: inline-grid; }
+	.provided .pog:nth-of-type(1) { transform: translateX(50%); }
+	.provided .pog:nth-of-type(3) { transform: translateX(-50%); }
+	.provided .pog:nth-of-type(1):nth-last-child(2) { transform: translateX(25%); }
+	.provided .pog:nth-of-type(2):last-child { transform: translateX(-25%); }
 
 header {
 	align-items: center;

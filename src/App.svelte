@@ -22,6 +22,7 @@
 			this.paper = 0; // Orn
 			this.glass = 0; // Ammo
 			this.trade = [];
+			this.provision = 0; // 0 none, 1 = res, 2 = man, 3 = both
 			// "Buildings"
 			this.eco = 0;
 			this.civ = 0;
