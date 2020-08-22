@@ -52,8 +52,12 @@
 			<Pile />
 		</main>
 
-		<aside class="tokens war-bar">
-			
+		<aside class="tokens">
+			<div class="token"></div>
+			<div class="token"></div>
+			<div class="token"></div>
+			<div class="token"></div>
+			<div class="token"></div>
 		</aside>
 
 		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
@@ -83,9 +87,18 @@
 }
 
 .tokens {
-	background: url('/assets/board.png');
-	background-size: 100% 100%;
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	height: 100%;
 	grid-area: ts;
+	padding: 5vh 0;
 }
+	.tokens .token {
+		background: green;
+		border-radius: 100%;
+		height: 90px;
+		width: 90px;
+	}
 </style>
