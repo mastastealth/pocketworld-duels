@@ -53,7 +53,7 @@
 
 	<div class="tokens">
 		{#each player.tokens as token}
-			<div class="token"></div>
+			<div class="token" data-id={token.id}></div>
 		{/each}
 	</div>
 

@@ -6,6 +6,8 @@
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
 
+	import more from './json/more.json';
+
 	// Define the Player object and all its props
 	class PlayerObj {
 		constructor(primary = false) {
@@ -15,6 +17,7 @@
 			this.cards = [];
 			this.tokens = [];
 			this.missions = {}; // Wonders
+			this.winner = false;
 			// Resources
 			this.wood = 0;
 			this.clay = 0; // Bones
@@ -30,6 +33,13 @@
 			this.civ = 0;
 			this.sci = [];
 			this.war = 0;
+			// Token flags
+			this.wartoken = false;
+			this.ecotoken = false;
+			this.linktoken = false;
+			this.playtoken = false;
+			this.civtoken = false;
+			this.wondertoken = false;
 			// Other
 			this.warprogress = 0;
 			this.links = [];
@@ -38,10 +48,13 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
+	const tokens = [...$gs.shuffle(more.tokens)];
+
 	gs.set({
 		...$gs,
 		p1,
-		p2
+		p2,
+		tokens
 	});
 </script>
 
@@ -56,11 +69,13 @@
 		</main>
 
 		<aside class="tokens">
-			<div class="token"></div>
-			<div class="token"></div>
-			<div class="token"></div>
-			<div class="token"></div>
-			<div class="token"></div>
+			{#each $gs.tokens.slice(0, 5) as token}
+				<div 
+					class="token"
+					data-taken={token.taken || null}
+					data-id={token.id}
+				></div>
+			{/each}
 		</aside>
 
 		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
@@ -98,10 +113,15 @@
 	grid-area: ts;
 	padding: 5vh 0;
 }
-	.tokens .token {
-		background: green;
-		border-radius: 100%;
-		height: 90px;
-		width: 90px;
-	}
+:global(.token) {
+	background: green;
+	border-radius: 100%;
+	height: 90px;
+	width: 90px;
+}
+
+:global(.token[disabled]),
+:global(.token[data-taken]) {
+	background: gray;
+}
 </style>

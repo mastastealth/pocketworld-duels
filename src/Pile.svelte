@@ -8,6 +8,7 @@
 	import more from './json/more.json';
 
 	let cards = $gs.shuffle(age1).slice(3);
+	let showModal = false;
 
 	/**
 	 * Sorts an array of cards, depending on age, to a certain layout.
@@ -127,7 +128,7 @@
 
 	/** Closes the modal */
 	function deselectModal() {
-		gs.set({
+		if (!showModal) gs.set({
 			...$gs,
 			selected: null
 		});
@@ -159,6 +160,34 @@
 		adjustScore(card, sell, build); // Calculate earnings
 	}
 
+	function chooseToken(token, i) {
+		const tokens = [...$gs.tokens];
+		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
+	
+		tokens[i].taken = true;
+		p.tokens.push(tokens[i]);
+
+		if (token.vp) p.vp += token.vp;
+		if (token.coin) p.food += token.coin;
+		if (token.sci) p.sci.push(token.sci);
+
+		if (token.mywar) p.wartoken = true;
+		if (token.mymoney) p.ecotoken = true;
+		if (token.mylinks) p.linktoken = true;
+		if (token.mywonders) p.playtoken = true;
+
+		if (token.discount === "civ") p.civtoken = true;
+		if (token.discount === "wonder") p.wondertoken = true;
+
+		showModal = null;
+		gs.set({ 
+			...$gs, 
+			tokens,
+			[$gs.myturn ? 'p1' : 'p2']: p,
+			myturn: !$gs.myturn,
+		});
+	}
+
 	/**
 	 * Calculates whether or not the player can afford the card with their current resources/money.
 	 * @param {Object} card
@@ -173,7 +202,7 @@
 		if (
 			card.linkcost 
 			&& me.links.find(l => l === card.linkcost)
-		) return total;
+		) return { total, link: true };
 
 		// Construct cost object
 		card.cost.forEach(res => {
@@ -230,7 +259,7 @@
 			}
 		}
 
-		return total - save;
+		return { total: total - save };
 	}
 
 	/**
@@ -244,14 +273,10 @@
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
 		let discarded = [...$gs.discarded];
+		let getToken = false;
 
 		// Mark as taken, so it disappears, regardless of action
 		finalCards[card.index].taken = true;
-
-		// Doesn't sort??
-		// p1Cards.sort((a, b) => {
-		// 	return a.type - b.type;
-		// });
 
 		if (!sell && !build) { // If buying card
 			p.cards = [...p.cards, card]; // Save cards into my deck
@@ -276,7 +301,10 @@
 			if (card.type === "man") p.man += 1;
 			if (card.type === "civ") p.civ += 1;
 			if (card.type === "eco") p.eco += 1;
-			if (card.type === "sci") p.sci.push(card.sci);
+			if (card.type === "sci") {
+				if (p.sci.includes(card.sci)) getToken = true;
+				p.sci.push(card.sci);
+			}
 			if (card.type === "war") {
 				p.warprogress += card.war;
 				p.war += 1;
@@ -307,8 +335,11 @@
 				p.food -= card.cost; // Deduct food, ez mode
 			} else {
 				// Calculate how much is spent from missing resources
-				const total = canAfford(card);
+				const { total, link } = canAfford(card);
 				p.food -= total;
+
+				if (o.tokens.find(t => t.mymoney)) o.food += total;
+				if (link && o.tokens.find(t => t.mylinks)) p.food += 4;
 			}
 		} else if (sell) { // If selling card
 			p.food += 2 + p.eco;
@@ -321,14 +352,22 @@
 			...$gs,
 			p1: $gs.myturn ? p : $gs.p1,
 			p2: $gs.myturn ? $gs.p2 : p,
-			myturn: !$gs.myturn,
+			myturn: getToken ? $gs.myturn : !$gs.myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
 			discarded
 		});
 
-		// No more cards, next "age"
-		if (!$gs.cardsleft) nextAge();
+		tokenCheck(getToken);
+	}
+
+	function tokenCheck(getToken) {
+		if (getToken) {
+			showModal = "token"
+		} else {
+			// No more cards, next "age"
+			if (!$gs.cardsleft) nextAge();
+		}
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
@@ -386,16 +425,21 @@
 			} 
 		});
 
-		//Tokens
-		p.tokens.forEach(t => {
-			
-		});
+		// Math token
+		if (p.tokens.includes("mathematics")) p.vp += p.tokens.length * 3;
+
+		// Declare winner
 	}
 </script>
 
-{#if $gs.selected}
+{#if $gs.selected || showModal}
 	<div class="overlay" on:click|self={deselectModal}>
-		<Modal chooseCard={chooseCard} canAfford={canAfford} />
+		<Modal 
+			chooseCard={chooseCard}
+			chooseToken={chooseToken}
+			canAfford={canAfford} 
+			showModal={showModal} 
+		/>
 	</div>
 {/if}
 

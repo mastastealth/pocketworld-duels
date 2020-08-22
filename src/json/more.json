@@ -109,44 +109,54 @@
 		{
 			"id": "agriculture",
 			"vp": 4,
-			"coin": 6
+			"coin": 6,
+			"taken": false
 		},
 		{
 			"id": "architecture",
-			"discount": "wonder"
+			"discount": "wonder",
+			"taken": false
 		},
 		{
 			"id": "economy",
-			"mymoney": true
+			"mymoney": true,
+			"taken": false
 		},
 		{
 			"id": "law",
-			"sci": "law"
+			"sci": "law",
+			"taken": false
 		},
 		{
 			"id": "masonry",
-			"discount": "civ"
+			"discount": "civ",
+			"taken": false
 		},
 		{
 			"id": "mathematics",
-			"mytokens": true
+			"mytokens": true,
+			"taken": false
 		},
 		{
 			"id": "philosophy",
-			"vp": 7
+			"vp": 7,
+			"taken": false
 		},
 		{
 			"id": "strategy",
-			"mywar": true
+			"mywar": true,
+			"taken": false
 		},
 		{
 			"id": "theology",
-			"mywonders": true
+			"mywonders": true,
+			"taken": false
 		},
 		{
 			"id": "urbanism",
 			"vp": 6,
-			"mylinks": true
+			"mylinks": true,
+			"taken": false
 		}
 	],
 	"wonders": [

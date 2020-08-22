@@ -8,6 +8,7 @@ export const gs = writable({
 	cardsleft: 20,
 	selected: null,
 	discarded: [],
+	tokens: [],
 	// Methods,
 	shuffle(arr) {
 		const shuffled = [...arr];
