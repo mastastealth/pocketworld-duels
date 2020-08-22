@@ -58,14 +58,14 @@
 	</div>
 
 	<div class="missions">
-		<span>Wood: {player.wood}</span>
+		<!-- <span>Wood: {player.wood}</span>
 		<span>Bones: {player.clay}</span>
 		<span>Stone: {player.stone}</span>
 		<span>Orn: {player.paper}</span>
 		<span>Ammo: {player.glass}</span>
 		<span>Eco: {player.eco}</span>
 		<span>Civ: {player.civ}</span>
-		<span>Sci: {player.sci.length}</span>
+		<span>Sci: {player.sci.length}</span> -->
 	</div>
 </section>
 
@@ -100,9 +100,10 @@
 		.player.me .missions { top: auto; bottom: 90%; }
 	.player.you { padding-bottom: 20px; }
 		.player.you:after { transform: rotateX(180deg); }
-	
+
 	.player:not([data-myturn]):not(:hover) {
 		filter: brightness(50%) saturate(0.5);
+		transition-delay: 1s;
 	}
 
 .score {

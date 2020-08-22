@@ -4,7 +4,7 @@
 	import { gs } from './store/gameState';
 	import age1 from './json/age1.json';
 	import age2 from './json/age2.json';
-	import age3 from './json/age2.json';
+	import age3 from './json/age3.json';
 	import guilds from './json/guilds.json';
 
 	let cards = $gs.shuffle(age1).slice(3);
@@ -254,10 +254,15 @@
 			if (card.provides?.includes('paper')) p.provision = !p.provision ? 2 : 3;
 
 			// Building additions
+			if (card.type === "res") p.res += 1;
+			if (card.type === "man") p.man += 1;
 			if (card.type === "civ") p.civ += 1;
 			if (card.type === "eco") p.eco += 1;
-			if (card.type === "sci") p.sci += 1;
-			if (card.type === "war") p.war += 1;
+			if (card.type === "sci") p.sci.push(card.sci);
+			if (card.type === "war") {
+				p.warprogress += card.war;
+				p.war += 1;
+			}
 
 			// Special bonus
 			if (card.instaby) p.food += card.instaby.type !== 'wonder'
@@ -267,7 +272,11 @@
 			// Guild
 			if (card.earn?.coin) {
 				const from = card.earn.from;
-				if (from !== 'res') {
+				if (from === 'sci') { // Science is an array
+					p.food += p.sci.length > o.sci.length 
+						? p.sci.length 
+						: o.sci.length;
+				} else if (from !== 'res') {
 					p.food += p[from] > o[from] ? p[from] : o[from];
 				} else { // Resources uses both grey/brown
 					p.food += (p.res + p.man) > (o.res + o.man) 
@@ -319,11 +328,10 @@
 			cardsleft: 20
 		});
 
-		const agedeck = age === 2 ? age2 : age3;
 		const g = $gs.shuffle(guilds);
 		const nextdeck = age === 2 
 			? age2.slice(3)
-			: [...age3.slice(6), ...g.slice(4)];
+			: [...age3.slice(3), ...g.slice(4)];
 		cards = [...$gs.shuffle(nextdeck)];
 	}
 

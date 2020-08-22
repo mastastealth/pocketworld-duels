@@ -1,12 +1,12 @@
 [
 	{
 		"id": "shipowners",
-		"cost": {
-			"clay": 1,
-			"stone": 1,
-			"glass": 1,
-			"paper": 1
-		},
+		"cost": [
+			"clay",
+			"stone",
+			"glass",
+			"paper"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "res",
@@ -16,11 +16,12 @@
 	},
 	{
 		"id": "magistrates",
-		"cost": {
-			"wood": 2,
-			"clay": 1,
-			"paper": 1
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"clay",
+			"paper"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "civ",
@@ -30,10 +31,12 @@
 	},
 	{
 		"id": "scientist",
-		"cost": {
-			"clay": 2,
-			"wood": 2
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"clay",
+			"clay"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "sci",
@@ -43,11 +46,12 @@
 	},
 	{
 		"id": "tacticians",
-		"cost": {
-			"clay": 1,
-			"stone": 2,
-			"paper": 1
-		},
+		"cost": [
+			"clay",
+			"stone",
+			"stone",
+			"paper"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "war",
@@ -57,12 +61,12 @@
 	},
 	{
 		"id": "merchants",
-		"cost": {
-			"clay": 1,
-			"wood": 1,
-			"glass": 1,
-			"paper": 1
-		},
+		"cost": [
+			"clay",
+			"wood",
+			"glass",
+			"paper"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "eco",
@@ -72,12 +76,13 @@
 	},
 	{
 		"id": "builders",
-		"cost": {
-			"clay": 1,
-			"wood": 1,
-			"glass": 1,
-			"stone": 2
-		},
+		"cost": [
+			"clay",
+			"wood",
+			"stone",
+			"stone",
+			"glass"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "wonder",
@@ -86,10 +91,12 @@
 	},
 	{
 		"id": "moneylenders",
-		"cost": {
-			"wood": 2,
-			"stone": 2
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"stone",
+			"stone"
+		],
 		"type": "guild",
 		"earn": {
 			"from": "coin",

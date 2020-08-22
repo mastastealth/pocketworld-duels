@@ -24,11 +24,14 @@
 			this.trade = [];
 			this.provision = 0; // 0 none, 1 = res, 2 = man, 3 = both
 			// "Buildings"
+			this.res = 0;
+			this.man = 0;
 			this.eco = 0;
 			this.civ = 0;
 			this.sci = [];
 			this.war = 0;
 			// Other
+			this.warprogress = 0;
 			this.links = [];
 		}
 	}

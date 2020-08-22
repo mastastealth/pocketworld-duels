@@ -1,40 +1,46 @@
 [
 	{
 		"id": "study",
-		"cost": {
-			"wood": 2,
-			"glass": 1,
-			"paper": 1
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"glass",
+			"paper"
+		],
 		"type": "sci",
 		"sci": "sundial",
 		"vp": 3
 	},
 	{
 		"id": "arsenal",
-		"cost": {
-			"clay": 3,
-			"wood": 2
-		},
+		"cost": [
+			"clay",
+			"clay",
+			"clay",
+			"wood",
+			"wood"
+		],
 		"type": "war",
 		"war": 3
 	},
 	{
 		"id": "obelisk",
-		"cost": {
-			"stone": 2,
-			"glass": 1
-		},
+		"cost": [
+			"stone",
+			"stone",
+			"glass"
+		],
 		"type": "civ",
 		"vp": 5
 	},
 	{
 		"id": "lighthouse",
-		"cost": {
-			"clay": 2,
-			"glass": 1,
-			"link": "jar"
-		},
+		"cost": [
+			"clay",
+			"clay",
+			"glass"
+		],
+		"linkcost": "jar",
 		"type": "eco",
 		"vp": 3,
 		"instaby": {
@@ -44,66 +50,73 @@
 	},
 	{
 		"id": "circus",
-		"cost": {
-			"clay": 2,
-			"stone": 2,
-			"link": "helmet"
-		},
+		"cost": [
+			"clay",
+			"clay",
+			"stone",
+			"stone"
+		],
+		"linkcost": "helmet",
 		"type": "war",
 		"war": 2
 	},
 	{
 		"id": "gardens",
-		"cost": {
-			"clay": 2,
-			"wood": 2,
-			"link": "statue"
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"clay",
+			"clay"
+		],
+		"linkcost": "statue",
 		"type": "civ",
 		"vp": 6
 	},
 	{
 		"id": "pantheon",
-		"cost": {
-			"clay": 1,
-			"wood": 1,
-			"paper": 2,
-			"link": "sun"
-		},
+		"cost": [
+			"wood",
+			"clay",
+			"paper",
+			"paper"
+		],
+		"linkcost": "sun",
 		"type": "civ",
 		"vp": 6
 	},
 	{
 		"id": "university",
-		"cost": {
-			"clay": 1,
-			"glass": 1,
-			"paper": 1,
-			"link": "lyre"
-		},
+		"cost": [
+			"clay",
+			"glass",
+			"paper"
+		],
+		"linkcost": "lyre",
 		"type": "sci",
 		"sci": "armillary",
 		"vp": 2
 	},
 	{
 		"id": "observatory",
-		"cost": {
-			"stone": 1,
-			"paper": 2,
-			"link": "lamp"
-		},
+		"cost": [
+			"stone",
+			"paper",
+			"paper"
+		],
+		"linkcost": "lamp",
 		"type": "sci",
 		"sci": "armillary",
 		"vp": 2
 	},
 	{
 		"id": "fortifications",
-		"cost": {
-			"stone": 2,
-			"clay": 1,
-			"paper": 1,
-			"link": "castle"
-		},
+		"cost": [
+			"stone",
+			"stone",
+			"clay",
+			"paper"
+		],
+		"linkcost": "castle",
 		"type": "war",
 		"war": 2
 	},
@@ -115,42 +128,48 @@
 	},
 	{
 		"id": "siegeworkshop",
-		"cost": {
-			"wood": 3,
-			"glass": 1,
-			"link": "target"
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"wood",
+			"glass"
+		],
+		"linkcost": "target",
 		"type": "war",
 		"war": 2
 	},
 	{
 		"id": "palace",
-		"cost": {
-			"clay": 1,
-			"stone": 1,
-			"wood": 1,
-			"glass": 2
-		},
+		"cost": [
+			"wood",
+			"stone",
+			"clay",
+			"glass",
+			"glass"
+		],
 		"type": "civ",
 		"vp": 7
 	},
 	{
 		"id": "townhall",
-		"cost": {
-			"stone": 3,
-			"wood": 2
-		},
+		"cost": [
+			"wood",
+			"wood",
+			"stone",
+			"stone",
+			"stone"
+		],
 		"type": "civ",
 		"vp": 7
 	},
 	{
 		"id": "arena",
-		"cost": {
-			"clay": 1,
-			"stone": 1,
-			"wood": 1,
-			"link": "barrel"
-		},
+		"cost": [
+			"wood",
+			"clay",
+			"stone"
+		],
+		"linkcost": "barrel",
 		"type": "eco",
 		"vp": 3,
 		"instaby": {
@@ -160,9 +179,10 @@
 	},
 	{
 		"id": "chamberofcommerce",
-		"cost": {
-			"paper": 2
-		},
+		"cost": [
+			"paper",
+			"paper"
+		],
 		"type": "eco",
 		"vp": 3,
 		"instaby": {
@@ -172,32 +192,35 @@
 	},
 	{
 		"id": "senate",
-		"cost": {
-			"clay": 2,
-			"stone": 1,
-			"paper": 1,
-			"link": "courthouse"
-		},
+		"cost": [
+			"clay",
+			"clay",
+			"stone",
+			"paper"
+		],
+		"linkcost": "courthouse",
 		"type": "civ",
 		"vp": 5
 	},
 	{
 		"id": "academy",
-		"cost": {
-			"stone": 1,
-			"wood": 1,
-			"glass": 2
-		},
+		"cost": [
+			"stone",
+			"wood",
+			"glass",
+			"glass"
+		],
 		"type": "sci",
 		"sci": "sundial",
 		"vp": 3
 	},
 	{
 		"id": "armory",
-		"cost": {
-			"stone": 2,
-			"glass": 1
-		},
+		"cost": [
+			"stone",
+			"stone",
+			"glass"
+		],
 		"type": "eco",
 		"vp": 3,
 		"instaby": {
@@ -207,11 +230,11 @@
 	},
 	{
 		"id": "port",
-		"cost": {
-			"wood": 1,
-			"glass": 1,
-			"paper": 1
-		},
+		"cost": [
+			"wood",
+			"glass",
+			"paper"
+		],
 		"type": "eco",
 		"vp": 3,
 		"instaby": {

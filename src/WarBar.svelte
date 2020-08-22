@@ -2,34 +2,34 @@
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
 
-	$: warTotal = $gs.p1.war - $gs.p2.war
+	$: warTotal = $gs.p1.warprogress - $gs.p2.warprogress
 	$: markerPos = 9 - warTotal;
 
 	$: {
 		// Check for a war win
-		if (warTotal === 9 || warTotal === -9) {
+		if (warTotal >= 9 || warTotal <= -9) {
 			// ...
 		}
 
-		if (warTotal === 6 && !$top5) { 
+		if (warTotal >= 6 && !$top5) { 
 			top5.set(true); // Flag checkpoint
 			const p2 = {...$gs.p2}; // Copy player data
 			p2.food -= p2.food >= 5 ? 5 : p2.food; // Adjust food
 			gs.set({...$gs, p2 }); // Set player data back
 		}
-		if (warTotal === 3 && !$top2) { 
+		if (warTotal >= 3 && !$top2) { 
 			top2.set(true);
 			const p2 = {...$gs.p2};
 			p2.food -= p2.food >= 2 ? 2 : p2.food;
 			gs.set({...$gs, p2 });
 		}
-		if (warTotal === -6 && !$bot5) { 
+		if (warTotal <= -6 && !$bot5) { 
 			bot5.set(true);
 			const p1 = {...$gs.p1};
 			p1.food -= p1.food >= 5 ? 5 : p1.food;
 			gs.set({...$gs, p1 });
 		}
-		if (warTotal === -3 && !$bot2) { 
+		if (warTotal <= -3 && !$bot2) { 
 			bot2.set(true);
 			const p1 = {...$gs.p1};
 			p1.food -= p1.food >= 2 ? 2 : p1.food;
@@ -63,8 +63,8 @@
 	<div class="step"></div>
 	<div class="step"></div>
 
-	<aside class="penalty bot-2"></aside>
-	<aside class="penalty bot-5"></aside>
+	{#if !$bot2}<aside class="penalty bot-2"></aside>{/if}
+	{#if !$bot5}<aside class="penalty bot-5"></aside>{/if}
 </aside>
 
 <style>
