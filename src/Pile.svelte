@@ -224,6 +224,7 @@
 	function adjustScore(card, sell, build) {
 		// console.log(card);
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
+		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
 		let discarded = [...$gs.discarded];
 
 		// Mark as taken, so it disappears, regardless of action
@@ -257,6 +258,23 @@
 			if (card.type === "eco") p.eco += 1;
 			if (card.type === "sci") p.sci += 1;
 			if (card.type === "war") p.war += 1;
+
+			// Special bonus
+			if (card.instaby) p.food += card.instaby.type !== 'wonder'
+				? p[card.instaby.type] * card.instaby.coin
+				: Object.keys(p.missions).length * 2;
+
+			// Guild
+			if (card.earn?.coin) {
+				const from = card.earn.from;
+				if (from !== 'res') {
+					p.food += p[from] > o[from] ? p[from] : o[from];
+				} else { // Resources uses both grey/brown
+					p.food += (p.res + p.man) > (o.res + o.man) 
+						? p.res + p.man 
+						: o.res + o.man;
+				}
+			}
 
 			if (!card.cost.length) {
 				p.food -= card.cost; // Deduct food, ez mode
