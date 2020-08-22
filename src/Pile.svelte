@@ -5,7 +5,7 @@
 	import age1 from './json/age1.json';
 	import age2 from './json/age2.json';
 	import age3 from './json/age3.json';
-	import guilds from './json/guilds.json';
+	import more from './json/more.json';
 
 	let cards = $gs.shuffle(age1).slice(3);
 
@@ -112,6 +112,24 @@
 			}
 
 			return c;
+		});
+	}
+
+	/** Marks a card as selected in the gameState 
+	 * @param {Object} card
+	*/
+	function selectCard(card) {
+		gs.set({
+			...$gs,
+			selected: card
+		});
+	}
+
+	/** Closes the modal */
+	function deselectModal() {
+		gs.set({
+			...$gs,
+			selected: null
 		});
 	}
 
@@ -328,28 +346,49 @@
 			cardsleft: 20
 		});
 
-		const g = $gs.shuffle(guilds);
+		const g = $gs.shuffle(more.guilds);
 		const nextdeck = age === 2 
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
 		cards = [...$gs.shuffle(nextdeck)];
 	}
 
-	/** Marks a card as selected in the gameState 
-	 * @param {Object} card
-	*/
-	function selectCard(card) {
-		gs.set({
-			...$gs,
-			selected: card
-		});
+	/** Does all the end game calculation work */
+	function endGame() {
+		tallyPlayer($gs.p1);
+		tallyPlayer($gs.p2);
 	}
 
-	/** Closes the modal */
-	function deselectModal() {
-		gs.set({
-			...$gs,
-			selected: null
+	/** Calculates the per player numbers */
+	function tallyPlayer(p) {
+		// Tally up Guild points
+		const g = p.cards.forEach(c => {
+			if (c.earn) {
+				switch(c.earn.for) {
+					case "civ":
+					case "war":
+					case "eco":
+						p.vp += p[c.earn.for];
+						break;
+					case "sci":
+						p.vp += p.sci.length;
+						break;
+					case "res":
+						p.vp += p.res + p.man;
+						break;
+					case "coin":
+						p.vp += Math.floor(p.food / 3);
+						break;
+					case "wonder":
+						p.vp += Object.keys(p.missions).length;
+						break;
+				}
+			} 
+		});
+
+		//Tokens
+		p.tokens.forEach(t => {
+			
 		});
 	}
 </script>

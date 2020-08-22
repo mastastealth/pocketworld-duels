@@ -1,0 +1,155 @@
+{
+	"guilds": [
+		{
+			"id": "shipowners",
+			"cost": [
+				"clay",
+				"stone",
+				"glass",
+				"paper"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "res",
+				"vp": 1,
+				"coin": 1
+			}
+		},
+		{
+			"id": "magistrates",
+			"cost": [
+				"wood",
+				"wood",
+				"clay",
+				"paper"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "civ",
+				"vp": 1,
+				"coin": 1
+			}
+		},
+		{
+			"id": "scientist",
+			"cost": [
+				"wood",
+				"wood",
+				"clay",
+				"clay"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "sci",
+				"vp": 1,
+				"coin": 1
+			}
+		},
+		{
+			"id": "tacticians",
+			"cost": [
+				"clay",
+				"stone",
+				"stone",
+				"paper"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "war",
+				"vp": 1,
+				"coin": 1
+			}
+		},
+		{
+			"id": "merchants",
+			"cost": [
+				"clay",
+				"wood",
+				"glass",
+				"paper"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "eco",
+				"vp": 1,
+				"coin": 1
+			}
+		},
+		{
+			"id": "builders",
+			"cost": [
+				"clay",
+				"wood",
+				"stone",
+				"stone",
+				"glass"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "wonder",
+				"vp": 2
+			}
+		},
+		{
+			"id": "moneylenders",
+			"cost": [
+				"wood",
+				"wood",
+				"stone",
+				"stone"
+			],
+			"type": "guild",
+			"earn": {
+				"from": "coin",
+				"vp": 1
+			}
+		}
+	],
+	"tokens": [
+		{
+			"id": "agriculture",
+			"vp": 4,
+			"coin": 6
+		},
+		{
+			"id": "architecture",
+			"discount": "wonder"
+		},
+		{
+			"id": "economy",
+			"mymoney": true
+		},
+		{
+			"id": "law",
+			"sci": "law"
+		},
+		{
+			"id": "masonry",
+			"discount": "civ"
+		},
+		{
+			"id": "mathematics",
+			"mytokens": true
+		},
+		{
+			"id": "philosophy",
+			"vp": 7
+		},
+		{
+			"id": "strategy",
+			"mywar": true
+		},
+		{
+			"id": "theology",
+			"mywonders": true
+		},
+		{
+			"id": "urbanism",
+			"vp": 6,
+			"mylinks": true
+		}
+	],
+	"wonders": [
+
+	]
+}
