@@ -143,7 +143,7 @@
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 */
-	function chooseCard(card, sell = false, build = false) {
+	function chooseCard({card, sell = false, build = false, adjustedCost = false}) {
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
 		const i = card.index - (7 - isOdd);
 
@@ -157,7 +157,7 @@
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 
-		adjustScore(card, sell, build); // Calculate earnings
+		adjustScore(card, sell, build, adjustedCost); // Calculate earnings
 	}
 
 	function chooseToken(token, i) {
@@ -192,16 +192,19 @@
 	 * Calculates whether or not the player can afford the card with their current resources/money.
 	 * @param {Object} card
 	 */
-	function canAfford(card) {
+	function canAfford(card, adj = false) {
 		const me = $gs.myturn ? $gs.p1 : $gs.p2;
 		const opp = $gs.myturn ? $gs.p2 : $gs.p1;
 		const need = {};
+		const cost = adj || card.cost;
 		let total = 0;
 
 		// Construct cost object
-		card.cost.forEach(res => {
-			if (!need[res]) need[res] = 0;
-			need[res] += 1;
+		cost.forEach(res => {
+			if (res) {
+				if (!need[res]) need[res] = 0;
+				need[res] += 1;
+			}
 		});
 
 		// Check for link, if so, its free
@@ -268,7 +271,7 @@
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 */
-	function adjustScore(card, sell, build) {
+	function adjustScore(card, sell, build, adjustedCost) {
 		// console.log(card);
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
@@ -335,7 +338,7 @@
 				p.food -= card.cost; // Deduct food, ez mode
 			} else {
 				// Calculate how much is spent from missing resources
-				const { total, link } = canAfford(card);
+				const { total, link } = canAfford(card, adjustedCost);
 				p.food -= total;
 
 				if (o.tokens.find(t => t.mymoney)) o.food += total;

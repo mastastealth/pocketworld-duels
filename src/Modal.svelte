@@ -7,13 +7,15 @@
 	export let showModal = false;
 	export let canAfford = () => {};
 	
-	$: affordable = calcCost($gs.selected);
+	$: affordable = calcCost($gs.selected, adjustedCost);
 	$: who = $gs[$gs.myturn ? 'p1' : 'p2'];
+	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
 
 	let total = 0;
 	let need = null;
+	let adjustedCost = [...$gs.selected.cost];
 
-	function calcCost(card) {
+	function calcCost(card, adj) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
 		if (!card) return false;
 		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
@@ -21,7 +23,7 @@
 
 		// For complicated cost forms
 		if (card.cost.length) {
-			const { total : t, need : n } = canAfford(card);
+			const { total : t, need : n } = canAfford(card, adj);
 			total = t;
 			need = n;
 			return t <= pfood;
@@ -33,7 +35,16 @@
 		return false;
 	}
 
-	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
+	function reduceMe(i, res) {
+		if (
+			!who.civtoken 
+			|| $gs.selected.type !== "civ" 
+			|| !$gs.selected.cost.length
+			|| adjustedCost.filter(c => c === false).length === 2
+		) return false;
+		adjustedCost[i] = !adjustedCost[i] ? res : false;
+		adjustedCost = [...adjustedCost];
+	}
 </script>
 
 <div class="modal">
@@ -49,11 +60,19 @@
 				<div class="cost">
 					<h4>You Need:</h4>
 					{#if $gs.selected.cost.length}
-						{#each $gs.selected.cost as res}
-							<span class="pog" data-res={res}></span>
+						{#each $gs.selected.cost as res, i}
+							<span 
+								class="pog" 
+								data-res={res}
+								data-disable={!adjustedCost[i] || null}
+								on:click={reduceMe(i, res)}
+							></span>
 						{/each}
 					{:else}
 						{$gs.selected.cost} Food
+					{/if}
+					{#if who.civtoken && $gs.selected.type === "civ" && $gs.selected.cost.length}
+						<small><i>You can disable 2 resources.</i></small>
 					{/if}
 				</div>
 
@@ -82,10 +101,10 @@
 			<aside class="options">
 				<button 
 					disabled={affordable ? null : true}
-					on:click={chooseCard($gs.selected)}
+					on:click={chooseCard({ card: $gs.selected, adjustedCost })}
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 
-				<button on:click={chooseCard($gs.selected, true)}>Trade</button>
+				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade</button>
 			</aside>
 		</section>
 	{:else if showModal === "token"}
@@ -142,7 +161,18 @@ h4 { margin: 0 0 10px; }
 	.purchase .pog { display: inline-grid; }
 
 .buy div { margin-bottom: 10px; }
+.buy small { display: block; }
+
+.buy .pog[data-disable]:after {
+	content: "❌";
+	font-size: 1.5em;
+	position: absolute;
+	top: 3px; left: 8px;
+	z-index: 2;
+}
+
 .current:empty:before { content: "None 😔"; }
+
 .have .pog:after {
 	content: "⚠️";
 	position: absolute;
