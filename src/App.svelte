@@ -124,4 +124,26 @@
 :global(.token[data-taken]) {
 	background: gray;
 }
+
+:global(.pog) { 
+	background: url('/assets/pog.png');
+	background-size: 100% auto;
+	display: grid;
+	height: 40px;
+	position: relative;
+	width: 40px;
+}
+	:global(.pog:before) {
+		background: url('/assets/res.png') no-repeat;
+		background-size: 120px 60px;
+		content: '';
+		height: 30px;
+		margin: auto;
+		width: 30px;
+		z-index: 1;
+	}
+		:global(.pog[data-res="stone"]:before) { background-position: -30px 0; }
+		:global(.pog[data-res="wood"]:before) { background-position: -60px 0; }
+		:global(.pog[data-res="paper"]:before) { background-position: 0 -30px; }
+		:global(.pog[data-res="glass"]:before) { background-position: -30px -30px; }
 </style>

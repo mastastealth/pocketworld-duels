@@ -149,48 +149,27 @@
 	.card:nth-child(n+31) { top: -200%; left: 50%; }
 	.card:nth-child(n+37) { top: -240%; left: 0; }
 
-.pog { 
-	background: url('/assets/pog.png');
-	background-size: 100% auto;
-	display: grid;
-	height: 40px;
-	position: relative;
-	width: 40px;
-}
-	.pog:before {
-		background: url('/assets/res.png') no-repeat;
-		background-size: 120px 60px;
-		content: '';
-		height: 30px;
-		margin: auto;
-		width: 30px;
-		z-index: 1;
-	}
-		.card[data-res="stone"] .pog:before,
-		.card[data-trade="stone"] .pog:before,
-		.pog[data-res="stone"]:before { background-position: -30px 0; }
-		.card[data-res="wood"] .pog:before,
-		.card[data-trade="wood"] .pog:before,
-		.pog[data-res="wood"]:before { background-position: -60px 0; }
-		.card[data-res="paper"] .pog:before,
-		.card[data-trade="paper"] .pog:before,
-		.pog[data-res="paper"]:before { background-position: 0 -30px; }
-		.card[data-res="glass"] .pog:before,
-		.card[data-trade="glass"] .pog:before,
-		.pog[data-res="glass"]:before { background-position: -30px -30px; }
+	.card[data-res="stone"] .pog:before,
+	.card[data-trade="stone"] .pog:before { background-position: -30px 0; }
+	.card[data-res="wood"] .pog:before,
+	.card[data-trade="wood"] .pog:before { background-position: -60px 0; }
+	.card[data-res="paper"] .pog:before,
+	.card[data-trade="paper"] .pog:before { background-position: 0 -30px; }
+	.card[data-res="glass"] .pog:before,
+	.card[data-trade="glass"] .pog:before { background-position: -30px -30px; }
 
-	.card[data-trade] .pog:after {
-		background: rgba(0, 0, 0, 0.5);
-		border-radius: 3px;
-		content: "1";
-		display: block;
-		font-size: 0.7em;
-		padding: 0 8px;
-		position: absolute;
-		bottom: 1px; left: 20%;
-		text-align: center;
-		z-index: 1;
-	}
+.card[data-trade] .pog:after {
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	content: "1";
+	display: block;
+	font-size: 0.7em;
+	padding: 0 8px;
+	position: absolute;
+	bottom: 1px; left: 20%;
+	text-align: center;
+	z-index: 1;
+}
 
 
 .provided { text-align: right; }
@@ -211,6 +190,7 @@ header {
 	top: 0; left: 0;
 	width: 100%;
 }
+	header > .pog { top: 3px; }
 
 .star {
 	width: 30px;
@@ -299,7 +279,7 @@ header {
 
 .res-list {
 	margin: 0;
-	padding: 5.5vh 0 0 0;
+	padding: 6vh 0 0 0;
 	list-style: none;
 }
 	.food strong + .res-list { padding-top: 0; }

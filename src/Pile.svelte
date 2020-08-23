@@ -198,17 +198,17 @@
 		const need = {};
 		let total = 0;
 
-		// Check for link, if so, its free
-		if (
-			card.linkcost 
-			&& me.links.find(l => l === card.linkcost)
-		) return { total, link: true };
-
 		// Construct cost object
 		card.cost.forEach(res => {
 			if (!need[res]) need[res] = 0;
 			need[res] += 1;
 		});
+
+		// Check for link, if so, its free
+		if (
+			card.linkcost 
+			&& me.links.find(l => l === card.linkcost)
+		) return { total, link: true, need };
 
 		// Tally up coins needed per resource
 		for (const res in need) {
@@ -259,7 +259,7 @@
 			}
 		}
 
-		return { total: total - save };
+		return { total: total - save, need };
 	}
 
 	/**
