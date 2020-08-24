@@ -180,6 +180,126 @@
 			],
 			"vp": 6,
 			"playagain": true
+		},
+		{
+			"id": "piraeus",
+			"cost": [
+				"clay",
+				"stone",
+				"wood",
+				"wood"
+			],
+			"vp": 2,
+			"playagain": true,
+			"provides": ["glass", "paper"]
+		},
+		{
+			"id": "statue",
+			"cost": [
+				"paper",
+				"paper",
+				"clay",
+				"wood",
+				"stone"
+			],
+			"vp": 3,
+			"war": 1,
+			"destroyres": true
+		},
+		{
+			"id": "appianway",
+			"cost": [
+				"paper",
+				"clay",
+				"clay",
+				"stone",
+				"stone"
+			],
+			"vp": 3,
+			"coin": 3,
+			"playagain": true,
+			"destroycoin": true
+		},
+		{
+			"id": "artemis",
+			"cost": [
+				"paper",
+				"glass",
+				"stone",
+				"wood"
+			],
+			"coin": 12,
+			"playagain": true
+		},
+		{
+			"id": "circus",
+			"cost": [
+				"glass",
+				"wood",
+				"stone",
+				"stone"
+			],
+			"vp": 3,
+			"war": 1,
+			"destroyman": true
+		},
+		{
+			"id": "colossus",
+			"cost": [
+				"glass",
+				"clay",
+				"clay",
+				"clay"
+			],
+			"vp": 3,
+			"war": 2
+		},
+		{
+			"id": "lighthouse",
+			"cost": [
+				"wood",
+				"stone",
+				"paper",
+				"paper"
+			],
+			"vp": 4,
+			"provides": ["wood", "stone", "clay"]
+		},
+		{
+			"id": "library",
+			"cost": [
+				"paper",
+				"glass",
+				"wood",
+				"wood",
+				"wood"
+			],
+			"vp": 4,
+			"selecttoken": true
+		},
+		{
+			"id": "gardens",
+			"cost": [
+				"paper",
+				"glass",
+				"wood",
+				"wood"
+			],
+			"vp": 3,
+			"playagain": true,
+			"coin": 6
+		},
+		{
+			"id": "mausoleum",
+			"cost": [
+				"paper",
+				"glass",
+				"glass",
+				"clay",
+				"clay"
+			],
+			"vp": 2,
+			"selectdiscard": true
 		}
 	]
 }
