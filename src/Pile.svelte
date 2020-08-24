@@ -128,10 +128,16 @@
 
 	/** Closes the modal */
 	function deselectModal() {
-		if (!showModal) gs.set({
+		if (showModal === "wonder" || !showModal) gs.set({
 			...$gs,
 			selected: null
 		});
+
+		showModal = false;
+	}
+
+	function setModal(x) {
+		showModal = x;
 	}
 
 	/** The computed property that sorts the shuffled cards per age */
@@ -442,6 +448,7 @@
 			chooseToken={chooseToken}
 			canAfford={canAfford} 
 			showModal={showModal} 
+			setModal={setModal}
 		/>
 	</div>
 {/if}

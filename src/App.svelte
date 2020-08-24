@@ -16,7 +16,7 @@
 			this.score = 0; // VPs
 			this.cards = [];
 			this.tokens = [];
-			this.missions = {}; // Wonders
+			this.missions = []; // Wonders
 			this.winner = false;
 			// Resources
 			this.wood = 0;
@@ -49,6 +49,8 @@
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
 	const tokens = [...$gs.shuffle(more.tokens)];
+
+	p1.missions.push(...more.wonders);
 
 	gs.set({
 		...$gs,

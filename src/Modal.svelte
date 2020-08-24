@@ -5,15 +5,24 @@
 	export let chooseCard = null;
 	export let chooseToken = null;
 	export let showModal = false;
+	export let setModal = () => {};
 	export let canAfford = () => {};
 	
+	let selectedWonder;
+	let total = 0;
+	let need = null;
+	let adjustedCost = $gs.selected?.cost.length ? [...$gs.selected.cost] : false;
+	let adjustedWonderCost = false;
+	// let affordableWonder = false;
+
 	$: affordable = calcCost($gs.selected, adjustedCost);
 	$: who = $gs[$gs.myturn ? 'p1' : 'p2'];
 	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
-
-	let total = 0;
-	let need = null;
-	let adjustedCost = [...$gs.selected.cost];
+	$: {
+		selectedWonder = showModal === "wonder" ? who.missions[0] : null;
+		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
+	}
+	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost);
 
 	function calcCost(card, adj) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
@@ -44,6 +53,27 @@
 		) return false;
 		adjustedCost[i] = !adjustedCost[i] ? res : false;
 		adjustedCost = [...adjustedCost];
+	}
+
+	function reduceWonder(i, res) {
+		if (!who.wondertoken) return false;
+	
+		const cost = adjustedWonderCost;
+		if (cost[i] === false) {
+			adjustedWonderCost[i] = selectedWonder.cost[i];
+		} else if (cost.filter(c => c === false).length < 2) {
+			adjustedWonderCost[i] = false;
+		}
+	
+		adjustedWonderCost = [...adjustedWonderCost];
+	}
+
+	function buildWonder() {
+		gs.set({
+			...$gs,
+			selected: null
+		});
+		setModal("wonder");
 	}
 </script>
 
@@ -105,10 +135,12 @@
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 
 				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade</button>
+
+				<button on:click={buildWonder}>Complete Mission</button>
 			</aside>
 		</section>
 	{:else if showModal === "token"}
-		<h2>Choose a token</h2>
+		<h2>Choose a token:</h2>
 
 		{#each $gs.tokens.slice(0, 5) as token, i}
 			<button 
@@ -118,6 +150,58 @@
 				on:click={chooseToken(token, i)}
 			></button>
 		{/each}
+	{:else if showModal === "wonder"}
+		<h2>Choose a mission to complete:</h2>
+		<section class="purchase">
+			<aside class="item">
+				{#each who.missions as mission}
+					<button>{mission.id}</button>
+				{/each}
+			</aside>
+	
+			<aside class="buy">
+				<div class="cost">
+					<h4>You Need:</h4>
+					{#each adjustedWonderCost as res, i}
+						<span 
+							class="pog" 
+							data-res={res}
+							data-disable={!adjustedWonderCost[i] || null}
+							on:click={reduceWonder(i, res)}
+						></span>
+					{/each}
+					{#if who.wondertoken}
+						<small><i>You can disable 2 resources.</i></small>
+					{/if}
+				</div>
+
+				<div class="have">
+					<h4>You Have:</h4>
+					<!-- <div class="current">
+						{#if $gs.selected.linkcost && who.links.includes($gs.selected.linkcost)}
+							{$gs.selected.linkcost}
+						{:else}
+							{#each resReduce as res}
+								{#if who[res] > 0}
+									<span 
+										class="pog" 
+										data-res={res} 
+										data-enough={who[res] >= need[res] || null}
+									></span>
+								{/if}
+							{/each}
+						{/if}
+					</div> -->
+				</div>
+			</aside>
+
+			<aside class="options">
+				<button 
+					disabled={affordableWonder ? null : true}
+					on:click={chooseCard({ card: $gs.selected, adjustedCost })}
+				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
+			</aside>
+		</section>
 	{/if}
 </div>
 
@@ -166,6 +250,7 @@ h4 { margin: 0 0 10px; }
 .buy .pog[data-disable]:after {
 	content: "❌";
 	font-size: 1.5em;
+	pointer-events: none;
 	position: absolute;
 	top: 3px; left: 8px;
 	z-index: 2;

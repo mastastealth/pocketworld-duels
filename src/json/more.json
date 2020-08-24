@@ -160,6 +160,26 @@
 		}
 	],
 	"wonders": [
-
+		{
+			"id": "pyramids",
+			"cost": [
+				"paper",
+				"stone",
+				"stone",
+				"stone"
+			],
+			"vp": 9
+		},
+		{
+			"id": "sphinx",
+			"cost": [
+				"glass",
+				"glass",
+				"clay",
+				"stone"
+			],
+			"vp": 6,
+			"playagain": true
+		}
 	]
 }

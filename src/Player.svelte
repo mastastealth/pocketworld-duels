@@ -66,6 +66,9 @@
 		<span>Eco: {player.eco}</span>
 		<span>Civ: {player.civ}</span>
 		<span>Sci: {player.sci.length}</span> -->
+		{#each player.missions as mission}
+			Hello
+		{/each}
 	</div>
 </section>
 
