@@ -2,6 +2,7 @@
 	import Player from './Player.svelte';
 	import WarBar from './WarBar.svelte';
 	import Pile from './Pile.svelte';
+	import Mission from './Mission.svelte';
 
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
@@ -129,13 +130,11 @@
 				<h2>Player {$gs.myturn ? 1 : 2} Select a Mission:</h2>
 
 				{#each missionSet as m}
-					<div 
-						class="mission" 
-						data-taken={selectedMissions.includes(m.id) || null}
-						on:click={() => chooseMission(m)}
-					>
-						{m.label || "Mission Name Here"}
-					</div>
+					<Mission 
+						taken={selectedMissions.includes(m.id) || null} 
+						mission={m} 
+						chooseMission={chooseMission} 
+					/>
 				{/each}
 			</div>
 		{:else}
@@ -193,18 +192,6 @@
 		margin: 0;
 		text-align: center;
 		width: 100%; 
-	}
-
-	.wonder-select .mission {
-		background: green;
-		height: 20vh;
-		margin: 5px;
-		width: 45%;
-	}
-
-	.wonder-select .mission[data-taken] {
-		filter: grayscale(100%);
-		pointer-events: none;
 	}
 
 .tokens {

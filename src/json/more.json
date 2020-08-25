@@ -172,7 +172,8 @@
 			"vp": 9
 		},
 		{
-			"id": "Defense of the Cold Mark",
+			"id": "sphinx",
+			"label": "Defense of the Cold Mark",
 			"cost": [
 				"glass",
 				"glass",
