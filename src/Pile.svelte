@@ -454,12 +454,12 @@
 {/if}
 
 <div class="pile" data-myturn={$gs.myturn} data-age={$gs.age}>
-	{#each finalCards as card}
+	{#each finalCards as card, i}
 		{#if !card}
 			<div class="card" data-empty></div>
 		{/if}
 		{#if card}
-			<Card card={card} selectCard={selectCard} />
+			<Card card={card} selectCard={selectCard} index={i} />
 		{/if}
 	{/each}
 </div>

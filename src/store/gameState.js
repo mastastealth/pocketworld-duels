@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const gs = writable({
+	state: 'menu',
 	age: 1,
 	p1: null,
 	p2: null,

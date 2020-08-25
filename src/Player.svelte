@@ -67,7 +67,9 @@
 		<span>Civ: {player.civ}</span>
 		<span>Sci: {player.sci.length}</span> -->
 		{#each player.missions as mission}
-			Hello
+			<div class="mission">
+				{mission.label}
+			</div>
 		{/each}
 	</div>
 </section>
@@ -100,7 +102,7 @@
 	}
 
 	.player.me { padding-top: 20px; }
-		.player.me .missions { top: auto; bottom: 90%; }
+		.player.me .missions { top: auto; bottom: 88%; }
 	.player.you { padding-bottom: 20px; }
 		.player.you:after { transform: rotateX(180deg); }
 
@@ -232,11 +234,22 @@
 	}
 
 .missions {
+	display: flex;
 	height: 48px;
 	position: absolute;
-	top: 90%;
+	top: 88%;
 	right: 0;
 	width: calc(100% - 200px);
+	z-index: -1;
+}
+
+.mission {
+	background: black;
+	display: inline-block;
+	flex: 1;
+	margin: 0 5px;
+	max-width: 25%;
+	padding: 5px;
 }
 
 </style>

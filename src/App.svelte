@@ -49,38 +49,107 @@
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
 	const tokens = [...$gs.shuffle(more.tokens)];
+	const missions = [...$gs.shuffle(more.wonders)];
 
-	p1.missions.push(...more.wonders);
+	let missionSet = [...missions.slice(0, 4)];
+	let selectedMissions = [];
 
-	gs.set({
+	function startGame() {
+		gs.set({
 		...$gs,
-		p1,
-		p2,
-		tokens
-	});
+			state: "wonders",
+			p1,
+			p2,
+			tokens
+		});
+	}
+
+	function chooseMission(m) {
+		// Track selected missions
+		selectedMissions.push(m.id);
+		selectedMissions = [...selectedMissions];
+
+		// Track who it goes to
+		const p = $gs.myturn ? p1 : p2;
+		p.missions.push(m);
+
+		// Check when we need to change turns
+		let changeTurn = true;
+
+		switch(selectedMissions.length) {
+			case 4:
+				missionSet = [...missions.slice(4, 8)];
+			case 3:
+			case 5:
+				changeTurn = true;
+				break;
+			case 2:
+			case 6:
+				changeTurn = false;
+				break;
+			case 8:
+				gs.set({
+					...$gs,
+					state: "started"
+				});
+
+				break;
+		}
+
+		gs.set({
+		...$gs,
+			myturn: changeTurn ? !$gs.myturn : $gs.myturn,
+			[$gs.myturn ? 'p1' : 'p2']: p 
+		});
+	}
 </script>
 
 <main>
 	<div class="game">
-		<Player className="you" player={$gs.p2} ws={$score} turn={!$gs.myturn} />
+		{#if $gs.p2}<Player className="you" player={$gs.p2} ws={$score} turn={!$gs.myturn} />{/if}
 
-		<WarBar />
+		{#if $gs.state === "started"}
+			<WarBar />
 
-		<main class="table">
-			<Pile />
-		</main>
+			<main class="table">
+				<Pile />
+			</main>
 
-		<aside class="tokens">
-			{#each $gs.tokens.slice(0, 5) as token}
-				<div 
-					class="token"
-					data-taken={token.taken || null}
-					data-id={token.id}
-				></div>
-			{/each}
-		</aside>
+			<aside class="tokens">
+				{#each $gs.tokens.slice(0, 5) as token}
+					<div 
+						class="token"
+						data-taken={token.taken || null}
+						data-id={token.id}
+					></div>
+				{/each}
+			</aside>
+		{:else if $gs.state === "wonders"}
+			<div class="table wonder-select">
+				<h2>Player {$gs.myturn ? 1 : 2} Select a Mission:</h2>
 
-		<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />
+				{#each missionSet as m}
+					<div 
+						class="mission" 
+						data-taken={selectedMissions.includes(m.id) || null}
+						on:click={() => chooseMission(m)}
+					>
+						{m.label || "Mission Name Here"}
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<main class="table menu">
+				<ul class="lobbies">
+
+				</ul>
+				<aside>
+					<button on:click={startGame}>Start Game</button>
+				</aside>
+			</main>
+		{/if}
+
+		{#if $gs.p1}<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />{/if}
 	</div>
 </main>
 
@@ -105,6 +174,38 @@
 	max-height: calc(100vh - 200px);
 	padding: 48px 20px;
 }
+
+.menu {
+	gap: 10px;
+}
+	.menu .lobbies { 
+		background: rgba(0, 0, 0, 0.5);
+		flex: 1;
+		height: 100%;
+	}
+
+	.menu aside {
+		flex: 1;
+	}
+
+.wonder-select { flex-wrap: wrap; }
+	.wonder-select h2 { 
+		margin: 0;
+		text-align: center;
+		width: 100%; 
+	}
+
+	.wonder-select .mission {
+		background: green;
+		height: 20vh;
+		margin: 5px;
+		width: 45%;
+	}
+
+	.wonder-select .mission[data-taken] {
+		filter: grayscale(100%);
+		pointer-events: none;
+	}
 
 .tokens {
 	align-items: flex-start;

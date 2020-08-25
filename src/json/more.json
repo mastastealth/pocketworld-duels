@@ -162,6 +162,7 @@
 	"wonders": [
 		{
 			"id": "pyramids",
+			"label": "The Bone-Pit Riots",
 			"cost": [
 				"paper",
 				"stone",
@@ -171,7 +172,7 @@
 			"vp": 9
 		},
 		{
-			"id": "sphinx",
+			"id": "Defense of the Cold Mark",
 			"cost": [
 				"glass",
 				"glass",
@@ -183,6 +184,7 @@
 		},
 		{
 			"id": "piraeus",
+			"label": "Fuel of Firebrand",
 			"cost": [
 				"clay",
 				"stone",
@@ -195,6 +197,7 @@
 		},
 		{
 			"id": "statue",
+			"label": "The Sand Kiln at Levacaloo",
 			"cost": [
 				"paper",
 				"paper",
@@ -208,6 +211,7 @@
 		},
 		{
 			"id": "appianway",
+			"label": "Frozen in Noe",
 			"cost": [
 				"paper",
 				"clay",
@@ -222,6 +226,7 @@
 		},
 		{
 			"id": "artemis",
+			"label": "Victors Will Feast",
 			"cost": [
 				"paper",
 				"glass",
@@ -233,6 +238,7 @@
 		},
 		{
 			"id": "circus",
+			"label": "Sage Marrow Speaks",
 			"cost": [
 				"glass",
 				"wood",
@@ -245,6 +251,7 @@
 		},
 		{
 			"id": "colossus",
+			"label": "What Might Be",
 			"cost": [
 				"glass",
 				"clay",
@@ -256,6 +263,7 @@
 		},
 		{
 			"id": "lighthouse",
+			"label": "Black Sledge Uprising",
 			"cost": [
 				"wood",
 				"stone",
@@ -267,6 +275,7 @@
 		},
 		{
 			"id": "library",
+			"label": "Awash in Solawa",
 			"cost": [
 				"paper",
 				"glass",
@@ -279,6 +288,7 @@
 		},
 		{
 			"id": "gardens",
+			"label": "Scrapetown Racket",
 			"cost": [
 				"paper",
 				"glass",
@@ -291,6 +301,7 @@
 		},
 		{
 			"id": "mausoleum",
+			"label": "Snikaree Liberation",
 			"cost": [
 				"paper",
 				"glass",

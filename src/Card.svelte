@@ -1,6 +1,10 @@
 <script>
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+
 	export let card = {};
 	export let selectCard = () => {};
+	export let index = 0;
 
 	$: fullCost = card.cost.length 
 		? card.cost.filter(c => c !== "coin") 
@@ -19,6 +23,7 @@
 
 <div
 	class="card"
+	in:fly="{{ y: -200, duration: 300, delay: index * 50, easing: quintOut }}"
 	data-blocked={card.blocked ? true : null}
 	data-hidden={card.flipped ? true : null}
 	data-taken={card.taken ? true : null}
@@ -96,7 +101,9 @@
 	min-height: 144px;
 	min-width: calc((100vh - 200px) / 5);
 	position: relative;
+	transform: translateZ(1px);
 	width: 80%;
+	will-change: contents;
 	z-index: 1;
 }
 	.card[data-type="war"],
