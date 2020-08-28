@@ -1,4 +1,6 @@
 <script>
+	import Mission from './Mission.svelte';
+
 	export let className = "";
 	export let player = {};
 	export let ws = 0;
@@ -67,13 +69,7 @@
 		<span>Civ: {player.civ}</span>
 		<span>Sci: {player.sci.length}</span> -->
 		{#each player.missions as mission}
-			<div class="mission">
-				<div class="cost">
-					{#each mission.cost as cost}
-						<div class="pog" data-res={cost}></div>
-					{/each}
-				</div>
-			</div>
+			<Mission mission={mission} smallMode={true} />
 		{/each}
 	</div>
 </section>
@@ -179,8 +175,7 @@
 		}
 
 		.card[data-res]:before,
-		.card[data-trade]:before,
-		.mission .pog:before {
+		.card[data-trade]:before {
 			background: url('/assets/res.png') no-repeat;
 			background-size: 80px 40px;
 			height: 20px;
@@ -189,17 +184,13 @@
 			width: 20px;
 		}
 			.card[data-res="stone"]:before,
-			.card[data-trade="stone"]:before,
-			.mission .pog[data-res="stone"]:before { background-position: -20px 0; }
+			.card[data-trade="stone"]:before { background-position: -20px 0; }
 			.card[data-res="wood"]:before,
-			.card[data-trade="wood"]:before,
-			.mission .pog[data-res="wood"]:before { background-position: -40px 0; }
+			.card[data-trade="wood"]:before { background-position: -40px 0; }
 			.card[data-res="paper"]:before,
-			.card[data-trade="paper"]:before,
-			.mission .pog[data-res="paper"]:before { background-position: 0 -20px; }
+			.card[data-trade="paper"]:before { background-position: 0 -20px; }
 			.card[data-res="glass"]:before,
-			.card[data-trade="glass"]:before,
-			.mission .pog[data-res="glass"]:before { background-position: -20px -20px; }
+			.card[data-trade="glass"]:before { background-position: -20px -20px; }
 
 	.card[data-type="man"] { background: var(--man); }
 	.card[data-type="guild"] { background: var(--guild); }
@@ -253,23 +244,4 @@
 	width: calc(100% - 200px);
 	z-index: -1;
 }
-
-.mission {
-	align-items: center;
-	background: black;
-	display: inline-flex;
-	flex: 1;
-	margin: 0 5px;
-	max-width: 25%;
-	padding: 5px;
-}
-	.mission .pog {
-		display: inline-grid;
-		height: 24px;
-		width: 24px;
-	}
-		.mission .pog:before {
-			top: 2px; left: 2px;
-		}
-
 </style>

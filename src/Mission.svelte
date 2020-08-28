@@ -2,9 +2,10 @@
 	export let mission = {};
 	export let taken = null;
 	export let chooseMission = null;
+	export let smallMode = false;
 </script>
 
-<div class="mission" data-taken={taken} on:click={() => chooseMission(mission)}>
+<div class="mission {smallMode ? 'small' : ''}" data-taken={taken} on:click={() => { if (!smallMode) chooseMission(mission)}}>
 	<aside class="cost">
 		{#each mission.cost as cost}
 			<div class="pog" data-res={cost}></div>
@@ -66,6 +67,38 @@
 		pointer-events: none;
 	}
 
+	.mission.small {
+		align-items: center;
+		background: black;
+		display: inline-flex;
+		flex: 1;
+		height: auto;
+		margin: 0 5px;
+		max-width: 25%;
+		padding: 5px;
+	}
+		.mission.small h3 {
+			font-size: 14px;
+		}
+
+		.mission.small .pog {
+			display: inline-grid;
+			height: 24px;
+			width: 24px;
+		}
+			.mission.small .pog:before {
+				background: url('/assets/res.png') no-repeat;
+				background-size: 80px 40px;
+				height: 20px;
+				position: absolute;
+				top: 2px; left: 2px;
+				width: 20px;
+			}
+				.mission.small .pog[data-res="stone"]:before { background-position: -20px 0; }
+				.mission.small .pog[data-res="wood"]:before { background-position: -40px 0; }
+				.mission.small .pog[data-res="paper"]:before { background-position: 0 -20px; }
+				.mission.small .pog[data-res="glass"]:before { background-position: -20px -20px; }
+
 h3 { flex: 1; text-align: center; }
 
 .cost, .actions {
@@ -75,6 +108,19 @@ h3 { flex: 1; text-align: center; }
 	justify-content: center;
 	padding: 0 5px;
 }
+	.mission.small .cost,
+	.mission.small .actions {
+		flex-direction: row;
+	}
+
+	.mission.small:not(:hover) .actions,
+	.mission.small:hover .cost {
+		display: none;
+	}
+
+	.mission.small .actions {
+		font-size: 0.7em;
+	}
 
 .actions {
 	width: 60px;
