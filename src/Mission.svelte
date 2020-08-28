@@ -14,7 +14,41 @@
 	<h3>{mission.label}</h3>
 
 	<aside class="actions">
-
+		{#if mission.coin}
+			<div class="food">{mission.coin}</div>
+		{/if}
+		{#if mission.vp}
+			<div class="txt">{mission.vp}</div>
+		{/if}
+		{#if mission.war}
+			<img src="/assets/star.png" alt="star" />
+			{#if mission.war > 1}<img src="/assets/star.png" alt="star" />{/if}
+		{/if}
+		{#if mission.playagain}
+			<div class="txt">🔁</div>
+		{/if}
+		{#if mission.destroycoin}
+			<div class="txt">💥</div>
+		{/if}
+		{#if mission.destroyres}
+			<div class="txt">☢️</div>
+		{/if}
+		{#if mission.destroyman}
+			<div class="txt">💣</div>
+		{/if}
+		{#if mission.selecttoken}
+			<div class="txt">🙏</div>
+		{/if}
+		{#if mission.selectdiscard}
+			<div class="txt">🃏</div>
+		{/if}
+		{#if mission.provides}
+			<span class="pog" data-res={mission.provides[0]}></span>
+			<span class="pog" data-res={mission.provides[1]}></span>
+			{#if mission.provides.length === 3}
+				<span class="pog" data-res={mission.provides[2]}></span>
+			{/if}
+		{/if}
 	</aside>
 </div>
 
@@ -34,7 +68,7 @@
 
 h3 { flex: 1; text-align: center; }
 
-.cost {
+.cost, .actions {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -44,5 +78,29 @@ h3 { flex: 1; text-align: center; }
 
 .actions {
 	width: 60px;
+}
+	.actions img {
+		width: 40px;
+	}
+
+	.actions .pog:nth-of-type(2) { transform: translateY(-25%); }
+	.actions .pog:nth-of-type(3) { transform: translateY(-50%); }
+
+.food {
+	background: url('/assets/res.png') no-repeat -120px 5px;
+	background-size: 160px 80px;
+	color: white;
+	display: grid;
+	font-size: 1.25em;
+	font-weight: bold;
+	height: 40px;
+	place-items: center;
+	width: 40px;
+}
+
+.txt {
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
 }
 </style>
