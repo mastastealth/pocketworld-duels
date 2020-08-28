@@ -68,7 +68,11 @@
 		<span>Sci: {player.sci.length}</span> -->
 		{#each player.missions as mission}
 			<div class="mission">
-				{mission.label}
+				<div class="cost">
+					{#each mission.cost as cost}
+						<div class="pog" data-res={cost}></div>
+					{/each}
+				</div>
 			</div>
 		{/each}
 	</div>
@@ -103,7 +107,9 @@
 
 	.player.me { padding-top: 20px; }
 		.player.me .missions { top: auto; bottom: 88%; }
+		.player.me .mission { border-radius: 5px 5px 0 0; }
 	.player.you { padding-bottom: 20px; }
+		.player.you .mission { border-radius: 0 0 5px 5px; }
 		.player.you:after { transform: rotateX(180deg); }
 
 	.player:not([data-myturn]):not(:hover) {
@@ -173,7 +179,8 @@
 		}
 
 		.card[data-res]:before,
-		.card[data-trade]:before {
+		.card[data-trade]:before,
+		.mission .pog:before {
 			background: url('/assets/res.png') no-repeat;
 			background-size: 80px 40px;
 			height: 20px;
@@ -182,13 +189,17 @@
 			width: 20px;
 		}
 			.card[data-res="stone"]:before,
-			.card[data-trade="stone"]:before { background-position: -20px 0; }
+			.card[data-trade="stone"]:before,
+			.mission .pog[data-res="stone"]:before { background-position: -20px 0; }
 			.card[data-res="wood"]:before,
-			.card[data-trade="wood"]:before { background-position: -40px 0; }
+			.card[data-trade="wood"]:before,
+			.mission .pog[data-res="wood"]:before { background-position: -40px 0; }
 			.card[data-res="paper"]:before,
-			.card[data-trade="paper"]:before { background-position: 0 -20px; }
+			.card[data-trade="paper"]:before,
+			.mission .pog[data-res="paper"]:before { background-position: 0 -20px; }
 			.card[data-res="glass"]:before,
-			.card[data-trade="glass"]:before { background-position: -20px -20px; }
+			.card[data-trade="glass"]:before,
+			.mission .pog[data-res="glass"]:before { background-position: -20px -20px; }
 
 	.card[data-type="man"] { background: var(--man); }
 	.card[data-type="guild"] { background: var(--guild); }
@@ -244,12 +255,21 @@
 }
 
 .mission {
+	align-items: center;
 	background: black;
-	display: inline-block;
+	display: inline-flex;
 	flex: 1;
 	margin: 0 5px;
 	max-width: 25%;
 	padding: 5px;
 }
+	.mission .pog {
+		display: inline-grid;
+		height: 24px;
+		width: 24px;
+	}
+		.mission .pog:before {
+			top: 2px; left: 2px;
+		}
 
 </style>

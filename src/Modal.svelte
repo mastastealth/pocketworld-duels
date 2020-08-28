@@ -19,7 +19,7 @@
 	$: who = $gs[$gs.myturn ? 'p1' : 'p2'];
 	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
 	$: {
-		selectedWonder = showModal === "wonder" ? who.missions[0] : null;
+		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
 	}
 	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost);
@@ -69,11 +69,11 @@
 	}
 
 	function buildWonder() {
-		gs.set({
-			...$gs,
-			selected: null
-		});
 		setModal("wonder");
+	}
+
+	function selectWonder(m) {
+		selectedWonder = m;
 	}
 </script>
 
@@ -155,7 +155,7 @@
 		<section class="purchase">
 			<aside class="item">
 				{#each who.missions as mission}
-					<button>{mission.id}</button>
+					<button on:click={selectWonder(mission)}>{mission.label}</button>
 				{/each}
 			</aside>
 	
@@ -198,7 +198,12 @@
 			<aside class="options">
 				<button 
 					disabled={affordableWonder ? null : true}
-					on:click={chooseCard({ card: $gs.selected, adjustedCost })}
+					on:click={chooseCard({ 
+						card: $gs.selected, 
+						build: true,
+						wonder: selectedWonder, 
+						adjustedCost: adjustedWonderCost 
+					})}
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 			</aside>
 		</section>

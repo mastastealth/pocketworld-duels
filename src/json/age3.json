@@ -40,7 +40,7 @@
 			"clay",
 			"glass"
 		],
-		"linkcost": "jar",
+		"linkcost": "cup",
 		"type": "eco",
 		"vp": 3,
 		"instaby": {
@@ -91,7 +91,7 @@
 			"glass",
 			"paper"
 		],
-		"linkcost": "lyre",
+		"linkcost": "flower",
 		"type": "sci",
 		"sci": "armillary",
 		"vp": 2
@@ -103,7 +103,7 @@
 			"paper",
 			"paper"
 		],
-		"linkcost": "lamp",
+		"linkcost": "snow",
 		"type": "sci",
 		"sci": "armillary",
 		"vp": 2
@@ -169,7 +169,7 @@
 			"clay",
 			"stone"
 		],
-		"linkcost": "barrel",
+		"linkcost": "drink",
 		"type": "eco",
 		"vp": 3,
 		"instaby": {

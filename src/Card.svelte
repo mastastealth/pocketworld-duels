@@ -48,7 +48,13 @@
 							{/each}
 						</li>
 						{#if card.linkcost}
-							<li>{card.linkcost}</li>
+							<li>
+								{#if card.type === "eco" || card.type === "sci"}
+									<i class="icon icon-{card.linkcost}"></i>
+								{:else}
+									{card.linkcost}
+								{/if}
+							</li>
 						{/if}
 					</ul>
 				{/if}
@@ -78,10 +84,18 @@
 		{/if}
 
 		{#if card.link}
-			<div class="link-icon">{card.link[0]}</div>
+			<div class="link-icon">
+				{#if card.type === "eco" || card.type === "sci"}
+					<i class="icon icon-{card.link}"></i>
+				{:else}
+					{card.link[0]}
+				{/if}
+			</div>
 		{/if}
 		{#if card.sci}
-			<div class="sci-icon" data-sci="card.sci">{card.sci[0]}</div>
+			<div class="sci-icon" data-sci="card.sci">
+				<i class="icon icon-{card.sci}"></i>
+			</div>
 		{/if}
 	</header>
 
@@ -218,20 +232,23 @@ header {
 .sci-icon,
 .link-icon {
 	height: 100%;
-	line-height: 5vh;
+	line-height: 5.5vh;
 	position: absolute;
 	top: 0; right: 0;
 	text-align: center;
 	text-transform: uppercase;
 	width: 40px;
 }
-	.link-icon + .sci-icon {
-		right: 30px;
+	.sci-icon { 
+		font-size: 1.5em; 
+		mix-blend-mode: overlay;
 	}
+
+	.link-icon + .sci-icon { right: 30px; }
 
 	.link-icon {
 		background: rgba(0, 0, 0, 0.5);
-		border-radius: 100%;
+		border-radius: 8px;
 		height: 30px;
 		line-height: 30px;
 		margin: 5px;

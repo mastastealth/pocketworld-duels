@@ -102,7 +102,7 @@
 			"clay",
 			"stone"
 		],
-		"linkcost": "cog",
+		"linkcost": "mountain",
 		"type": "sci",
 		"sci": "bowl",
 		"vp": 2
@@ -125,7 +125,7 @@
 			"stone",
 			"glass"
 		],
-		"linkcost": "book",
+		"linkcost": "tree",
 		"type": "sci",
 		"sci": "quill",
 		"vp": 2
@@ -145,7 +145,7 @@
 		"cost": 0,
 		"type": "eco",
 		"instant": 6,
-		"link": "barrel"
+		"link": "drink"
 	},
 	{
 		"id": "temple",
@@ -185,7 +185,7 @@
 		"type": "sci",
 		"sci": "level",
 		"vp": 1,
-		"link": "lamp"
+		"link": "snow"
 	},
 	{
 		"id": "glassblower",
@@ -223,6 +223,6 @@
 		"type": "sci",
 		"sci": "wheel",
 		"vp": 1,
-		"link": "lyre"
+		"link": "flower"
 	}
 ]

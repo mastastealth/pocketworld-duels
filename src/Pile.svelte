@@ -148,8 +148,11 @@
 	 * @param {Object} card - The card that was chosen
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
+	 * @param {Boolean} wonder - The wonder that is being built
 	 */
-	function chooseCard({card, sell = false, build = false, adjustedCost = false}) {
+	function chooseCard({card, sell = false, build = false, adjustedCost = false, wonder = false}) {
+		if (wonder) deselectModal();
+
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
 		const i = card.index - (7 - isOdd);
 
@@ -163,7 +166,7 @@
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 
-		adjustScore(card, sell, build, adjustedCost); // Calculate earnings
+		adjustScore(card, sell, build, adjustedCost, wonder); // Calculate earnings
 	}
 
 	function chooseToken(token, i) {
@@ -277,12 +280,12 @@
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 */
-	function adjustScore(card, sell, build, adjustedCost) {
-		// console.log(card);
+	function adjustScore(card, sell, build, adjustedCost, wonder) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
 		let discarded = [...$gs.discarded];
 		let getToken = false;
+		let playAgain = false;
 
 		// Mark as taken, so it disappears, regardless of action
 		finalCards[card.index].taken = true;
@@ -355,28 +358,37 @@
 			discarded = [...$gs.discarded, card];
 		} else {
 			// Build wonder junk
+			p.missions = p.missions.map(w => {
+				const m = {...w};
+				if (w.id === wonder.id) m.built = true;
+				return m;
+			});
+
+			// Basic wins
+			if (wonder.vp) p.score += wonder.vp;
+			if (wonder.coin) p.food += wonder.coin;
+			if (wonder.war) p.warprogress += wonder.war;
+
+			// Tricky wins
+			if (wonder.playagain) playAgain = true;
 		}
 
 		gs.set({
 			...$gs,
 			p1: $gs.myturn ? p : $gs.p1,
 			p2: $gs.myturn ? $gs.p2 : p,
-			myturn: getToken ? $gs.myturn : !$gs.myturn,
+			myturn: getToken || playAgain ? $gs.myturn : !$gs.myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
 			discarded
 		});
 
-		tokenCheck(getToken);
-	}
+		// Check for extra wonder/token actions
+		if (wonder) wonderCheck(wonder);
+		if (getToken) showModal = "token";
 
-	function tokenCheck(getToken) {
-		if (getToken) {
-			showModal = "token"
-		} else {
-			// No more cards, next "age"
-			if (!$gs.cardsleft) nextAge();
-		}
+		// Last but not least
+		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */

@@ -30,7 +30,7 @@
 		"cost": 2,
 		"type": "sci",
 		"sci": "bowl",
-		"link": "cog"
+		"link": "mountain"
 	},
 	{
 		"id": "glassworks",
@@ -43,7 +43,7 @@
 		"cost": 0,
 		"type": "eco",
 		"instant": 4,
-		"link": "jar"
+		"link": "cup"
 	},
 	{
 		"id": "apothecary",
@@ -139,7 +139,7 @@
 		"cost": 2,
 		"type": "sci",
 		"sci": "quill",
-		"link": "book"
+		"link": "tree"
 	},
 	{
 		"id": "workshop",
