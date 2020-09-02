@@ -11,8 +11,9 @@ export const gs = writable({
 	discarded: [],
 	tokens: [],
 	// Methods,
-	shuffle(arr) {
+	shuffle(arr, dontshuffle = false) {
 		const shuffled = [...arr];
+		if (dontshuffle) return shuffled;
 
 		// Durstenfled shuffle
 		for (let i = shuffled.length - 1; i > 0; i -= 1) {

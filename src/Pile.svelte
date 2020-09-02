@@ -201,7 +201,7 @@
 	 * Calculates whether or not the player can afford the card with their current resources/money.
 	 * @param {Object} card
 	 */
-	function canAfford(card, adj = false) {
+	function canAfford(card, adj = false, pro = false) {
 		const me = $gs.myturn ? $gs.p1 : $gs.p2;
 		const opp = $gs.myturn ? $gs.p2 : $gs.p1;
 		const need = {};
@@ -215,6 +215,14 @@
 				need[res] += 1;
 			}
 		});
+
+		// Adjust need to special provision cards
+		if (pro) {
+			pro.provisions.forEach((x, i) => {
+				const bonus = x.provides[pro.res[i]];
+				if (need[bonus]) need[bonus] -= 1;
+			});
+		}
 
 		// Check for link, if so, its free
 		if (
@@ -236,42 +244,7 @@
 			}
 		}
 
-		// Reduce total if we have any providing eco cards
-		let save = 0;
-
-		if ( // If we have the right eco card and can use it
-			(me.provision === 1 || me.provision === 3 )
-			&& (need.wood || need.stone || need.clay)
-		) {
-			save += 1; // We will always save at least 1 food
-
-			if ( // If I don't have the trade card for that resource
-				(need.wood && !me.trade.includes('wood'))
-				|| (need.stone && !me.trade.includes('stone'))
-				|| (need.clay && !me.trade.includes('clay'))
-			) save += 1;
-		
-			if ( // And if opponent has one of the resources we need, we can save 1 more food
-				need.wood && opp.wood
-				|| (need.clay && opp.clay)
-				|| (need.stone && opp.stone)
-			) save += 1;
-		}
-
-		// Now do same check on manufactured resources
-		if (me.provision > 1 && (need.paper || need.glass)) {
-			if (me.trade.includes('paper')) {
-				save += 1; // With the trade cost, we'd only be saving 1 food
-			} else {
-				save += 2;
-				if (
-					need.glass && opp.glass
-					|| (need.paper && opp.paper)
-				) save += 1;
-			}
-		}
-
-		return { total: total - save, need };
+		return { total, need };
 	}
 
 	/**

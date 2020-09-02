@@ -1,5 +1,6 @@
 <script>
 	import Card from './Card.svelte';
+	import Provisions from './Provisions.svelte';
 	import { gs } from './store/gameState';
 
 	export let chooseCard = null;
@@ -25,9 +26,25 @@
 		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
 	}
-	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost);
+	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost, res);
 
-	function calcCost(card, adj) {
+	// These are the extra bits to support "provision" type cards/wonders
+	$: eco = who.cards.filter(c => c.provides);
+	$: wonders = who.missions.filter(c => c.built && c.provides);
+	$: provisions = [ ...eco, ...wonders ];
+
+	let res = [0, 0, 0, 0];
+
+	function changeRes(i) {
+		// Check if we looped around
+		res[i] = res[i] + 1 >= provisions[i].provides.length 
+			? 0 
+			: res[i] + 1;
+		// Set it
+		res = [...res];
+	}
+
+	function calcCost(card, adj, res) {
 		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
 		if (!card) return false;
 		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
@@ -35,7 +52,8 @@
 
 		// For complicated cost forms
 		if (card.cost.length) {
-			const { total : t, need : n } = canAfford(card, adj);
+			const pro = provisions ? { provisions, res } : false;
+			const { total : t, need : n } = canAfford(card, adj, pro);
 			total = t;
 			need = n;
 			return t <= pfood;
@@ -47,6 +65,9 @@
 		return false;
 	}
 
+	/**
+	 * Modifies the adjustedCost array to enable/disable a max of 2 resources
+	 */
 	function reduceMe(i, res) {
 		if (
 			!who.civtoken 
@@ -54,6 +75,7 @@
 			|| !$gs.selected.cost.length
 			|| adjustedCost.filter(c => c === false).length === 2
 		) return false;
+		// If we have the proper token, card, and counts, you are free to adjust
 		adjustedCost[i] = !adjustedCost[i] ? res : false;
 		adjustedCost = [...adjustedCost];
 	}
@@ -125,6 +147,7 @@
 										></span>
 									{/if}
 								{/each}
+
 							{/if}
 						</div>
 					</div>
@@ -190,6 +213,7 @@
 								></span>
 							{/if}
 						{/each}
+						<Provisions provisions={provisions} res={res} changeRes={changeRes} />
 					</div>
 				</div>
 			</aside>
