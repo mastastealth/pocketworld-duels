@@ -17,7 +17,10 @@
 
 	$: affordable = calcCost($gs.selected, adjustedCost);
 	$: who = $gs[$gs.myturn ? 'p1' : 'p2'];
+
 	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
+	$: wonderResReduce = selectedWonder?.cost.length ? [...new Set(selectedWonder.cost)] : [];
+
 	$: {
 		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
@@ -77,7 +80,7 @@
 	}
 </script>
 
-<div class="modal">
+<div class="modal" data-modal="{showModal || null}">
 	{#if !showModal}
 		<h2>What would you like to do?</h2>
 
@@ -177,21 +180,17 @@
 
 				<div class="have">
 					<h4>You Have:</h4>
-					<!-- <div class="current">
-						{#if $gs.selected.linkcost && who.links.includes($gs.selected.linkcost)}
-							{$gs.selected.linkcost}
-						{:else}
-							{#each resReduce as res}
-								{#if who[res] > 0}
-									<span 
-										class="pog" 
-										data-res={res} 
-										data-enough={who[res] >= need[res] || null}
-									></span>
-								{/if}
-							{/each}
-						{/if}
-					</div> -->
+					<div class="current">
+						{#each wonderResReduce as res}
+							{#if who[res] > 0}
+								<span 
+									class="pog" 
+									data-res={res} 
+									data-enough={who[res] >= need[res] || null}
+								></span>
+							{/if}
+						{/each}
+					</div>
 				</div>
 			</aside>
 
@@ -234,14 +233,19 @@ h4 { margin: 0 0 10px; }
 }
 
 .item {
-	align-items: center;
 	display: flex;
+	flex-wrap: wrap;
 }
+	.item button { width: 50%; }
 
 .purchase {
+	column-gap: 10px;
 	display: grid;
-	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 }
+	[data-modal="wonder"] .purchase { 
+		grid-template-columns: 2fr 1fr 100px;
+	}
 
 	.purchase aside {
 		text-align: left;

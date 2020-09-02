@@ -214,7 +214,7 @@ header {
 	header > .pog { top: 3px; }
 
 .star {
-	width: 30px;
+	width: 40px;
 }
 
 .vp, .instant { 

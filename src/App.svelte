@@ -144,6 +144,7 @@
 				</ul>
 				<aside>
 					<button on:click={startGame}>Start Game</button>
+					<button disabled>Host Lobby</button>
 				</aside>
 			</main>
 		{/if}
