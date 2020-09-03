@@ -217,7 +217,7 @@
 }
 
 :global(.pog) { 
-	background: url('/assets/pog.png');
+	background: url('/assets/pog.png') no-repeat;
 	background-size: 100% auto;
 	display: grid;
 	height: 40px;
@@ -235,6 +235,7 @@
 	}
 		:global(.pog[data-res="stone"]:before) { background-position: -30px 0; }
 		:global(.pog[data-res="wood"]:before) { background-position: -60px 0; }
+		:global(.pog[data-res="coin"]:before) { background-position: -91px 0; }
 		:global(.pog[data-res="paper"]:before) { background-position: 0 -30px; }
 		:global(.pog[data-res="glass"]:before) { background-position: -30px -30px; }
 </style>

@@ -14,10 +14,16 @@
 	let need = null;
 	let adjustedCost = $gs.selected?.cost.length ? [...$gs.selected.cost] : false;
 	let adjustedWonderCost = false;
-	// let affordableWonder = false;
+	const who = $gs[$gs.myturn ? 'p1' : 'p2'];
 
-	$: affordable = calcCost($gs.selected, adjustedCost);
-	$: who = $gs[$gs.myturn ? 'p1' : 'p2'];
+	// These are the extra bits to support "provision" type cards/wonders
+	const eco = who.cards.filter(c => c.provides);
+	const wonders = who.missions.filter(c => c.built && c.provides);
+	const provisions = [ ...eco, ...wonders ];
+
+	// Computed for affording junk
+	$: affordable = calcCost($gs.selected, adjustedCost, res);
+	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost, res);
 
 	$: resReduce = $gs.selected?.cost.length ? [...new Set($gs.selected.cost)] : [];
 	$: wonderResReduce = selectedWonder?.cost.length ? [...new Set(selectedWonder.cost)] : [];
@@ -26,12 +32,8 @@
 		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
 	}
-	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost, res);
 
-	// These are the extra bits to support "provision" type cards/wonders
-	$: eco = who.cards.filter(c => c.provides);
-	$: wonders = who.missions.filter(c => c.built && c.provides);
-	$: provisions = [ ...eco, ...wonders ];
+	
 
 	let res = [0, 0, 0, 0];
 
@@ -45,7 +47,6 @@
 	}
 
 	function calcCost(card, adj, res) {
-		// console.log(cardCost, $gs[$gs.myturn ? 'p1' : 'p2'].food);
 		if (!card) return false;
 		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
 		total = card.cost;
@@ -147,7 +148,7 @@
 										></span>
 									{/if}
 								{/each}
-
+								<Provisions provisions={provisions} res={res} changeRes={changeRes} />
 							{/if}
 						</div>
 					</div>
