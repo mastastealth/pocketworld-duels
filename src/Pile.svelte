@@ -262,7 +262,7 @@
 	 */
 	function adjustScore(card, sell, build, adjustedCost, wonder, pro) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
-		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
+		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };
 		let discarded = [...$gs.discarded];
 		let getToken = false;
 		let playAgain = false;
@@ -351,18 +351,18 @@
 
 			// Tricky wins
 			if (wonder.playagain) playAgain = true;
+			if (wonder.destroycoin) o.food = o.food <= 3 ? 0 : o.food - 3;
 
-			// Pay up
 			// Calculate how much is spent from missing resources
-			const { total, link } = canAfford(card, adjustedCost, pro);
+			const { total } = canAfford(card, adjustedCost, pro);
 			p.food -= total;
 			if (o.tokens.find(t => t.mymoney)) o.food += total;
 		}
 
 		gs.set({
 			...$gs,
-			p1: $gs.myturn ? p : $gs.p1,
-			p2: $gs.myturn ? $gs.p2 : p,
+			p1: $gs.myturn ? p : o,
+			p2: $gs.myturn ? o : p,
 			myturn: getToken || playAgain ? $gs.myturn : !$gs.myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
