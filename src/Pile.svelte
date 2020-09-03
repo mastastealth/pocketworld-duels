@@ -150,7 +150,14 @@
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 * @param {Boolean} wonder - The wonder that is being built
 	 */
-	function chooseCard({card, sell = false, build = false, adjustedCost = false, wonder = false}) {
+	function chooseCard({
+		card,
+		 sell = false, 
+		 build = false, 
+		 adjustedCost = false, 
+		 wonder = false,
+		 pro = false
+	}) {
 		if (wonder) deselectModal();
 
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row
@@ -166,7 +173,7 @@
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 
-		adjustScore(card, sell, build, adjustedCost, wonder); // Calculate earnings
+		adjustScore(card, sell, build, adjustedCost, wonder, pro); // Calculate earnings
 	}
 
 	function chooseToken(token, i) {
@@ -253,7 +260,7 @@
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 */
-	function adjustScore(card, sell, build, adjustedCost, wonder) {
+	function adjustScore(card, sell, build, adjustedCost, wonder, pro) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let o = $gs[$gs.myturn ? 'p2' : 'p1'];
 		let discarded = [...$gs.discarded];
@@ -320,7 +327,7 @@
 				p.food -= card.cost; // Deduct food, ez mode
 			} else {
 				// Calculate how much is spent from missing resources
-				const { total, link } = canAfford(card, adjustedCost);
+				const { total, link } = canAfford(card, adjustedCost, pro);
 				p.food -= total;
 
 				if (o.tokens.find(t => t.mymoney)) o.food += total;
@@ -344,6 +351,12 @@
 
 			// Tricky wins
 			if (wonder.playagain) playAgain = true;
+
+			// Pay up
+			// Calculate how much is spent from missing resources
+			const { total, link } = canAfford(card, adjustedCost, pro);
+			p.food -= total;
+			if (o.tokens.find(t => t.mymoney)) o.food += total;
 		}
 
 		gs.set({
@@ -362,6 +375,11 @@
 
 		// Last but not least
 		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
+	}
+
+	function wonderCheck(wonder) {
+		// ...
+		console.log(wonder)
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */

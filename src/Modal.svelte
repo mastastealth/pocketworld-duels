@@ -32,11 +32,10 @@
 		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
 	}
-
 	
-
 	let res = [0, 0, 0, 0];
 
+	/* Cycles through the resource in a provision pog */
 	function changeRes(i) {
 		// Check if we looped around
 		res[i] = res[i] + 1 >= provisions[i].provides.length 
@@ -158,7 +157,7 @@
 			<aside class="options">
 				<button 
 					disabled={affordable ? null : true}
-					on:click={chooseCard({ card: $gs.selected, adjustedCost })}
+					on:click={chooseCard({ card: $gs.selected, adjustedCost, pro: { provisions, res } })}
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 
 				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade</button>
@@ -182,7 +181,7 @@
 		<section class="purchase">
 			<aside class="item">
 				{#each who.missions as mission}
-					<button on:click={selectWonder(mission)}>{mission.label}</button>
+					<button on:click={() => { selectWonder(mission) }}>{mission.label}</button>
 				{/each}
 			</aside>
 	
@@ -226,7 +225,8 @@
 						card: $gs.selected, 
 						build: true,
 						wonder: selectedWonder, 
-						adjustedCost: adjustedWonderCost 
+						adjustedCost: adjustedWonderCost,
+						pro: { provisions, res }
 					})}
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 			</aside>
