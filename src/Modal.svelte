@@ -157,7 +157,12 @@
 										></span>
 									{/if}
 								{/each}
-								<Provisions provisions={provisions} res={res} changeRes={changeRes} />
+
+								{#if provisions.length}
+									<Provisions provisions={provisions} res={res} changeRes={changeRes} />
+								{/if}
+
+								{#if !provisions.length}<span class="empty-txt">None 😔</span>{/if}
 							{/if}
 						</div>
 					</div>
@@ -368,6 +373,10 @@ h4 { margin: 0 0 10px; }
 }
 
 .current:empty:before { content: "None 😔"; }
+
+.have .pog ~ .empty-txt {
+	display: none;
+}
 
 .have .pog:after {
 	content: "⚠️";

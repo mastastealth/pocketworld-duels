@@ -7,7 +7,7 @@
 	import age3 from './json/age3.json';
 	import more from './json/more.json';
 
-	let cards = $gs.shuffle(age1).slice(3);
+	let cards = $gs.shuffle(age1, process.env.isDev).slice(3);
 	let showModal = false;
 
 	/**

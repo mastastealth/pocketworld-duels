@@ -49,8 +49,8 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	const tokens = [...$gs.shuffle(more.tokens)];
-	const missions = [...$gs.shuffle(more.wonders)];
+	const tokens = [...$gs.shuffle(more.tokens, process.env.isDev)];
+	const missions = [...$gs.shuffle(more.wonders, process.env.isDev)];
 
 	let missionSet = [...missions.slice(0, 4)];
 	let selectedMissions = [];
