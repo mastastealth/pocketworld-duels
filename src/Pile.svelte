@@ -7,7 +7,7 @@
 	import age3 from './json/age3.json';
 	import more from './json/more.json';
 
-	let cards = $gs.shuffle(age2).slice(3);
+	let cards = $gs.shuffle(age1).slice(3);
 	let showModal = false;
 
 	/**
@@ -128,7 +128,11 @@
 
 	/** Closes the modal */
 	function deselectModal() {
-		if (showModal.includes('token')) return false;
+		if (
+			showModal
+			&& (showModal.includes('token') || showModal.includes('select-'))
+		) return false;
+
 		if (showModal === "wonder" || !showModal) gs.set({
 			...$gs,
 			selected: null
@@ -157,7 +161,8 @@
 		 build = false, 
 		 adjustedCost = false, 
 		 wonder = false,
-		 pro = false
+		 pro = false,
+		 free = false
 	}) {
 		if (wonder) deselectModal();
 
@@ -174,9 +179,14 @@
 			if (!finalCards[i + 1].blocked) finalCards[i + 1].flipped = false;
 		}
 
-		adjustScore(card, sell, build, adjustedCost, wonder, pro); // Calculate earnings
+		adjustScore({card, sell, build, adjustedCost, wonder, pro, free}); // Calculate earnings
 	}
 
+	/**
+	 * Fired after a player has chosen from one of the 2 token modals
+	 * @param {Object} The chosen token
+	 * @param {Number} The index of the chosen token, to mark as taken in UI
+	 */ 
 	function chooseToken(token, i = false) {
 		const tokens = [...$gs.tokens];
 		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
@@ -261,12 +271,13 @@
 	 * @param {Boolean} sell - Whether the card was chosen to be sold
 	 * @param {Boolean} build - Whether the card was chosen to build a wonder
 	 */
-	function adjustScore(card, sell, build, adjustedCost, wonder, pro) {
+	function adjustScore({card, sell, build, adjustedCost, wonder, pro, free}) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };
 		let discarded = [...$gs.discarded];
 		let getToken = false;
 		let playAgain = false;
+		let selectCard = false;
 
 		// Mark as taken, so it disappears, regardless of action
 		finalCards[card.index].taken = true;
@@ -324,15 +335,19 @@
 				}
 			}
 
-			if (!card.cost.length) {
-				p.food -= card.cost; // Deduct food, ez mode
-			} else {
-				// Calculate how much is spent from missing resources
-				const { total, link } = canAfford(card, adjustedCost, pro);
-				p.food -= total;
+			if (!free) {
+				if (!card.cost.length) {
+					p.food -= card.cost; // Deduct food, ez mode
+				} else {
+					// Calculate how much is spent from missing resources
+					const { total, link } = canAfford(card, adjustedCost, pro);
+					p.food -= total;
 
-				if (o.tokens.find(t => t.mymoney)) o.food += total;
-				if (link && o.tokens.find(t => t.mylinks)) p.food += 4;
+					if (o.tokens.find(t => t.mymoney)) o.food += total;
+					if (link && o.tokens.find(t => t.mylinks)) p.food += 4;
+				}
+			} else {
+				showModal = false;
 			}
 		} else if (sell) { // If selling card
 			p.food += 2 + p.eco;
@@ -359,13 +374,18 @@
 			p.food -= total;
 			if (o.tokens.find(t => t.mymoney)) o.food += total;
 			if (wonder.selecttoken) getToken = true;
+			if (
+				wonder.selectdiscard
+				|| wonder.destroyres
+				|| wonder.destroyman
+			) selectCard = true;
 		}
 
 		gs.set({
 			...$gs,
 			p1: $gs.myturn ? p : o,
 			p2: $gs.myturn ? o : p,
-			myturn: getToken || playAgain ? $gs.myturn : !$gs.myturn,
+			myturn: getToken || playAgain || selectCard ? $gs.myturn : !$gs.myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
 			discarded
@@ -379,8 +399,16 @@
 		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
 	}
 
+	/**
+	 * Performs some extra things for certain wonders
+	 * @param {Object} The wonder that was bought and is being checked
+	 */
 	function wonderCheck(wonder) {
 		if (wonder.selecttoken) showModal = "token-special";
+		if (wonder.selectdiscard) showModal = "select-discard";
+		if (wonder.destroyres) showModal = "select-res";
+		if (wonder.destroyman) showModal = "select-man";
+
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
@@ -443,6 +471,45 @@
 
 		// Declare winner
 	}
+
+	function destroyCard(card) {
+		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] }; // Do I need this one?
+		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };
+
+		// Loop through opponent cards to find right one to nix
+		o.cards.forEach((c, i) => {
+			if (card.id === c.id) {
+				const rescount = card.rescount || 1;
+
+				// Deduct resource
+				if (card.type === "res") {
+					o.res -= 1;
+		
+					if (card.res === "stone") o.stone -= 1 * rescount;
+					if (card.res === "wood") o.wood -= 1 * rescount;
+					if (card.res === "clay") o.clay -= 1 * rescount;
+				} else {
+					o.man -= 1;
+
+					if (card.res === "glass") o.glass -= 1 * rescount;
+					if (card.res === "paper") o.paper -= 1 * rescount;
+				}
+			
+				// Discard
+				o.cards.splice(i, 1);
+			}
+		});
+
+		// Apply it all
+		gs.set({
+			...$gs,
+			p1: $gs.myturn ? p : o,
+			p2: $gs.myturn ? o : p,
+			myturn: !$gs.myturn
+		});
+
+		showModal = false;
+	}
 </script>
 
 {#if $gs.selected || showModal}
@@ -450,6 +517,7 @@
 		<Modal 
 			chooseCard={chooseCard}
 			chooseToken={chooseToken}
+			destroyCard={destroyCard}
 			canAfford={canAfford} 
 			showModal={showModal} 
 			setModal={setModal}

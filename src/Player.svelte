@@ -31,7 +31,7 @@
 	<div class="cards">
 		{#each player.cards as card}
 			<div 
-				class="card" 
+				class="card-sm" 
 				data-type={card.type}
 				data-vp={card.vp}
 				data-res={card.res}
@@ -136,64 +136,6 @@
 }
 	.player.you .cards { padding: 5px 20px 10px 0; }
 	.player.me .cards { padding: 10px 20px 5px 0; }
-
-.card {
-	border: 1px solid black;
-	border-radius: 3px;
-	display: grid;
-	line-height: calc(59px / 2);
-	position: relative;
-	text-align: center;
-	width: 32px;
-}
-	.card:after { font-weight: bold; }
-	.card[data-type="war"] { background: var(--war); }
-	.card[data-type="sci"] { background: var(--sci); }
-	.card[data-type="civ"] { background: var(--civ); }
-	.card[data-type="eco"] { background: var(--eco); }
-	.card[data-type="res"] { background: var(--res); }
-		.card[data-res]:before,
-		.card[data-res]:after,
-		.card[data-trade]:before,
-		.card[data-trade]:after,
-		.card[data-provides]:after { 
-			background: url('/assets/pog.png');
-			background-size: 100% auto;
-			content: '';
-			display: inline-block;
-			height: 24px;
-			margin: auto;
-			width: 24px;
-		}
-
-		.card[data-res]:before,
-		.card[data-trade]:before {
-			background: url('/assets/res.png') no-repeat;
-			background-size: 80px 40px;
-			height: 20px;
-			position: absolute;
-			top: 5px; left: 5px;
-			width: 20px;
-		}
-			.card[data-res="stone"]:before,
-			.card[data-trade="stone"]:before { background-position: -20px 0; }
-			.card[data-res="wood"]:before,
-			.card[data-trade="wood"]:before { background-position: -40px 0; }
-			.card[data-res="paper"]:before,
-			.card[data-trade="paper"]:before { background-position: 0 -20px; }
-			.card[data-res="glass"]:before,
-			.card[data-trade="glass"]:before { background-position: -20px -20px; }
-
-	.card[data-type="man"] { background: var(--man); }
-	.card[data-type="guild"] { background: var(--guild); }
-
-	.card[data-type="civ"]:after,
-	.card[data-type="sci"]:after { 
-		content: attr(data-vp);
-	}
-
-	.card[data-war]:after { content: attr(data-war); }
-	.card[data-provides="res"]:after { filter: sepia(1); }
 
 .emblems {
 	font-size: 10px;

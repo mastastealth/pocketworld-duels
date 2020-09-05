@@ -8,6 +8,7 @@
 	export let showModal = false;
 	export let setModal = () => {};
 	export let canAfford = () => {};
+	export let destroyCard = () => {};
 	
 	let selectedWonder;
 	let total = 0;
@@ -15,6 +16,7 @@
 	let adjustedCost = $gs.selected?.cost.length ? [...$gs.selected.cost] : false;
 	let adjustedWonderCost = false;
 	const who = $gs[$gs.myturn ? 'p1' : 'p2'];
+	const notwho = $gs[$gs.myturn ? 'p2' : 'p1'];
 
 	// These are the extra bits to support "provision" type cards/wonders
 	const eco = who.cards.filter(c => c.provides);
@@ -99,6 +101,14 @@
 
 	function selectWonder(m) {
 		selectedWonder = m;
+	}
+
+	function prov(c) {
+		if (!c.provides) return null;
+
+		return c.provides.includes('wood')
+			? 'res'
+			: 'man';
 	}
 </script>
 
@@ -241,6 +251,64 @@
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 			</aside>
 		</section>
+	{:else if showModal === "select-man"}
+		<h2>Choose a card to destroy:</h2>
+
+		<section class="cards">
+			{#each notwho.cards.filter(c => c.type === "man") as card}
+				<div 
+					class="card-sm" 
+					data-res={card.res} 
+					data-type={card.type} 
+					on:click={destroyCard(card)}
+				></div>
+			{/each}
+		</section>
+	{:else if showModal === "select-res"}
+		<h2>Choose a card to destroy:</h2>
+
+		<section class="cards">
+			{#each notwho.cards.filter(c => c.type === "res") as card}
+				<div 
+					class="card-sm" 
+					data-res={card.res} 
+					data-type={card.type} 
+					on:click={destroyCard(card)}
+				>
+					<span class="emblems">
+						{#if card.rescount}<span class="extra">{card.rescount}</span>{/if}
+					</span>
+				</div>
+			{/each}
+		</section>
+	{:else if showModal === "select-discard"}
+		<h2>Choose a card from the discard:</h2>
+
+		<section class="cards">
+			{#each $gs.discarded as card}
+				<div 
+					class="card-sm"
+					data-type={card.type}
+					data-vp={card.vp}
+					data-res={card.res}
+					data-war={card.war}
+					data-trade={card.trade}
+					data-provides={prov(card)}
+					on:click={chooseCard({ card, free: true })}
+				>
+					<span class="emblems">
+						{#if card.sci}
+							<span>{card.sci?.[0]}</span>
+						{/if}
+						{#if card.rescount}
+							<span class="extra">{card.rescount}</span>
+						{:else if card.link}
+							<span class="extra">{card.link[0]}</span>
+						{/if}
+					</span>
+				</div>
+			{/each}
+		</section>
 	{/if}
 </div>
 
@@ -251,13 +319,12 @@ h4 { margin: 0 0 10px; }
 	background: url('/assets/modal_bg.png') no-repeat;
 	background-size: 100% 100%;
 	color: white;
-	height: 340px;
 	margin: auto;
 	max-height: 95vh;
 	max-width: 80vw;
+	min-width: 480px;
 	padding: 35px;
 	text-align: center;
-	width: 800px;
 }
 
 .modal :global(.card) {
@@ -314,4 +381,57 @@ h4 { margin: 0 0 10px; }
 	display: block; 
 	margin-bottom: 10px;
 }
+
+.cards {
+	text-align: center;
+}
+
+.card-sm {
+	cursor: pointer;
+	display: inline-grid;
+	height: 70px;
+	line-height: 70px;
+	margin: 0 2px 5px 2px;
+	transition: transform 0.2s;
+	width: 50px;
+	vertical-align: top;
+}
+	.card-sm:hover {
+		transform: scale(1.1);
+	}
+
+	.card-sm:before {
+		left: 14px;
+		top: 24px;
+	}
+
+	.card-sm:after {
+		height: 30px;
+		width: 30px;
+	}
+
+	.card-sm[data-type="civ"]:after,
+	.card-sm[data-type="sci"]:after,
+	.card-sm[data-type="war"]:after {
+		width: 100% !important;
+	}
+
+.emblems {
+	font-size: 10px;
+	font-weight: bold;
+	position: absolute;
+	top: -1px; right: 0;
+	text-transform: uppercase;
+	width: 100%;
+}
+	.emblems span {
+		border-radius: 3px;
+		float: left;
+		line-height: 14px;
+		padding: 0 3px;
+	}
+		.emblems span.extra { 
+			background: rgba(0, 0, 0, 0.5);
+			float: right; 
+		}
 </style>

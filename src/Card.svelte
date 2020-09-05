@@ -19,6 +19,8 @@
 		x.length = card.war;
 		return x;
 	}
+
+	function noFn () {}
 </script>
 
 <div
@@ -32,7 +34,7 @@
 	data-res={card.res}
 	data-trade={card.trade}
 	data-sci={card.sci}
-	on:click={selectCard(card)}
+	on:click={!card.taken ? selectCard(card) : noFn}
 >
 	<header>
 		{#if card.cost}
