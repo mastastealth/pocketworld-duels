@@ -128,6 +128,7 @@
 
 	/** Closes the modal */
 	function deselectModal() {
+		if (showModal.includes('token')) return false;
 		if (showModal === "wonder" || !showModal) gs.set({
 			...$gs,
 			selected: null
@@ -176,12 +177,12 @@
 		adjustScore(card, sell, build, adjustedCost, wonder, pro); // Calculate earnings
 	}
 
-	function chooseToken(token, i) {
+	function chooseToken(token, i = false) {
 		const tokens = [...$gs.tokens];
 		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 	
-		tokens[i].taken = true;
-		p.tokens.push(tokens[i]);
+		if (i) tokens[i].taken = true;
+		p.tokens.push(i ? tokens[i] : token);
 
 		if (token.vp) p.vp += token.vp;
 		if (token.coin) p.food += token.coin;
@@ -357,6 +358,7 @@
 			const { total } = canAfford(card, adjustedCost, pro);
 			p.food -= total;
 			if (o.tokens.find(t => t.mymoney)) o.food += total;
+			if (wonder.selecttoken) getToken = true;
 		}
 
 		gs.set({
@@ -370,16 +372,15 @@
 		});
 
 		// Check for extra wonder/token actions
-		if (wonder) wonderCheck(wonder);
 		if (getToken) showModal = "token";
+		if (wonder) wonderCheck(wonder);
 
 		// Last but not least
 		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
 	}
 
 	function wonderCheck(wonder) {
-		// ...
-		console.log(wonder)
+		if (wonder.selecttoken) showModal = "token-special";
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */

@@ -60,14 +60,6 @@
 	</div>
 
 	<div class="missions">
-		<!-- <span>Wood: {player.wood}</span>
-		<span>Bones: {player.clay}</span>
-		<span>Stone: {player.stone}</span>
-		<span>Orn: {player.paper}</span>
-		<span>Ammo: {player.glass}</span>
-		<span>Eco: {player.eco}</span>
-		<span>Civ: {player.civ}</span>
-		<span>Sci: {player.sci.length}</span> -->
 		{#each player.missions as mission}
 			<Mission mission={mission} smallMode={true} />
 		{/each}

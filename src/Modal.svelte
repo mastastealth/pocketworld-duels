@@ -176,6 +176,16 @@
 				on:click={chooseToken(token, i)}
 			></button>
 		{/each}
+	{:else if showModal === "token-special"}
+		<h2>Choose a token:</h2>
+
+		{#each $gs.tokens.slice(5, 8) as token}
+			<button 
+				class="token"
+				data-id={token.id}
+				on:click={chooseToken(token)}
+			></button>
+		{/each}
 	{:else if showModal === "wonder"}
 		<h2>Choose a mission to complete:</h2>
 		<section class="purchase">
