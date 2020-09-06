@@ -426,11 +426,11 @@
 			cardsleft: 20
 		});
 
-		const g = $gs.shuffle(more.guilds);
+		const g = $gs.shuffle(more.guilds, process.env.isDev);
 		const nextdeck = age === 2 
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
-		cards = [...$gs.shuffle(nextdeck)];
+		cards = [...$gs.shuffle(nextdeck, process.env.isDev)];
 	}
 
 	/** Does all the end game calculation work */

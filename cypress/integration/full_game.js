@@ -1,4 +1,4 @@
-describe('Play through a full game', () => {
+describe('Starts a game', () => {
 	it('Starts the game', () => {
 		// Loads main page
 		cy.visit('/');
@@ -25,7 +25,9 @@ describe('Play through a full game', () => {
 		cy.get('.card[data-sci="quill"]').should('exist');
 		cy.get('.card[data-sci="level"]').should('exist');
 	});
+});
 
+describe('Play through age 1', () => {
 	it('Open and closes modal, adds civ card', () => {
 		// Player 1 chooses Civilian card
 		cy.get('[data-index="24"]').click();
@@ -150,4 +152,132 @@ describe('Play through a full game', () => {
 		cy.contains('Trade').click();
 		cy.get('.card[data-type]').should('have.length', 20);
 	})
+});
+
+describe('Play through age 2', () => {
+	// TODO - Need to insert player turn choice here
+
+	it('Displays complex card costs', () => {
+		cy.get('[data-index="26"]').click();
+		cy.contains('Trade').click();
+
+		cy.get('[data-index="27"]').click();
+		cy.get('.modal .cost .pog').should('have.length', 3);
+		cy.get('.modal .have .pog[data-enough]').should('have.length', 1);
+	});
+
+	it('Constructs a wonder, plays again', () => {
+		cy.contains('Complete Mission').click();
+		cy.contains('Buy for 2').click();
+		cy.get('.player.you .score').should('have.text', '13 1');
+		cy.get('.player.you[data-myturn]').should('exist');
+
+		cy.get('[data-index="21"]').click();
+		cy.contains('Trade').click();
+	});
+
+	it('Buys a card via links instead of resources or food', () => {
+		cy.get('[data-index="16"]').click();
+		cy.get('.modal .cost .pog').should('have.length', 2);
+		cy.get('.modal .have .pog').should('not.exist');
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="10"]').click();
+		cy.contains('Get for Free').click();
+	});
+
+	it('Buy matching science icon earns a token', () => {
+		cy.get('[data-index="20"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="15"]').click();
+		cy.contains('Buy for 2').click();
+
+		cy.get('[data-index="19"]').click();
+		cy.contains('Buy for 8').click();
+
+		cy.get('.modal [data-id="economy"]').click();
+		cy.get('.player.me .token[data-id="economy"]').should('exist');
+		cy.get('aside.tokens .token[data-id="economy"][data-taken]').should('exist');
+
+		cy.get('[data-index="9"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('.modal [data-id="masonry"]').click();
+		cy.get('.player.you .token[data-id="masonry"]').should('exist');
+		cy.get('aside.tokens .token[data-id="masonry"][data-taken]').should('exist');
+	});
+
+	it('Civ token works', () => {
+		cy.get('[data-index="13"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="14"]').click();
+		cy.get('.modal small').should('have.text', 'You can disable 2 resources.');
+		cy.get('.modal button[disabled]').should('have.text', 'Buy for 3');
+		cy.get('.modal .cost [data-res="paper"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="6"]').click();
+		cy.contains('Trade').click();
+
+		cy.get('[data-index="4"]').click();
+		cy.contains('Trade').click();
+	});
+
+	it('Selecting Levacaloo works', () => {
+		cy.get('[data-index="8"]').click();
+		cy.contains('Complete Mission').click();
+
+		cy.get('.modal .cost .pog').should('have.length', 4);
+		cy.get('.pog[data-res="paper"][data-enough]').should('exist');
+		cy.contains('The Sand Kiln at Levacaloo').click();
+		cy.get('.modal .cost .pog').should('have.length', 5);
+		cy.get('.pog[data-res="stone"][data-enough]').should('exist');
+		cy.contains('Buy for 8').click();
+		cy.get('.modal .card-sm').should('have.length', 4);
+
+		// Deletes the correct resource
+		cy.get('.player.you .cards .card-sm').should('have.length', 12);
+		cy.get('.modal .card-sm:last-child').click();
+		cy.get('.player.you .cards .card-sm').should('have.length', 11);
+		cy.get('.player.you .card-sm[data-type="wood] .extra').should('not.exist');
+	});
+
+	it('Economy token works', () => {
+		cy.get('[data-index="7"]').click();
+		cy.get('.player.me .score').should('have.text', '8 3');
+		cy.contains('Buy for 2').click();
+		cy.get('.player.me .score').should('have.text', '8 5');
+	});
+
+	it('Should jack up rice on wood', () => {
+		cy.get('[data-index="0"]').click();
+		cy.contains('Buy for 6');
+		cy.contains('Complete Mission').click();
+		cy.contains('Victors Will Feast').click();
+		cy.contains('Buy for 3').click();
+
+		cy.get('[data-index="5"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="3"]').click();
+		cy.contains('Trade').click();
+	});
+
+	it('Should not hit negatives when war nukes coins', () => {
+		cy.get('.player.you .score').should('have.text', '25 3');
+		cy.get('.penalty.top-5').should('exist');
+		cy.get('[data-index="1"]').click();
+		cy.contains('Buy for 3').click();
+		cy.get('.player.you .score').should('have.text', '25 0');
+		cy.get('.penalty.top-5').should('not.exist');
+	});
+
+	it('Will load the last age, with 3 guild cards', () => {
+		cy.get('[data-index="2"]').click();
+		cy.contains('Trade').click();
+		cy.get('.card[data-type]').should('have.length', 20);
+		cy.get('.card[data-type="guild"]').should('have.length', 3);
+	});
 });
