@@ -205,7 +205,7 @@
 		<h2>Choose a mission to complete:</h2>
 		<section class="purchase">
 			<aside class="item">
-				{#each who.missions as mission}
+				{#each who.missions.filter(m => !m.built) as mission}
 					<button on:click={() => { selectWonder(mission) }}>{mission.label}</button>
 				{/each}
 			</aside>

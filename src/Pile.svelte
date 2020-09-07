@@ -317,7 +317,7 @@
 			// Special bonus
 			if (card.instaby) p.food += card.instaby.type !== 'wonder'
 				? p[card.instaby.type] * card.instaby.coin
-				: Object.keys(p.missions).length * 2;
+				: p.missions.filter(m => m.built).length * 2;
 
 			// Guild
 			if (card.earn?.coin) {

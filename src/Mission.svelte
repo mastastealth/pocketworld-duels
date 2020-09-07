@@ -5,7 +5,12 @@
 	export let smallMode = false;
 </script>
 
-<div class="mission {smallMode ? 'small' : ''}" data-taken={taken} on:click={() => { if (!smallMode) chooseMission(mission)}}>
+<div 
+	class="mission {smallMode ? 'small' : ''}" 
+	data-taken={taken}
+	data-built={mission.built}
+	on:click={() => { if (!smallMode) chooseMission(mission)}}
+>
 	<aside class="cost">
 		{#each mission.cost as cost}
 			<div class="pog" data-res={cost}></div>
@@ -77,6 +82,10 @@
 		max-width: 25%;
 		padding: 5px;
 	}
+		.mission.small[data-built] {
+			background: blue;
+		}
+
 		.mission.small h3 {
 			font-size: 14px;
 		}
@@ -113,8 +122,9 @@ h3 { flex: 1; text-align: center; }
 		flex-direction: row;
 	}
 
-	.mission.small:not(:hover) .actions,
-	.mission.small:hover .cost {
+	.mission.small:not([data-built]):not(:hover) .actions,
+	.mission.small:hover .cost,
+	.mission.small[data-built] .cost {
 		display: none;
 	}
 
