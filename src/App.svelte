@@ -54,11 +54,12 @@
 
 	let missionSet = [...missions.slice(0, 4)];
 	let selectedMissions = [];
+	let winner = null;
 
 	function startGame() {
 		gs.set({
 		...$gs,
-			state: "wonders",
+			state: 'wonders',
 			p1,
 			p2,
 			tokens
@@ -91,7 +92,7 @@
 			case 8:
 				gs.set({
 					...$gs,
-					state: "started"
+					state: 'started'
 				});
 
 				break;
@@ -103,6 +104,29 @@
 			[$gs.myturn ? 'p1' : 'p2']: p 
 		});
 	}
+
+	/** Does all the end game calculation work */
+	function endGame(win) {
+		winner = { player: `Player ${$gs.myturn ? 2 : 1} Wins` }
+
+		// Check for war victory
+		if (win === 'war') {
+			winner.type = 'Military Victory';
+			return true;
+		}
+
+		if (win === 'sci') {
+			winner.type = 'Civilized Victory';
+			return true;
+		}
+
+		tallyPlayer($gs.p1);
+		tallyPlayer($gs.p2);
+		winner = {
+			player: ``,
+			type: 'Standard Victory'
+		}
+	}
 </script>
 
 <main>
@@ -112,8 +136,13 @@
 		{#if $gs.state === "started"}
 			<WarBar />
 
-			<main class="table">
-				<Pile />
+			<main class="table" data-winner={winner ? true : null}>
+				{#if winner}
+					<h1>{winner.player}</h1>
+					<h3>{winner.type}</h3>
+				{:else}
+					<Pile endGame={endGame} />
+				{/if}
 			</main>
 
 			<aside class="tokens">
@@ -174,6 +203,9 @@
 	max-height: calc(100vh - 200px);
 	padding: 48px 20px;
 }
+	.table[data-winner] {
+		flex-direction: column;
+	}
 
 .menu {
 	gap: 10px;

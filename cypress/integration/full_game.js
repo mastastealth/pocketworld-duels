@@ -281,3 +281,89 @@ describe('Play through age 2', () => {
 		cy.get('.card[data-type="guild"]').should('have.length', 3);
 	});
 });
+
+describe('Play through age 3', () => {
+	// TODO - Handle turn choice
+
+	it ('Shuffles in 3 Guild cards', () => {
+		cy.get('[data-type="guild"]').should('have.length', 3);
+	});
+
+	it('Instant Eco card gains food/VP (Wonders)', () => {
+		// Clear a few cards
+		cy.get('[data-index="38"]').click();
+		cy.contains('Buy for 7').click();
+
+		cy.get('[data-index="31"]').click();
+		cy.contains('Trade').click();
+
+		// Get the actual eco card: 2 food per wonder
+		cy.get('[data-index="25"]').click();
+		cy.get('.player.me .score').should('have.text', '8 4');
+		cy.contains('Get for Free').click();
+		cy.get('.player.me .score').should('have.text', '11 8');
+	});
+
+	it('Wonder provides resources', () => {
+		cy.get('[data-index="39"]').click();
+		cy.contains('Complete Mission').click();
+		cy.contains('Buy for 2').click();
+		cy.get('.player.you .mission[data-built]').should('have.length', 2);
+
+		cy.get('[data-index="33"]').click();
+		cy.contains('Trade').click();
+
+		cy.get('[data-index="32"]').click();
+		cy.get('.player.me .score').should('have.text', '11 10');
+		cy.contains('Buy for 3').click();
+		cy.get('.player.me .score').should('have.text', '14 9');
+
+
+		cy.get('[data-index="26"]').click();
+		cy.get('.player.you .score').should('have.text', '27 4');
+		// Displays wonder provision
+		cy.get('.modal .current .pog[data-type="wonder"]').should('have.length', 1);
+		cy.get('.modal .current .pog[data-res="glass"]').should('have.length', 1);
+		cy.get('.modal button[disabled]').should('have.text', 'Buy for 8');
+		// Toggle provided resource
+		cy.get('.modal .current .pog[data-type="wonder"]').click();
+		cy.get('.modal .current .pog[data-res="paper"]').should('have.length', 1);
+		cy.contains('Buy for 4').click();
+		cy.get('.player.you .score').should('have.text', '30 3');
+	});
+
+	it('Destroy Coin ability works', () => {
+		cy.get('[data-index="27"]').click();
+		cy.contains('Buy for 2').click();
+
+		cy.get('[data-index="19"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="13"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('[data-index="14"]').click();
+		cy.contains('Trade').click();
+
+		cy.get('[data-index="28"]').click();
+		cy.contains('Buy for 6').click();
+
+		cy.get('[data-index="21"]').click();
+		cy.contains('Complete Mission').click();
+		cy.get('.modal .current .pog[data-type="wonder"]').click();
+		cy.get('.player.me .score').should('have.text', '24 5');
+		cy.contains('Buy for 5').click();
+		// 5 - 3 food = 2 food but +5 from trade because of economy token
+		cy.get('.player.me .score').should('have.text', '24 7');
+	});
+
+	it('Finish with a war victory', () => {
+		cy.get('[data-index="15"]').click();
+		cy.contains('Trade').click();
+
+		cy.get('[data-index="16"]').click();
+		cy.contains('Get for Free').click();
+
+		cy.get('.table[data-winner] h3').should('have.text', 'Military Victory');
+	});
+});

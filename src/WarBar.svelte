@@ -6,11 +6,6 @@
 	$: markerPos = 9 - warTotal;
 
 	$: {
-		// Check for a war win
-		if (warTotal >= 9 || warTotal <= -9) {
-			// ...
-		}
-
 		if (warTotal >= 6 && !$top5) { 
 			top5.set(true); // Flag checkpoint
 			const p2 = {...$gs.p2}; // Copy player data
@@ -95,7 +90,11 @@
 .penalty {
 	background: darkred;
 	border-radius: 5px;
+	color: white;
+	display: grid;
+	font-weight: bold;
 	height: calc((100% / 19) * 3);
+	place-items: center;
 	position: absolute;
 	left: 25px;
 	top: calc(100% / 19);
@@ -105,6 +104,12 @@
 	.penalty.top-2 { top: calc((100% / 19) * 4); }
 	.penalty.bot-2 { top: calc((100% / 19) * 12); }
 	.penalty.bot-5 { top: calc((100% / 19) * 15); }
+
+	.penalty:not(.top-2):not(.bot-2):after,
+	.penalty.bot-5:after { content: '-5'; font-size: 1.2em; }
+
+	.penalty.top-2:after,
+	.penalty.bot-2:after { content: '-2'; }
 
 .step {
 	border: 1px dashed black;

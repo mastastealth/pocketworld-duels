@@ -14,9 +14,9 @@
 		? card.cost.filter(c => c === "coin").length 
 		: false;
 
-	function warLen() {
+	function warLen(n) {
 		const x = [];
-		x.length = card.war;
+		x.length = n;
 		return x;
 	}
 
@@ -80,7 +80,7 @@
 		{:else if card.instant}
 			<div class="instant">{card.instant}</div>
 		{:else if card.war}
-			{#each warLen() as star}
+			{#each warLen(card.war) as star}
 				<img src="/assets/star.png" alt="⭐" class="star">
 			{/each}
 		{/if}

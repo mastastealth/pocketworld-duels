@@ -7,6 +7,7 @@
 	import age3 from './json/age3.json';
 	import more from './json/more.json';
 
+	export let endGame = null;
 	let cards = $gs.shuffle(age1, process.env.isDev).slice(3);
 	let showModal = false;
 
@@ -395,6 +396,13 @@
 		if (getToken) showModal = "token";
 		if (wonder) wonderCheck(wonder);
 
+		// Check for special wins
+		const warTotal = $gs.p1.warprogress - $gs.p2.warprogress;
+		if (warTotal >= 9 || warTotal <= -9) endGame('war');
+
+		const sciTotal = [...new Set(p.sci)].length;
+		if (sciTotal === 6) endGame('sci');
+
 		// Last but not least
 		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
 	}
@@ -431,12 +439,6 @@
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
 		cards = [...$gs.shuffle(nextdeck, process.env.isDev)];
-	}
-
-	/** Does all the end game calculation work */
-	function endGame() {
-		tallyPlayer($gs.p1);
-		tallyPlayer($gs.p2);
 	}
 
 	/** Calculates the per player numbers */

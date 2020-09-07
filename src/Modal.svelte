@@ -31,9 +31,15 @@
 	$: wonderResReduce = selectedWonder?.cost.length ? [...new Set(selectedWonder.cost)] : [];
 
 	$: {
-		if (!selectedWonder && showModal === "wonder") selectedWonder = who.missions[0];
+		if (!selectedWonder && showModal === "wonder") 
+			selectedWonder = who.missions.filter(m => !m.built)[0];
 		adjustedWonderCost = selectedWonder ? [...selectedWonder.cost] : [];
 	}
+
+	$: enoughWonders = [
+		...who.missions,
+		notwho.missions
+	].filter(m => m.built).length >= 6;
 	
 	let res = [0, 0, 0, 0];
 
@@ -177,7 +183,10 @@
 
 				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade</button>
 
-				<button on:click={buildWonder}>Complete Mission</button>
+				<button
+					disabled={enoughWonders}
+					on:click={buildWonder}
+				>Complete Mission</button>
 			</aside>
 		</section>
 	{:else if showModal === "token"}
