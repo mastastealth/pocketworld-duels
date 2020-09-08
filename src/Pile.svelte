@@ -131,7 +131,11 @@
 	function deselectModal() {
 		if (
 			showModal
-			&& (showModal.includes('token') || showModal.includes('select-'))
+			&& (
+				showModal.includes('token') 
+				|| showModal.includes('select-')
+				|| showModal === 'next'
+			)
 		) return false;
 
 		if (showModal === "wonder" || !showModal) gs.set({
@@ -439,6 +443,8 @@
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
 		cards = [...$gs.shuffle(nextdeck, process.env.isDev)];
+
+		showModal = 'next';
 	}
 
 	function destroyCard(card) {
@@ -479,6 +485,12 @@
 
 		showModal = false;
 	}
+
+	function changePlayer(p) {
+		// TODO - Check if you were allowed to make that decision
+		gs.set({ ...$gs, myturn: p === "p1" });
+		showModal = false;
+	}
 </script>
 
 {#if $gs.selected || showModal}
@@ -487,6 +499,7 @@
 			chooseCard={chooseCard}
 			chooseToken={chooseToken}
 			destroyCard={destroyCard}
+			changePlayer={changePlayer}
 			canAfford={canAfford} 
 			showModal={showModal} 
 			setModal={setModal}

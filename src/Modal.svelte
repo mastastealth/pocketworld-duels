@@ -5,6 +5,7 @@
 
 	export let chooseCard = null;
 	export let chooseToken = null;
+	export let changePlayer = null;
 	export let showModal = false;
 	export let setModal = () => {};
 	export let canAfford = () => {};
@@ -323,6 +324,10 @@
 				</div>
 			{/each}
 		</section>
+	{:else if showModal === "next"}
+		<h2>Choose who will start this age:</h2>
+		<button on:click={changePlayer("p1")}>Player 1</button>
+		<button on:click={changePlayer("p2")}>Player 2</button>
 	{/if}
 </div>
 

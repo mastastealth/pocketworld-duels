@@ -155,7 +155,11 @@ describe('Play through age 1', () => {
 });
 
 describe('Play through age 2', () => {
-	// TODO - Need to insert player turn choice here
+	it('Displays player turn modal', () => {
+		cy.get('.modal h2').should('have.text', 'Choose who will start this age:');
+		cy.contains('Player 1').click();
+		cy.get('.modal').should('not.exist');
+	});
 
 	it('Displays complex card costs', () => {
 		cy.get('[data-index="26"]').click();
@@ -283,9 +287,8 @@ describe('Play through age 2', () => {
 });
 
 describe('Play through age 3', () => {
-	// TODO - Handle turn choice
-
 	it ('Shuffles in 3 Guild cards', () => {
+		cy.contains('Player 1').click();
 		cy.get('[data-type="guild"]').should('have.length', 3);
 	});
 

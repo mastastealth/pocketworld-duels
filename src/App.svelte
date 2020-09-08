@@ -328,17 +328,6 @@
 	grid-area: ts;
 	padding: 5vh 0;
 }
-:global(.token) {
-	background: green;
-	border-radius: 100%;
-	height: 90px;
-	width: 90px;
-}
-
-:global(.token[disabled]),
-:global(.token[data-taken]) {
-	background: gray;
-}
 
 :global(.pog) { 
 	background: url('/assets/pog.png') no-repeat;

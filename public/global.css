@@ -85,6 +85,23 @@ body {
 	.card-sm[data-war]:after { content: attr(data-war); }
 	.card-sm[data-provides="res"]:after { filter: sepia(1); }
 
+.token {
+	background: green;
+	border-radius: 100%;
+	color: white;
+	display: inline-grid;
+	font-size: 0.8em;
+	height: 90px;
+	place-items: center;
+	width: 90px;
+}
+	.token[disabled],
+	.token[data-taken] {
+		background: gray;
+	}
+
+	.token:before { content: attr(data-id); }
+
 /* TnT version */
 /* :root {
 	--war :green;
