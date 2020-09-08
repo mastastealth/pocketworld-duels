@@ -441,39 +441,6 @@
 		cards = [...$gs.shuffle(nextdeck, process.env.isDev)];
 	}
 
-	/** Calculates the per player numbers */
-	function tallyPlayer(p) {
-		// Tally up Guild points
-		const g = p.cards.forEach(c => {
-			if (c.earn) {
-				switch(c.earn.for) {
-					case "civ":
-					case "war":
-					case "eco":
-						p.vp += p[c.earn.for];
-						break;
-					case "sci":
-						p.vp += p.sci.length;
-						break;
-					case "res":
-						p.vp += p.res + p.man;
-						break;
-					case "coin":
-						p.vp += Math.floor(p.food / 3);
-						break;
-					case "wonder":
-						p.vp += Object.keys(p.missions).length;
-						break;
-				}
-			} 
-		});
-
-		// Math token
-		if (p.tokens.includes("mathematics")) p.vp += p.tokens.length * 3;
-
-		// Declare winner
-	}
-
 	function destroyCard(card) {
 		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] }; // Do I need this one?
 		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };

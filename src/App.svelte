@@ -120,18 +120,110 @@
 			return true;
 		}
 
-		tallyPlayer($gs.p1);
-		tallyPlayer($gs.p2);
-		winner = {
-			player: ``,
-			type: 'Standard Victory'
+		winner.type = 'Standard Victory';
+		tallyPlayer('p1');
+		tallyPlayer('p2');
+
+		if ($gs.p1.score > $gs.p2.score) winner.player = 'Player 1 Wins';
+		if ($gs.p2.score > $gs.p1.score) winner.player = 'Player 2 Wins';
+
+		// Civilian cards handle tie breakers
+		if ($gs.p1.score === $gs.p2.score) {
+			const civ1 = 0;
+			const civ2 = 0;
+
+			$gs.p1.cards.forEach(c => { if (c.type === "civ") civ1 += c.vp });
+			$gs.p2.cards.forEach(c => { if (c.type === "civ") civ2 += c.vp });
+
+			if (civ1 > civ2) winner.player = 'Player 1 Wins';
+			if (civ2 > civ1) winner.player = 'Player 2 Wins';
+			if (civ1 === civ2) winner.player = 'Both Players Win';
 		}
+	}
+
+	/** Calculates the per player numbers */
+	function tallyPlayer(p) {
+		const player = {...$gs[p]};
+
+		// Tally up war points
+		if (p === 'p1') {
+			switch($score) {
+				case 1:
+				case 2:
+					player.score += 2;
+					break;
+				case 3:
+				case 4:
+				case 5:
+					player.score += 5;
+					break;
+				case 6:
+				case 7:
+				case 8:
+					player.score += 10;
+					break;
+			}
+		} else {
+			switch(score) {
+				case -1:
+				case -2:
+					player.score += 2;
+					break;
+				case -3:
+				case -4:
+				case -5:
+					player.score += 5;
+					break;
+				case -6:
+				case -7:
+				case -8:
+					player.score += 10;
+					break;
+			}
+		}
+
+		// Tally up Guild points
+		const g = player.cards.forEach(c => {
+			if (c.earn) {
+				switch(c.earn.for) {
+					case 'civ':
+					case 'war':
+					case 'eco':
+						player.score += player[c.earn.for];
+						break;
+					case 'sci':
+						player.score += player.sci.length;
+						break;
+					case 'res':
+						player.score += player.res + player.man;
+						break;
+					case 'coin':
+						player.score += Math.floor(player.food / 3);
+						break;
+					case 'wonder':
+						player.score += Object.keys(player.missions).length;
+						break;
+				}
+			} 
+		});
+
+		// Tally up coins
+		player.score += Math.floor(player.food / 3);
+
+		// Math token
+		if (player.tokens.includes('mathematics')) 
+			player.score += player.tokens.length * 3;
+
+		gs.set({
+		...$gs,
+			[player]: player
+		});
 	}
 </script>
 
 <main>
 	<div class="game">
-		{#if $gs.p2}<Player className="you" player={$gs.p2} ws={$score} turn={!$gs.myturn} />{/if}
+		{#if $gs.p2}<Player className="you" player={$gs.p2} turn={!$gs.myturn} />{/if}
 
 		{#if $gs.state === "started"}
 			<WarBar />
@@ -178,7 +270,7 @@
 			</main>
 		{/if}
 
-		{#if $gs.p1}<Player className="me" player={$gs.p1} ws={$score} turn={$gs.myturn} />{/if}
+		{#if $gs.p1}<Player className="me" player={$gs.p1} turn={$gs.myturn} />{/if}
 	</div>
 </main>
 

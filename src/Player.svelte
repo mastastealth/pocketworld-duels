@@ -3,12 +3,7 @@
 
 	export let className = "";
 	export let player = {};
-	export let ws = 0;
 	export let turn = null;
-
-	$: realScore = player.primary ?
-		player.score + ws
-		: player.score - ws;
 
 	function prov(c) {
 		if (!c.provides) return null;
@@ -22,7 +17,7 @@
 
 <section class="player {className}" data-myturn={turn ? '' : null}>
 	<aside class="score">
-		{realScore}
+		{player.score}
 		<span class="food">
 			{player.food}
 		</span>

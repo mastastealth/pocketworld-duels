@@ -2,7 +2,13 @@
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
 
-	$: warTotal = $gs.p1.warprogress - $gs.p2.warprogress
+	let warTotal = 0;
+
+	$: {
+		warTotal = $gs.p1.warprogress - $gs.p2.warprogress
+		score.set(warTotal);
+	}
+
 	$: markerPos = 9 - warTotal;
 
 	$: {
