@@ -140,6 +140,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/* Science (Civilized) Symbols */
 .icon-star:before,
 .icon-armillary:before {
 	content: "\e907";
@@ -168,7 +169,14 @@ body {
 	content: "\e90d";
 }
 
-
+/* Economy Cards (Longcoat) Link Icons */
+.icon-drink:before {
+	content: "\e903";
+}
+.icon-cup:before {
+	content: "\e904";
+}
+/* Science Cards (Civilized) Link Icons */
 .icon-mountain:before {
 	content: "\e900";
 }
@@ -178,13 +186,9 @@ body {
 .icon-tree:before {
 	content: "\e902";
 }
-.icon-drink:before {
-	content: "\e903";
-}
-.icon-cup:before {
-	content: "\e904";
-}
 .icon-snow:before {
 	content: "\e905";
 }
- 
+/* War Cards (KSR) Link Icons */
+
+/* Civilian Cards (Commonfolk) Link Icons */
