@@ -200,7 +200,7 @@
 		p.tokens.push(i ? tokens[i] : token);
 
 		if (token.vp) p.vp += token.vp;
-		if (token.coin) p.food += token.coin;
+		if (token.coin) p.ingoo += token.coin;
 		if (token.sci) p.sci.push(token.sci);
 
 		if (token.mywar) p.wartoken = true;
@@ -290,7 +290,7 @@
 		if (!sell && !build) { // If buying card
 			p.cards = [...p.cards, card]; // Save cards into my deck
 			if (card.vp) p.score += card.vp; // Add VP
-			if (card.instant) p.food += card.instant; // Add Eco monies
+			if (card.instant) p.ingoo += card.instant; // Add Eco monies
 			if (card.link) p.links.push(card.link); // Tally the links we have
 
 			// Resource addition
@@ -320,7 +320,7 @@
 			}
 
 			// Special bonus
-			if (card.instaby) p.food += card.instaby.type !== 'wonder'
+			if (card.instaby) p.ingoo += card.instaby.type !== 'wonder'
 				? p[card.instaby.type] * card.instaby.coin
 				: p.missions.filter(m => m.built).length * 2;
 
@@ -328,13 +328,13 @@
 			if (card.earn?.coin) {
 				const from = card.earn.from;
 				if (from === 'sci') { // Science is an array
-					p.food += p.sci.length > o.sci.length 
+					p.ingoo += p.sci.length > o.sci.length 
 						? p.sci.length 
 						: o.sci.length;
 				} else if (from !== 'res') {
-					p.food += p[from] > o[from] ? p[from] : o[from];
+					p.ingoo += p[from] > o[from] ? p[from] : o[from];
 				} else { // Resources uses both grey/brown
-					p.food += (p.res + p.man) > (o.res + o.man) 
+					p.ingoo += (p.res + p.man) > (o.res + o.man) 
 						? p.res + p.man 
 						: o.res + o.man;
 				}
@@ -342,20 +342,20 @@
 
 			if (!free) {
 				if (!card.cost.length) {
-					p.food -= card.cost; // Deduct food, ez mode
+					p.ingoo -= card.cost; // Deduct ingoo, ez mode
 				} else {
 					// Calculate how much is spent from missing resources
 					const { total, link } = canAfford(card, adjustedCost, pro);
-					p.food -= total;
+					p.ingoo -= total;
 
-					if (o.tokens.find(t => t.mymoney)) o.food += total;
-					if (link && o.tokens.find(t => t.mylinks)) p.food += 4;
+					if (o.tokens.find(t => t.mymoney)) o.ingoo += total;
+					if (link && o.tokens.find(t => t.mylinks)) p.ingoo += 4;
 				}
 			} else {
 				showModal = false;
 			}
 		} else if (sell) { // If selling card
-			p.food += 2 + p.eco;
+			p.ingoo += 2 + p.eco;
 			discarded = [...$gs.discarded, card];
 		} else {
 			// Build wonder junk
@@ -367,17 +367,17 @@
 
 			// Basic wins
 			if (wonder.vp) p.score += wonder.vp;
-			if (wonder.coin) p.food += wonder.coin;
+			if (wonder.coin) p.ingoo += wonder.coin;
 			if (wonder.war) p.warprogress += wonder.war;
 
 			// Tricky wins
 			if (wonder.playagain) playAgain = true;
-			if (wonder.destroycoin) o.food = o.food <= 3 ? 0 : o.food - 3;
+			if (wonder.destroycoin) o.ingoo = o.ingoo <= 3 ? 0 : o.ingoo - 3;
 
 			// Calculate how much is spent from missing resources
 			const { total } = canAfford(card, adjustedCost, pro);
-			p.food -= total;
-			if (o.tokens.find(t => t.mymoney)) o.food += total;
+			p.ingoo -= total;
+			if (o.tokens.find(t => t.mymoney)) o.ingoo += total;
 			if (wonder.selecttoken) getToken = true;
 			if (
 				wonder.selectdiscard

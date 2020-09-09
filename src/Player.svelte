@@ -18,8 +18,8 @@
 <section class="player {className}" data-myturn={turn ? '' : null}>
 	<aside class="score">
 		{player.score}
-		<span class="food">
-			{player.food}
+		<span class="ingoo">
+			{player.ingoo}
 		</span>
 	</aside>
 
@@ -109,7 +109,7 @@
 	width: 190px;
 }
 
-.food {
+.ingoo {
 	background: url('/assets/res.png') no-repeat -120px 0;
 	background-size: 160px 80px;
 	display: block;
@@ -118,7 +118,6 @@
 	line-height: 36px;
 	position: absolute;
 	text-align: center;
-	text-indent: 5px;
 	top: 30%; left: 5px;
 	width: 40px;
 }

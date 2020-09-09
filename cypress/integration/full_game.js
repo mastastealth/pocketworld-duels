@@ -41,10 +41,10 @@ describe('Play through age 1', () => {
 
 		// Buying card should be free
 		cy.get('[data-index="24"]').click();
-		cy.get('.modal .cost').should('have.text', 'You Need: 0 Food ');
-		cy.get('.player.me .score .food').should('have.text', '7');
+		cy.get('.modal .cost').should('have.text', 'You Need: 0 Ingoo ');
+		cy.get('.player.me .score .ingoo').should('have.text', '7');
 		cy.contains('Get for Free').click();
-		cy.get('.player.me .score .food').should('have.text', '7');
+		cy.get('.player.me .score .ingoo').should('have.text', '7');
 
 		// Card displays in player bar
 		cy.get('.player.me .cards .card-sm')
@@ -180,7 +180,7 @@ describe('Play through age 2', () => {
 		cy.contains('Trade').click();
 	});
 
-	it('Buys a card via links instead of resources or food', () => {
+	it('Buys a card via links instead of resources or ingoo', () => {
 		cy.get('[data-index="16"]').click();
 		cy.get('.modal .cost .pog').should('have.length', 2);
 		cy.get('.modal .have .pog').should('not.exist');
@@ -292,7 +292,7 @@ describe('Play through age 3', () => {
 		cy.get('[data-type="guild"]').should('have.length', 3);
 	});
 
-	it('Instant Eco card gains food/VP (Wonders)', () => {
+	it('Instant Eco card gains ingoo/VP (Wonders)', () => {
 		// Clear a few cards
 		cy.get('[data-index="38"]').click();
 		cy.contains('Buy for 7').click();
@@ -300,7 +300,7 @@ describe('Play through age 3', () => {
 		cy.get('[data-index="31"]').click();
 		cy.contains('Trade').click();
 
-		// Get the actual eco card: 2 food per wonder
+		// Get the actual eco card: 2 ingoo per wonder
 		cy.get('[data-index="25"]').click();
 		cy.get('.player.me .score').should('have.text', '8 4');
 		cy.contains('Get for Free').click();
@@ -356,7 +356,7 @@ describe('Play through age 3', () => {
 		cy.get('.modal .current .pog[data-type="wonder"]').click();
 		cy.get('.player.me .score').should('have.text', '24 5');
 		cy.contains('Buy for 5').click();
-		// 5 - 3 food = 2 food but +5 from trade because of economy token
+		// 5 - 3 ingoo = 2 ingoo but +5 from trade because of economy token
 		cy.get('.player.me .score').should('have.text', '24 7');
 	});
 

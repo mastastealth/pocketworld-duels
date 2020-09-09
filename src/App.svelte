@@ -13,7 +13,7 @@
 	class PlayerObj {
 		constructor(primary = false) {
 			this.primary = primary;
-			this.food = 7; // Coins
+			this.ingoo = 7; // Coins
 			this.score = 0; // VPs
 			this.cards = [];
 			this.tokens = [];
@@ -198,7 +198,7 @@
 						player.score += player.res + player.man;
 						break;
 					case 'coin':
-						player.score += Math.floor(player.food / 3);
+						player.score += Math.floor(player.ingoo / 3);
 						break;
 					case 'wonder':
 						player.score += Object.keys(player.missions).length;
@@ -208,7 +208,7 @@
 		});
 
 		// Tally up coins
-		player.score += Math.floor(player.food / 3);
+		player.score += Math.floor(player.ingoo / 3);
 
 		// Math token
 		if (player.tokens.includes('mathematics')) 

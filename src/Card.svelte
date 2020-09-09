@@ -38,7 +38,7 @@
 >
 	<header>
 		{#if card.cost}
-			<div class="food">
+			<div class="ingoo">
 				{#if typeof card.cost === 'number' || coinCost}
 					<strong>{coinCost || card.cost}</strong>
 				{/if}
@@ -123,23 +123,23 @@
 	z-index: 1;
 }
 	.card[data-type="war"],
-	.card[data-type="war"] .food li:before { background-color: var(--war); }
+	.card[data-type="war"] .ingoo li:before { background-color: var(--war); }
 	.card[data-type="sci"],
-	.card[data-type="sci"] .food li:before { background-color: var(--sci); }
+	.card[data-type="sci"] .ingoo li:before { background-color: var(--sci); }
 	.card[data-type="civ"] { 
 		background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/card.png'); 
 		background-blend-mode: color;
 	}
-		.card[data-type="civ"] .food li:before {
+		.card[data-type="civ"] .ingoo li:before {
 			background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/bar.png'); 
 			background-blend-mode: color;
 		}
 	.card[data-type="eco"],
-	.card[data-type="eco"] .food li:before { background-color: var(--eco); }
+	.card[data-type="eco"] .ingoo li:before { background-color: var(--eco); }
 	.card[data-type="res"],
-	.card[data-type="res"] .food li:before { background-color: var(--res); }
+	.card[data-type="res"] .ingoo li:before { background-color: var(--res); }
 	.card[data-type="man"],
-	.card[data-type="man"] .food li:before { 
+	.card[data-type="man"] .ingoo li:before { 
 		background-position: left bottom; 
 		background-blend-mode: none;
 	}
@@ -206,7 +206,7 @@ header {
 	align-items: center;
 	display: flex;
 	font-weight: bold;
-	height: 5.5vh;
+	height: 32%;
 	justify-content: center;
 	margin-bottom: 0.5vh;
 	position: relative;
@@ -257,23 +257,21 @@ header {
 		width: 30px;
 	}
 
-.food {
+.ingoo {
 	position: absolute;
 	top: 0; left: 8px;
 }
-	.food strong {
+	.ingoo strong {
 		background: url('/assets/res.png') no-repeat -90px 1vh;
 		background-size: 120px 60px;
 		display: block;
-		line-height: 4.5vh;
-		height: 5.5vh;
+		line-height: 4.9vh;
 		text-align: center;
-		text-indent: 2px;
 		width: 30px;
 	}
 
-	.food li { position: relative; }
-		.food li:before {
+	.ingoo li { position: relative; }
+		.ingoo li:before {
 			background: url('/assets/bar.png') no-repeat;
 			background-blend-mode: hard-light;
 			background-size: 100% 100%;
@@ -285,30 +283,30 @@ header {
 			z-index: -1 !important;
 		}
 
-	.food .pog {
+	.ingoo .pog {
 		display: inline-grid;
 		height: 30px;
 		left: 2px;
 		width: 30px;
 	}
-		.food .pog:before {
+		.ingoo .pog:before {
 			background-size: 80px 40px;
 			height: 20px;
 			margin: auto;
 			width: 20px;
 			z-index: 1;
 		}
-			.food .pog[data-res="stone"]:before { background-position: -20px 0; }
-			.food .pog[data-res="wood"]:before { background-position: -40px 0; }
-			.food .pog[data-res="paper"]:before { background-position: 0 -20px; }
-			.food .pog[data-res="glass"]:before { background-position: -20px -20px; }
+			.ingoo .pog[data-res="stone"]:before { background-position: -20px 0; }
+			.ingoo .pog[data-res="wood"]:before { background-position: -40px 0; }
+			.ingoo .pog[data-res="paper"]:before { background-position: 0 -20px; }
+			.ingoo .pog[data-res="glass"]:before { background-position: -20px -20px; }
 
 .res-list {
 	margin: 0;
 	padding: 6vh 0 0 0;
 	list-style: none;
 }
-	.food strong + .res-list { padding-top: 0; }
+	.ingoo strong + .res-list { padding-top: 0; }
 
 main {
 	height: 5vh;

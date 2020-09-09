@@ -21,7 +21,7 @@
 
 	<aside class="actions">
 		{#if mission.coin}
-			<div class="food">{mission.coin}</div>
+			<div class="ingoo">{mission.coin}</div>
 		{/if}
 		{#if mission.vp}
 			<div class="txt">{mission.vp}</div>
@@ -142,8 +142,8 @@ h3 { flex: 1; text-align: center; }
 	.actions .pog:nth-of-type(2) { transform: translateY(-25%); }
 	.actions .pog:nth-of-type(3) { transform: translateY(-50%); }
 
-.food {
-	background: url('/assets/res.png') no-repeat -120px 5px;
+.ingoo {
+	background: url('/assets/res.png') no-repeat -120px 2px;
 	background-size: 160px 80px;
 	color: white;
 	display: grid;

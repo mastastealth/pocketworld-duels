@@ -56,7 +56,7 @@
 
 	function calcCost(card, adj, res) {
 		if (!card) return false;
-		const pfood = $gs[$gs.myturn ? 'p1' : 'p2'].food;
+		const pingoo = $gs[$gs.myturn ? 'p1' : 'p2'].ingoo;
 		total = card.cost;
 
 		// For complicated cost forms
@@ -65,10 +65,10 @@
 			const { total : t, need : n } = canAfford(card, adj, pro);
 			total = t;
 			need = n;
-			return t <= pfood;
+			return t <= pingoo;
 		} else {
 			// Normal cost calculation (pure cash)
-			if (!card.cost || card.cost <= pfood) return true;
+			if (!card.cost || card.cost <= pingoo) return true;
 		}
 
 		return false;
@@ -141,7 +141,7 @@
 							></span>
 						{/each}
 					{:else}
-						{$gs.selected.cost} Food
+						{$gs.selected.cost} Ingoo
 					{/if}
 					{#if who.civtoken && $gs.selected.type === "civ" && $gs.selected.cost.length}
 						<small><i>You can disable 2 resources.</i></small>
