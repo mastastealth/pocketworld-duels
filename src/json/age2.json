@@ -91,7 +91,7 @@
 	{
 		"id": "barracks",
 		"cost": 3,
-		"linkcost": "sword",
+		"linkcost": "hammer",
 		"type": "war",
 		"war": 1
 	},
@@ -171,7 +171,7 @@
 			"wood",
 			"clay"
 		],
-		"linkcost": "horseshoe",
+		"linkcost": "flag",
 		"type": "war",
 		"war": 1
 	},
@@ -202,7 +202,7 @@
 		],
 		"type": "war",
 		"war": 2,
-		"link": "helmet"
+		"link": "fire"
 	},
 	{
 		"id": "customshouse",

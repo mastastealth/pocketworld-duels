@@ -16,14 +16,14 @@
 		"cost": 2,
 		"type": "war",
 		"war": 1,
-		"link": "castle"
+		"link": "shield"
 	},
 	{
 		"id": "garrison",
 		"cost": ["clay"],
 		"type": "war",
 		"war": 1,
-		"link": "sword"
+		"link": "hammer"
 	},
 	{
 		"id": "pharmacist",
@@ -126,7 +126,7 @@
 		"cost": ["wood"],	
 		"type": "war",
 		"war": 1,
-		"link": "horseshoe"
+		"link": "flag"
 	},
 	{
 		"id": "woodreserve",

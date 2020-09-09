@@ -190,5 +190,19 @@ body {
 	content: "\e905";
 }
 /* War Cards (KSR) Link Icons */
-
+.icon-flag:before {
+	content: "\e906";
+}
+.icon-target:before {
+	content: "\e90e";
+}
+.icon-fire:before {
+	content: "\e90f";
+}
+.icon-shield:before {
+	content: "\e910";
+}
+.icon-hammer:before {
+	content: "\e911";
+}
 /* Civilian Cards (Commonfolk) Link Icons */

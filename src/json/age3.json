@@ -56,7 +56,7 @@
 			"stone",
 			"stone"
 		],
-		"linkcost": "helmet",
+		"linkcost": "fire",
 		"type": "war",
 		"war": 2
 	},
@@ -116,7 +116,7 @@
 			"clay",
 			"paper"
 		],
-		"linkcost": "castle",
+		"linkcost": "shield",
 		"type": "war",
 		"war": 2
 	},
