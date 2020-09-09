@@ -1,6 +1,8 @@
 <script>
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let warTotal = 0;
 
@@ -39,7 +41,10 @@
 	}
 </script>
 
-<aside class="war-bar">
+<aside 
+	class="war-bar" 
+	in:fly="{{ x: -200, duration: 300, easing: quintOut }}"
+>
 	<aside class="marker" style="top: calc((100% / 19) * {markerPos})"></aside>
 	{#if !$top5}<aside class="penalty top-5"></aside>{/if}
 	{#if !$top2}<aside class="penalty top-2"></aside>{/if}
@@ -82,19 +87,20 @@
 }
 
 .marker {
-	background: red;
+	background: url('/assets/star.png') no-repeat center;
+	background-size: contain;
 	border-radius: 8px;
 	height: calc(100% / 19);
 	position: absolute;
-	left: 50px;
+	left: 0;
 	top: var(--top);
-	transform: scale(0.5);
-	width: 50%;
+	width: 100%;
 	z-index: 1;
 }
 
 .penalty {
-	background: darkred;
+	background: linear-gradient(to bottom, darkred, rgb(71, 2, 5));
+	border: 1px solid black;
 	border-radius: 5px;
 	color: white;
 	display: grid;
@@ -116,6 +122,14 @@
 
 	.penalty.top-2:after,
 	.penalty.bot-2:after { content: '-2'; }
+
+	.penalty:after {
+		background: url('/assets/res.png') no-repeat -119px 0;
+		display: grid;
+		height: 40px;
+		place-items: center;
+		width: 40px;
+	}
 
 .step {
 	border: 1px dashed black;
