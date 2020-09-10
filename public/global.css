@@ -16,11 +16,22 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-:root {
+/* :root {
 	--war :red;
 	--sci: #1fc041;
 	--civ: #2361ff;
 	--eco: #ffde00;
+	--res: rgb(122, 89, 45);
+	--man: #666;
+	--guild: #6f0cd3;
+} */
+
+/* TnT version */
+:root {
+	--war :#1fc041;
+	--sci: #ffde00;
+	--civ: red;
+	--eco: #2361ff;
 	--res: rgb(122, 89, 45);
 	--man: #666;
 	--guild: #6f0cd3;
@@ -101,17 +112,6 @@ body {
 	}
 
 	.token:before { content: attr(data-id); }
-
-/* TnT version */
-/* :root {
-	--war :green;
-	--sci: goldenrod;
-	--civ: red;
-	--eco: blue;
-	--res: tan;
-	--man: #666;
-	--guild: purple;
-} */
 
 @font-face {
 	font-family: 'icomoon';
@@ -206,3 +206,21 @@ body {
 	content: "\e911";
 }
 /* Civilian Cards (Commonfolk) Link Icons */
+.icon-happy:before {
+	content: "\e916";
+}
+.icon-wine:before {
+	content: "\e917";
+}
+.icon-can:before {
+	content: "\e913";
+}
+.icon-feather:before {
+	content: "\e912";
+}
+.icon-shop:before {
+	content: "\e914";
+}
+.icon-clock:before {
+	content: "\e915";
+}

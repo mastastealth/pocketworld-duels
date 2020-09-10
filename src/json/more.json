@@ -197,7 +197,7 @@
 			"provides": ["glass", "paper"]
 		},
 		{
-			"id": "statue",
+			"id": "levacaloo",
 			"label": "The Sand Kiln at Levacaloo",
 			"cost": [
 				"paper",
@@ -288,7 +288,7 @@
 			"selecttoken": true
 		},
 		{
-			"id": "gardens",
+			"id": "scrapetown",
 			"label": "Scrapetown Racket",
 			"cost": [
 				"paper",
@@ -301,7 +301,7 @@
 			"coin": 6
 		},
 		{
-			"id": "mausoleum",
+			"id": "snikaree",
 			"label": "Snikaree Liberation",
 			"cost": [
 				"paper",

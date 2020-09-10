@@ -5,9 +5,9 @@
 			"clay",
 			"clay"
 		],
-		"linkcost": "mask",
+		"linkcost": "happy",
 		"type": "civ",
-		"link": "statue",
+		"link": "shop",
 		"vp": 4
 	},
 	{
@@ -40,7 +40,7 @@
 		]
 	},
 	{
-		"id": "courthouse",
+		"id": "feather",
 		"cost": [
 			"wood",
 			"wood",
@@ -114,7 +114,7 @@
 			"stone",
 			"stone"
 		],
-		"linkcost": "drop",
+		"linkcost": "wine",
 		"type": "civ",
 		"vp": 5
 	},
@@ -138,7 +138,7 @@
 		],
 		"type": "civ",
 		"vp": 4,
-		"link": "courthouse"
+		"link": "feather"
 	},
 	{
 		"id": "brewery",
@@ -153,10 +153,10 @@
 			"wood",
 			"paper"
 		],
-		"linkcost": "moon",
+		"linkcost": "can",
 		"type": "civ",
 		"vp": 4,
-		"link": "sun"
+		"link": "clock"
 	},
 	{
 		"id": "sawmill",

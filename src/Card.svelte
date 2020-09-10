@@ -51,11 +51,7 @@
 						</li>
 						{#if card.linkcost}
 							<li>
-								{#if card.type === "eco" || card.type === "sci" || card.type === "war"}
-									<i class="icon icon-{card.linkcost}"></i>
-								{:else}
-									{card.linkcost}
-								{/if}
+								<i class="icon icon-{card.linkcost}"></i>
 							</li>
 						{/if}
 					</ul>
@@ -87,11 +83,7 @@
 
 		{#if card.link}
 			<div class="link-icon">
-				{#if card.type === "eco" || card.type === "sci" || card.type === "war"}
 					<i class="icon icon-{card.link}"></i>
-				{:else}
-					{card.link[0]}
-				{/if}
 			</div>
 		{/if}
 		{#if card.sci}

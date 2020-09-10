@@ -9,6 +9,7 @@
 	class="mission {smallMode ? 'small' : ''}" 
 	data-taken={taken}
 	data-built={mission.built}
+	data-id={mission.id}
 	on:click={() => { if (!smallMode) chooseMission(mission)}}
 >
 	<aside class="cost">
@@ -60,13 +61,20 @@
 
 <style>
 .mission {
-	background: green;
+	background-color: green;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: 1px solid black;
 	border-radius: 5px;
 	display: flex;
 	height: 25vh;
 	margin: 5px;
 	width: 45%;
 }
+	.mission[data-id="snikaree"] { background-image: url('/assets/missions/snikaree.jpg'); }
+	.mission[data-id="levacaloo"] { background-image: url('/assets/missions/levacaloo.jpg'); }
+	.mission[data-id="scrapetown"] { background-image: url('/assets/missions/scrapetown.jpg'); }
+
 	.mission[data-taken] {
 		filter: grayscale(100%);
 		pointer-events: none;
@@ -112,11 +120,15 @@ h3 { flex: 1; text-align: center; }
 
 .cost, .actions {
 	align-items: center;
+	background: linear-gradient(to right, rgba(0,0,0, 0.7), transparent);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	padding: 0 5px;
+	position: relative;
 }
+	.actions { background: linear-gradient(to left, rgba(0,0,0, 0.7), transparent); }
+
 	.mission.small .cost,
 	.mission.small .actions {
 		flex-direction: row;

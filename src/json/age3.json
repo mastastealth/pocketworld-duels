@@ -68,7 +68,7 @@
 			"clay",
 			"clay"
 		],
-		"linkcost": "statue",
+		"linkcost": "shop",
 		"type": "civ",
 		"vp": 6
 	},
@@ -80,7 +80,7 @@
 			"paper",
 			"paper"
 		],
-		"linkcost": "sun",
+		"linkcost": "clock",
 		"type": "civ",
 		"vp": 6
 	},
@@ -198,7 +198,7 @@
 			"stone",
 			"paper"
 		],
-		"linkcost": "courthouse",
+		"linkcost": "feather",
 		"type": "civ",
 		"vp": 5
 	},

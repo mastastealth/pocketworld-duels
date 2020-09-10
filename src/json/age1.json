@@ -81,7 +81,7 @@
 		"cost": ["stone"],
 		"type": "civ",
 		"vp": 3,
-		"link": "drop"
+		"link": "wine"
 	},
 	{
 		"id": "clayreserve",
@@ -100,7 +100,7 @@
 		"cost": 0,
 		"type": "civ",
 		"vp": 3,
-		"link": "mask"
+		"link": "happy"
 	},
 	{
 		"id": "claypool",
@@ -112,7 +112,7 @@
 		"id": "altar",
 		"cost": 0,
 		"type": "civ",
-		"link": "moon",
+		"link": "can",
 		"vp": 3
 	},
 	{
