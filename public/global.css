@@ -109,7 +109,8 @@ body {
 }
 	.token[disabled],
 	.token[data-taken] {
-		background: gray;
+		opacity: 0.5;
+		transform: scale(0.9);
 	}
 
 	.token:before { content: attr(data-id); }

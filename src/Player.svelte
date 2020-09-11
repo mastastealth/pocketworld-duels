@@ -159,8 +159,6 @@
 	padding: 0 20px;
 }
 	.token {
-		background: green;
-		border-radius: 100%;
 		height: 60px;
 		width: 60px;
 	}

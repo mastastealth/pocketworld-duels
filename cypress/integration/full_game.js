@@ -7,7 +7,7 @@ describe('Starts a game', () => {
 		cy.contains('Start Game').click();
 		cy.get('.mission').should('have.length', 4);
 		cy.get('h2').should('have.text', 'Player 1 Select a Mission:');
-		cy.contains('The Bone-Pit Riots').click();
+		cy.contains('The Bonepit Riots').click();
 		cy.contains('Defense of the Cold Mark').click();
 		cy.contains('Fuel of Firebrand').click();
 		cy.contains('The Sand Kiln at Levacaloo').click();
@@ -17,7 +17,7 @@ describe('Starts a game', () => {
 		cy.get('.mission').should('have.length', 8);
 		cy.contains('Frozen in Noe').click();
 		cy.contains('Victors Will Feast').click();
-		cy.contains('Sage Marrow Speaks').click();
+		cy.contains('Sage Marro Speaks').click();
 		cy.contains('What Might Be').click();
 
 		// Loads cards in Age 1
@@ -49,7 +49,7 @@ describe('Play through age 1', () => {
 		// Card displays in player bar
 		cy.get('.player.me .cards .card-sm')
 			.should('have.length', 1)
-			.should('have.text', ' m ');
+			.should('have.text', ' c ');
 
 		// VP added
 		cy.get('.player.me .score').should('have.text', '3 7');
