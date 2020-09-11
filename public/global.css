@@ -97,7 +97,8 @@ body {
 	.card-sm[data-provides="res"]:after { filter: sepia(1); }
 
 .token {
-	background: green;
+	background: url('/assets/tokens.png') no-repeat;
+	background-size: cover;
 	border-radius: 100%;
 	color: white;
 	display: inline-grid;
