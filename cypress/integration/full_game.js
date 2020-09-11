@@ -1,7 +1,7 @@
 describe('Starts a game', () => {
 	it('Starts the game', () => {
 		// Loads main page
-		cy.visit('/');
+		cy.visit('http://www.google.com');
 
 		// Start game by choosing missions
 		cy.contains('Start Game').click();
