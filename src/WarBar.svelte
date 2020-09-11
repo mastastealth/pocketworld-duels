@@ -99,7 +99,7 @@
 }
 
 .penalty {
-	background: linear-gradient(to bottom, darkred, rgb(71, 2, 5));
+	background: linear-gradient(to bottom, green, rgb(2, 71, 19));
 	border: 1px solid black;
 	border-radius: 5px;
 	color: white;
@@ -138,5 +138,5 @@
 }
 	.step:nth-of-type(10) { background: rgba(255, 255, 255, 0.2); }
 	.step:nth-of-type(1),
-	.step:nth-of-type(19) { background: rgba(255, 50, 50, 0.2); }
+	.step:nth-of-type(19) { background: rgba(50, 255, 67, 0.2); }
 </style>

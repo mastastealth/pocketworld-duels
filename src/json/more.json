@@ -161,8 +161,8 @@
 	],
 	"wonders": [
 		{
-			"id": "pyramids",
-			"label": "The Bone-Pit Riots",
+			"id": "bonepit",
+			"label": "The Bonepit Riots",
 			"cost": [
 				"paper",
 				"stone",
@@ -172,7 +172,7 @@
 			"vp": 9
 		},
 		{
-			"id": "sphinx",
+			"id": "coldmark",
 			"label": "Defense of the Cold Mark",
 			"cost": [
 				"glass",
@@ -184,7 +184,7 @@
 			"playagain": true
 		},
 		{
-			"id": "piraeus",
+			"id": "firebrand",
 			"label": "Fuel of Firebrand",
 			"cost": [
 				"clay",
@@ -211,7 +211,7 @@
 			"destroyres": true
 		},
 		{
-			"id": "appianway",
+			"id": "noe",
 			"label": "Frozen in Noe",
 			"cost": [
 				"paper",
@@ -226,7 +226,7 @@
 			"destroycoin": true
 		},
 		{
-			"id": "artemis",
+			"id": "feast",
 			"label": "Victors Will Feast",
 			"cost": [
 				"paper",
@@ -238,8 +238,8 @@
 			"playagain": true
 		},
 		{
-			"id": "circus",
-			"label": "Sage Marrow Speaks",
+			"id": "sagemarro",
+			"label": "Sage Marro Speaks",
 			"cost": [
 				"glass",
 				"wood",
@@ -251,7 +251,7 @@
 			"destroyman": true
 		},
 		{
-			"id": "colossus",
+			"id": "mightbe",
 			"label": "What Might Be",
 			"cost": [
 				"glass",
@@ -263,7 +263,7 @@
 			"war": 2
 		},
 		{
-			"id": "lighthouse",
+			"id": "blacksledge",
 			"label": "Black Sledge Uprising",
 			"cost": [
 				"wood",
@@ -275,7 +275,7 @@
 			"provides": ["wood", "stone", "clay"]
 		},
 		{
-			"id": "library",
+			"id": "solawa",
 			"label": "Awash in Solawa",
 			"cost": [
 				"paper",

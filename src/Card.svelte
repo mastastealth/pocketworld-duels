@@ -212,15 +212,19 @@ header {
 }
 
 .vp, .instant { 
-	font-size: 1.5em; 
-	mix-blend-mode: soft-light;
+	font-size: 1.5em;
 }
 	.instant {
 		background: url('/assets/res.png') no-repeat -120px -3px;
 		background-size: 160px 80px;
-		mix-blend-mode: unset;
 		text-align: center;
 		width: 40px;
+	}
+	.vp {
+		background: url('/assets/food.png') no-repeat 6px 3px;
+		background-size: auto 93%;
+		min-width: 60px;
+		text-align: center;
 	}
 
 .sci-icon,
@@ -250,14 +254,16 @@ header {
 	}
 
 .ingoo {
+	min-height: 100%;
 	position: absolute;
 	top: 0; left: 8px;
 }
 	.ingoo strong {
-		background: url('/assets/res.png') no-repeat -90px 1vh;
+		background: url('/assets/res.png') no-repeat -90px 1px;
 		background-size: 120px 60px;
 		display: block;
-		line-height: 4.9vh;
+		line-height: 30px;
+		margin-top: 40%;
 		text-align: center;
 		width: 30px;
 	}

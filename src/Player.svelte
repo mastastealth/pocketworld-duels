@@ -101,7 +101,9 @@
 	}
 
 .score {
-	font-size: 4em;
+	background: url('/assets/food.png') no-repeat 52px center;
+	background-size: 40% auto;
+	font-size: 3em;
 	font-weight: bold;
 	line-height: 75px;
 	position: relative;

@@ -25,7 +25,7 @@
 			<div class="ingoo">{mission.coin}</div>
 		{/if}
 		{#if mission.vp}
-			<div class="txt">{mission.vp}</div>
+			<div class="txt vp">{mission.vp}</div>
 		{/if}
 		{#if mission.war}
 			<img src="/assets/star.png" alt="star" />
@@ -61,7 +61,6 @@
 
 <style>
 .mission {
-	background-color: green;
 	background-repeat: no-repeat;
 	background-size: cover;
 	border: 1px solid black;
@@ -69,20 +68,36 @@
 	display: flex;
 	height: 25vh;
 	margin: 5px;
+	transition: transform 0.2s;
+	user-select: none;
 	width: 45%;
 }
+	.mission:not(.small):hover { transform: scale(1.05); z-index: 10; }
+
 	.mission[data-id="snikaree"] { background-image: url('/assets/missions/snikaree.jpg'); }
 	.mission[data-id="levacaloo"] { background-image: url('/assets/missions/levacaloo.jpg'); }
 	.mission[data-id="scrapetown"] { background-image: url('/assets/missions/scrapetown.jpg'); }
 
+	.mission[data-id="bonepit"] { background-image: url('/assets/missions/bonepit.jpg'); }
+	.mission[data-id="blacksledge"] { background-image: url('/assets/missions/blacksledge.jpg'); }
+	.mission[data-id="firebrand"] { background-image: url('/assets/missions/firebrand.jpg'); }
+
+	.mission[data-id="solawa"] { background-image: url('/assets/missions/solawa.jpg'); }
+	.mission[data-id="feast"] { background-image: url('/assets/missions/feast.jpg'); }
+	.mission[data-id="sagemarro"] { background-image: url('/assets/missions/sagemarro.jpg'); }
+
+	.mission[data-id="coldmark"] { background-image: url('/assets/missions/coldmark.jpg'); }
+	.mission[data-id="noe"] { background-image: url('/assets/missions/noe.jpg'); }
+	.mission[data-id="mightbe"] { background-image: url('/assets/missions/mightbe.jpg'); }
+
 	.mission[data-taken] {
 		filter: grayscale(100%);
 		pointer-events: none;
+		transform: scale(0.95);
 	}
 
 	.mission.small {
 		align-items: center;
-		background: black;
 		display: inline-flex;
 		flex: 1;
 		height: auto;
@@ -116,7 +131,12 @@
 				.mission.small .pog[data-res="paper"]:before { background-position: 0 -20px; }
 				.mission.small .pog[data-res="glass"]:before { background-position: -20px -20px; }
 
-h3 { flex: 1; text-align: center; }
+h3 { 
+	color: white;
+	flex: 1; 
+	text-align: center; 
+	text-shadow: 0 0 12px black, 0 0 2px black, 0 0 1px black;
+}
 
 .cost, .actions {
 	align-items: center;
@@ -127,11 +147,11 @@ h3 { flex: 1; text-align: center; }
 	padding: 0 5px;
 	position: relative;
 }
-	.actions { background: linear-gradient(to left, rgba(0,0,0, 0.7), transparent); }
-
 	.mission.small .cost,
 	.mission.small .actions {
+		background: none;
 		flex-direction: row;
+		width: auto;
 	}
 
 	.mission.small:not([data-built]):not(:hover) .actions,
@@ -143,12 +163,20 @@ h3 { flex: 1; text-align: center; }
 	.mission.small .actions {
 		font-size: 0.7em;
 	}
+		.mission.small .actions > div,
+		.mission.small .actions > img {
+			margin: 0 2px;
+		}
+
+		.mission.small .actions .pog:nth-of-type(2) { transform: translateX(-25%); }
+		.mission.small .actions .pog:nth-of-type(3) { transform: translateX(-50%); }
 
 .actions {
+	background: linear-gradient(to left, rgba(0,0,0, 0.7), transparent);
 	width: 60px;
 }
 	.actions img {
-		width: 40px;
+		width: 30px;
 	}
 
 	.actions .pog:nth-of-type(2) { transform: translateY(-25%); }
@@ -165,10 +193,30 @@ h3 { flex: 1; text-align: center; }
 	place-items: center;
 	width: 40px;
 }
+	.mission.small .ingoo {
+		background: url('/assets/res.png') no-repeat -90px 0;
+		background-size: 120px 60px;
+		font-size: 1.1em;
+		height: 30px;
+		width: 30px;
+	}
 
 .txt {
 	color: white;
 	font-size: 2em;
 	font-weight: bold;
 }
+
+.vp {
+	background: url('/assets/food.png') no-repeat 0 5px;
+	background-size: 100% auto;
+	font-size: 1.5em;
+	min-width: 40px;
+	text-align: center;
+	text-indent: 4px;
+}
+	.mission.small .vp {
+		background-position: 2px 0px;
+		background-size: 85% auto;
+	}
 </style>
