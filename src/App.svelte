@@ -264,6 +264,7 @@
 
 				</ul>
 				<aside>
+					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
 					<button on:click={startGame}>Start Game</button>
 					<button disabled>Host Lobby</button>
 				</aside>
@@ -311,6 +312,11 @@
 	.menu aside {
 		flex: 1;
 	}
+
+.logo { 
+	display: block; 
+	margin-bottom: 20px;
+}
 
 .wonder-select { flex-wrap: wrap; }
 	.wonder-select h2 { 
