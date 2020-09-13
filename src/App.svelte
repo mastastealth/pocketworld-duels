@@ -5,7 +5,7 @@
 	import Mission from './Mission.svelte';
 
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
-	import { gs } from './store/gameState';
+	import { gs, ns } from './store/gameState';
 
 	import more from './json/more.json';
 
@@ -56,7 +56,7 @@
 	let selectedMissions = [];
 	let winner = null;
 
-	function startGame() {
+	function startGame(mp = false) {
 		gs.set({
 		...$gs,
 			state: 'wonders',
@@ -64,6 +64,12 @@
 			p2,
 			tokens
 		});
+
+		if (mp) {
+			$ns.pubnub.unsubscribe({
+				channels: ["pwd-lobby"]
+			});
+		}
 	}
 
 	function chooseMission(m) {
@@ -219,6 +225,104 @@
 			[player]: player
 		});
 	}
+
+	$ns.pubnub.subscribe({
+		channels: ['pwd-lobby'],
+		withPresence: true
+	});
+
+	let lobbies = [];
+	let hosting = false;
+	let selectedRoom = null;
+
+	/** Either hosts a new game or cancels a currently hosted one */
+	function hostGame() {
+		if (hosting) {
+			$ns.pubnub.unsubscribe({
+				channels: [`pwd-${$ns.pubnub.getUUID().slice(3, 10)}`]
+			});
+	
+			$ns.pubnub.setState({
+				state: { hosting: false },
+				channels: ['pwd-lobby']
+			});
+
+			hosting = false;
+		} else {
+			hosting = $ns.hostGame();
+		}
+	}
+
+	function joinGame() {
+		if (hosting) return false;
+		const channel = `pwd-${selectedRoom.slice(3, 10)}`;
+
+		// Join the host's channel
+		$ns.pubnub.subscribe({
+			channels: [channel],
+			withPresence: true
+		});
+
+		$ns.pubnub.publish({
+			message: 'LETSGO',
+			channel
+		});
+
+		startGame(true);
+	}
+
+	async function updateLobbies() {
+		console.log('Updating lobbies.')
+		// Get lobbies
+		const resp = await $ns.pubnub.hereNow({ 
+			channels: ["pwd-lobby"], 
+			includeState: true 
+		});
+
+		lobbies = resp.channels["pwd-lobby"]
+					.occupants.filter(l => l.state.hosting && l.state.user);
+
+		console.log(resp.channels["pwd-lobby"].occupants, lobbies)
+	}
+
+	function selectRoom(lobby) {
+		if (hosting) return false;
+		selectedRoom = selectedRoom ? null : lobby.uuid;
+	}
+
+	$ns.pubnub.addListener({
+		presence(ev) {
+			// Used to detect when newly hosted games are created, live
+			if (ev.action === "state-change") {
+				console.log('Detected state change', ev)
+				if (ev.state.hosting !== null) updateLobbies();
+			}
+		},
+		status(ev) {
+			// On the initial connection to the lobby
+			if (
+				ev.category === "PNConnectedCategory"
+				&& ev.subscribedChannels.length === 1
+				&& ev.subscribedChannels.includes("pwd-lobby")
+			) {
+				console.log('You have joined the game.', ev)
+				// Clear any old presence? Then update lobbies
+				$ns.pubnub.setState({
+					state: { hosting: null },
+					channels: ['pwd-lobby']
+				}, updateLobbies);
+			}
+		},
+		message(data) {
+			// Ignore yourself
+			if (data.publisher === $ns.pubnub.getUUID()) return false;
+
+			// Player joined your game
+			if (hosting && data.message === 'LETSGO') {
+				startGame(true);
+			}
+		}
+	});
 </script>
 
 <main>
@@ -260,13 +364,27 @@
 			</div>
 		{:else}
 			<main class="table menu">
-				<ul class="lobbies">
-
+				<ul class="lobbies" data-hosting={hosting || null}>
+					{#each lobbies as lobby}
+						<li 
+							data-selected={selectedRoom === lobby.uuid || null} 
+							on:click={selectRoom(lobby)}
+						>
+							<strong>{lobby.state.user}'s Room</strong>
+							<span class="room">{lobby.uuid.slice(3, 8)}</span>
+						</li>
+					{/each}
 				</ul>
 				<aside>
 					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
 					<button on:click={startGame}>Start Game</button>
-					<button disabled>Host Lobby</button>
+					<button on:click={hostGame}>
+						{#if hosting}Cancel Host
+						{:else}Host Lobby{/if}
+					</button>
+					{#if !hosting}
+						<button disabled={!selectedRoom} on:click={joinGame}>Join Lobby</button>
+					{/if}
 				</aside>
 			</main>
 		{/if}
@@ -304,10 +422,41 @@
 	gap: 10px;
 }
 	.menu .lobbies { 
-		background: rgba(0, 0, 0, 0.5);
-		flex: 1;
+		background: url('/assets/board.png') no-repeat;
+		background-size: 100% 100%;
+		border-radius: 5px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+		color: white;
 		height: 100%;
+		margin-right: 50px;
+		padding: 18px 10px;
+		width: 320px;
 	}
+		.menu .lobbies[data-hosting] {
+			cursor: not-allowed;
+		}
+
+		.menu .lobbies:empty {
+			display: grid;
+			place-items: center;
+		}
+
+		.menu .lobbies:empty:after {
+			content: 'No lobbies.';
+		}
+
+		.menu .lobbies li {
+			list-style: none;
+			padding: 15px 10px;
+			user-select: none;
+		}
+			.menu .lobbies li[data-selected] { border-left: 3px solid yellow; }
+
+		.menu .lobbies .room {
+			float: right;
+			font-size: italic;
+			opacity: 0.5;
+		}
 
 	.menu aside {
 		flex: 1;
