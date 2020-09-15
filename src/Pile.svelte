@@ -2,13 +2,12 @@
 	import Card from './Card.svelte';
 	import Modal from './Modal.svelte';
 	import { gs } from './store/gameState';
-	import age1 from './json/age1.json';
 	import age2 from './json/age2.json';
 	import age3 from './json/age3.json';
 	import more from './json/more.json';
 
 	export let endGame = null;
-	let cards = $gs.shuffle(age1, process.env.isDev).slice(3);
+	export let cards = null;
 	let showModal = false;
 
 	/**

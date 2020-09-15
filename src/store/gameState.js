@@ -21,7 +21,7 @@ const pubnub = new PubNub({
 
 function random(arr) {
 	return arr[Math.floor(Math.random() * Math.floor(arr.length))];
- }
+}
 
 export const gs = writable({
 	state: 'menu',
@@ -48,26 +48,107 @@ export const gs = writable({
 	}
 });
 
-export const ns = writable({
+const { subscribe, set, update } = writable({
+	lobbies: [],
+	hosting: false,
+	selectedRoom: null,
 	pubnub,
-	hostGame() {
-		const user = `${random(factions)} ${random(units)}`;
-
-		pubnub.subscribe({
-			channels: [`pwd-${pubnub.getUUID().slice(3, 10)}`]
-		});
-
-		// Set presence to hosting
-		pubnub.setState({
-			state: { 
-				hosting: true,
-				user
-			},
-			channels: ['pwd-lobby']
-		}, (s, resp) => {
-			console.log(`Hosting as ${user}`, resp);
-		});
-
-		return true;
+	get mychan() {
+		return `pwd-${pubnub.getUUID().slice(3, 10)}`;
+	},
+	get channel() {
+		return this.selectedRoom 
+			? `pwd-${this.selectedRoom.slice(3, 10)}`
+			: null;
 	}
 });
+
+export const ns = {
+	// Store defaults
+	subscribe,
+	set,
+	update,
+
+	// Methods
+
+	/** Either hosts a new game or cancels a currently hosted one */
+	hostGame() {
+		if (self.hosting) {
+			console.info('Closing lobby.');
+			pubnub.unsubscribe({
+				channels: [`pwd-${self.mychan}`]
+			});
+	
+			pubnub.setState({
+				state: { hosting: false },
+				channels: ['pwd-lobby']
+			});
+
+			update(self => {
+				self.hosting = false;
+				return self;
+			});
+		} else {
+			console.info('Opening lobby.');
+			const user = `${random(factions)} ${random(units)}`;
+
+			pubnub.subscribe({
+				channels: [`pwd-${self.mychan}`]
+			});
+
+			// Set presence to hosting
+			pubnub.setState({
+				state: { 
+					hosting: true,
+					user
+				},
+				channels: ['pwd-lobby']
+			}, (s, resp) => {
+				console.log(`Hosting as ${user}`, resp);
+			});
+
+			update(self => {
+				self.hosting = true;
+				return self;
+			});
+		}
+	},
+	joinGame() {
+		if (this.hosting) return false;
+
+		// Join the host's channel
+		$ns.pubnub.subscribe({
+			channels: [this.channel]
+		});
+
+		$ns.pubnub.publish({
+			message: 'ready',
+			channel
+		});
+
+		// TODO - Set a loading state of sorts?
+	},
+	async updateLobbies() {
+		console.info('Updating lobbies.');
+
+		const resp = await pubnub.hereNow({ 
+			channels: ["pwd-lobby"], 
+			includeState: true 
+		});
+
+		const ppl = resp.channels["pwd-lobby"].occupants;
+
+		update(self => {
+			self.lobbies = ppl.filter(l => l.state.hosting && l.state.user);
+			return self;
+		});
+	},
+	selectRoom(lobby) {
+		update(self => {
+			if (self.hosting) return self;
+
+			self.selectedRoom = self.selectedRoom ? null : lobby.uuid;
+			return self;
+		});
+	}
+};

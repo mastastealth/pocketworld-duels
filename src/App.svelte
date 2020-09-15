@@ -7,6 +7,7 @@
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs, ns } from './store/gameState';
 
+	import age1 from './json/age1.json';
 	import more from './json/more.json';
 
 	// Define the Player object and all its props
@@ -49,27 +50,45 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	const tokens = [...$gs.shuffle(more.tokens, process.env.isDev)];
-	const missions = [...$gs.shuffle(more.wonders, process.env.isDev)];
-
+	let tokens = [...$gs.shuffle(more.tokens)];
+	let missions = [...$gs.shuffle(more.wonders)];
+	let cards = $gs.shuffle(age1).slice(3);
 	let missionSet = [...missions.slice(0, 4)];
+
 	let selectedMissions = [];
 	let winner = null;
 
 	function startGame(mp = false) {
-		gs.set({
-		...$gs,
-			state: 'wonders',
-			p1,
-			p2,
-			tokens
-		});
+		console.info('Starting Game.')
+		let myturn = true;
 
 		if (mp) {
+			// Leave the lobby
 			$ns.pubnub.unsubscribe({
 				channels: ["pwd-lobby"]
 			});
+
+			if (hosting) $ns.pubnub.publish({
+				message: {
+					cards,
+					tokens,
+					missions,
+					start: true
+				},
+				channel: `pwd-${$ns.pubnub.getUUID().slice(3, 10)}`
+			});
+
+			if (!hosting) myturn = false;
 		}
+
+		gs.set({
+			...$gs,
+			state: 'wonders',
+			p1,
+			p2,
+			tokens,
+			myturn
+		});
 	}
 
 	function chooseMission(m) {
@@ -226,76 +245,20 @@
 		});
 	}
 
+	// ===========================
+	// Prepare all the multiplayer stuff
+	// ===========================
 	$ns.pubnub.subscribe({
 		channels: ['pwd-lobby'],
 		withPresence: true
 	});
 
-	let lobbies = [];
-	let hosting = false;
-	let selectedRoom = null;
-
-	/** Either hosts a new game or cancels a currently hosted one */
-	function hostGame() {
-		if (hosting) {
-			$ns.pubnub.unsubscribe({
-				channels: [`pwd-${$ns.pubnub.getUUID().slice(3, 10)}`]
-			});
-	
-			$ns.pubnub.setState({
-				state: { hosting: false },
-				channels: ['pwd-lobby']
-			});
-
-			hosting = false;
-		} else {
-			hosting = $ns.hostGame();
-		}
-	}
-
-	function joinGame() {
-		if (hosting) return false;
-		const channel = `pwd-${selectedRoom.slice(3, 10)}`;
-
-		// Join the host's channel
-		$ns.pubnub.subscribe({
-			channels: [channel],
-			withPresence: true
-		});
-
-		$ns.pubnub.publish({
-			message: 'LETSGO',
-			channel
-		});
-
-		startGame(true);
-	}
-
-	async function updateLobbies() {
-		console.log('Updating lobbies.')
-		// Get lobbies
-		const resp = await $ns.pubnub.hereNow({ 
-			channels: ["pwd-lobby"], 
-			includeState: true 
-		});
-
-		lobbies = resp.channels["pwd-lobby"]
-					.occupants.filter(l => l.state.hosting && l.state.user);
-
-		console.log(resp.channels["pwd-lobby"].occupants, lobbies)
-	}
-
-	function selectRoom(lobby) {
-		if (hosting) return false;
-		selectedRoom = selectedRoom ? null : lobby.uuid;
-	}
-
 	$ns.pubnub.addListener({
 		presence(ev) {
 			// Used to detect when newly hosted games are created, live
 			if (ev.action === "state-change") {
-				console.log('Detected state change', ev)
-				if (ev.state.hosting !== null) updateLobbies();
+				// console.log('Detected state change', ev)
+				if (ev.state.hosting !== null) ns.updateLobbies();
 			}
 		},
 		status(ev) {
@@ -305,12 +268,12 @@
 				&& ev.subscribedChannels.length === 1
 				&& ev.subscribedChannels.includes("pwd-lobby")
 			) {
-				console.log('You have joined the game.', ev)
+				console.info('You have joined the lobby.')
 				// Clear any old presence? Then update lobbies
 				$ns.pubnub.setState({
 					state: { hosting: null },
 					channels: ['pwd-lobby']
-				}, updateLobbies);
+				}, ns.updateLobbies);
 			}
 		},
 		message(data) {
@@ -318,7 +281,15 @@
 			if (data.publisher === $ns.pubnub.getUUID()) return false;
 
 			// Player joined your game
-			if (hosting && data.message === 'LETSGO') {
+			if (hosting && data.message === 'ready') {
+				startGame(true);
+			}
+
+			if (data.message.start) {
+				cards = [...data.message.cards];
+				tokens = [...data.message.tokens];
+				missions = [...data.message.missions];
+				missionSet = [...missions.slice(0, 4)];
 				startGame(true);
 			}
 		}
@@ -337,7 +308,7 @@
 					<h1>{winner.player}</h1>
 					<h3>{winner.type}</h3>
 				{:else}
-					<Pile endGame={endGame} />
+					<Pile endGame={endGame} cards={cards} />
 				{/if}
 			</main>
 
@@ -364,11 +335,11 @@
 			</div>
 		{:else}
 			<main class="table menu">
-				<ul class="lobbies" data-hosting={hosting || null}>
-					{#each lobbies as lobby}
+				<ul class="lobbies" data-hosting={$ns.hosting || null}>
+					{#each $ns.lobbies as lobby}
 						<li 
-							data-selected={selectedRoom === lobby.uuid || null} 
-							on:click={selectRoom(lobby)}
+							data-selected={$ns.selectedRoom === lobby.uuid || null} 
+							on:click={ns.selectRoom(lobby)}
 						>
 							<strong>{lobby.state.user}'s Room</strong>
 							<span class="room">{lobby.uuid.slice(3, 8)}</span>
@@ -377,13 +348,15 @@
 				</ul>
 				<aside>
 					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
-					<button on:click={startGame}>Start Game</button>
-					<button on:click={hostGame}>
-						{#if hosting}Cancel Host
+					{#if !$ns.hosting}
+						<button on:click={() => { startGame(false); }}>Start Game</button>
+					{/if}
+					<button on:click={ns.hostGame}>
+						{#if $ns.hosting}Cancel Host
 						{:else}Host Lobby{/if}
 					</button>
-					{#if !hosting}
-						<button disabled={!selectedRoom} on:click={joinGame}>Join Lobby</button>
+					{#if !$ns.hosting}
+						<button disabled={!$ns.selectedRoom} on:click={$ns.joinGame}>Join Lobby</button>
 					{/if}
 				</aside>
 			</main>
