@@ -3,6 +3,7 @@
 	export let taken = null;
 	export let chooseMission = null;
 	export let smallMode = false;
+	export let myturn = false;
 </script>
 
 <div 
@@ -10,7 +11,7 @@
 	data-taken={taken}
 	data-built={mission.built}
 	data-id={mission.id}
-	on:click={() => { if (!smallMode) chooseMission(mission)}}
+	on:click={() => { if (!smallMode && myturn) chooseMission(mission)}}
 >
 	<aside class="cost">
 		{#each mission.cost as cost}

@@ -370,7 +370,8 @@
 					<Mission 
 						taken={selectedMissions.includes(m.id) || null} 
 						mission={m} 
-						chooseMission={chooseMission} 
+						chooseMission={chooseMission}
+						myturn={($ns.online && $gs.myturn) || !$ns.online}
 					/>
 				{/each}
 			</div>

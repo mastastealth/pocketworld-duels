@@ -5,6 +5,7 @@
 	export let card = {};
 	export let selectCard = () => {};
 	export let index = 0;
+	export let myturn = false;
 
 	$: fullCost = card.cost.length 
 		? card.cost.filter(c => c !== "coin") 
@@ -34,7 +35,7 @@
 	data-res={card.res}
 	data-trade={card.trade}
 	data-sci={card.sci}
-	on:click={!card.taken ? selectCard(card) : noFn}
+	on:click={!card.taken && myturn ? selectCard(card) : noFn}
 >
 	<header>
 		{#if card.cost}
@@ -110,6 +111,7 @@
 	min-width: calc((100vh - 200px) / 5);
 	position: relative;
 	transform: translateZ(1px);
+	user-select: none;
 	width: 80%;
 	will-change: contents;
 	z-index: 1;

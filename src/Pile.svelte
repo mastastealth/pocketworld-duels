@@ -526,13 +526,18 @@
 	</div>
 {/if}
 
-<div class="pile" data-myturn={$gs.myturn} data-age={$gs.age}>
+<div class="pile" data-myturn={$gs.myturn || null} data-age={$gs.age}>
 	{#each finalCards as card, i}
 		{#if !card}
 			<div class="card" data-empty></div>
 		{/if}
 		{#if card}
-			<Card card={card} selectCard={selectCard} index={i} />
+			<Card 
+				card={card} 
+				selectCard={selectCard} 
+				index={i} 
+				myturn={($ns.online && $gs.myturn) || !$ns.online}
+			/>
 		{/if}
 	{/each}
 </div>
@@ -560,6 +565,10 @@
 	.pile[data-age="3"] :global(.card[data-hidden]) {
 		background-color: rgb(29, 149, 59);
 		background-blend-mode: hard-light;
+	}
+
+	.pile:not([data-myturn]) :global(.card) {
+		cursor: default !important;
 	}
 
 .overlay {
