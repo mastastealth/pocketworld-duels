@@ -1,13 +1,14 @@
 <script>
 	import Card from './Card.svelte';
 	import Modal from './Modal.svelte';
-	import { gs } from './store/gameState';
+	import { gs, ns } from './store/gameState';
 	import age2 from './json/age2.json';
 	import age3 from './json/age3.json';
 	import more from './json/more.json';
 
 	export let endGame = null;
 	export let cards = null;
+	export let mpdata = null;
 	let showModal = false;
 
 	/**
@@ -152,6 +153,15 @@
 	/** The computed property that sorts the shuffled cards per age */
 	$: finalCards = sortCards(cards);
 
+	$: {
+		if (mpdata) {
+			if (mpdata.publisher !== $ns.myid) chooseCard({
+				...mpdata.message[0],
+				choosecard: true
+			});
+		}
+	}
+
 	/**
 	 * Fired when a player chooses an action on a card. Readjusts "blocked" state for newly revealed cards. This is passed down into the modal.
 	 * @param {Object} card - The card that was chosen
@@ -161,13 +171,23 @@
 	 */
 	function chooseCard({
 		card,
-		 sell = false, 
-		 build = false, 
-		 adjustedCost = false, 
-		 wonder = false,
-		 pro = false,
-		 free = false
+		sell = false, 
+		build = false, 
+		adjustedCost = false, 
+		wonder = false,
+		pro = false,
+		free = false,
+		choosecard = null
 	}) {
+		// Send choice when playing online
+		if ($ns.online && !choosecard) $ns.pubnub.publish({
+			message: {
+				...arguments,
+				choosecard: true
+			},
+			channel: $ns.channel
+		});
+
 		if (wonder) deselectModal();
 
 		const isOdd = Math.floor(card.index / 6) % 2; // Checks the row

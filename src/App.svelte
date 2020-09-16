@@ -68,17 +68,19 @@
 				channels: ["pwd-lobby"]
 			});
 
-			if (hosting) $ns.pubnub.publish({
-				message: {
-					cards,
-					tokens,
-					missions,
-					start: true
-				},
-				channel: `pwd-${$ns.pubnub.getUUID().slice(3, 10)}`
-			});
-
-			if (!hosting) myturn = false;
+			if ($ns.hosting) {
+				$ns.pubnub.publish({
+					message: {
+						cards,
+						tokens,
+						missions,
+						start: true
+					},
+					channel: $ns.channel
+				});
+			} else {
+				myturn = false;
+			}
 		}
 
 		gs.set({
@@ -91,7 +93,23 @@
 		});
 	}
 
-	function chooseMission(m) {
+	/**
+	 * Selects a mission, durin the start of the game.
+	 * @param m - The mission object
+	 * @param choosemission - Set to true when triggered from an online opponent
+	 */
+	function chooseMission(m, choosemission = false) {
+		console.log(m);
+
+		// Relay in MP
+		if ($ns.online && !choosemission) $ns.pubnub.publish({
+			message: {
+				mission: m,
+				choosemission: true
+			},
+			channel: $ns.channel
+		});
+
 		// Track selected missions
 		selectedMissions.push(m.id);
 		selectedMissions = [...selectedMissions];
@@ -262,18 +280,32 @@
 			}
 		},
 		status(ev) {
-			// On the initial connection to the lobby
-			if (
-				ev.category === "PNConnectedCategory"
-				&& ev.subscribedChannels.length === 1
-				&& ev.subscribedChannels.includes("pwd-lobby")
-			) {
-				console.info('You have joined the lobby.')
-				// Clear any old presence? Then update lobbies
-				$ns.pubnub.setState({
-					state: { hosting: null },
-					channels: ['pwd-lobby']
-				}, ns.updateLobbies);
+			if (ev.category === "PNConnectedCategory") {
+				// On the initial connection to the lobby
+				if (
+					ev.subscribedChannels.length === 1
+					&& ev.subscribedChannels.includes("pwd-lobby")
+				) {
+					console.info('You have joined the lobby.')
+					// Clear any old presence? Then update lobbies
+					$ns.pubnub.setState({
+						state: { hosting: null },
+						channels: ['pwd-lobby']
+					}, ns.updateLobbies);
+				}
+
+				// On join game
+				if (ev.subscribedChannels.length === 2) {
+					$ns.pubnub.hereNow({ 
+						channels: ev.affectedChannels
+					}, (s, resp) => {
+						console.log(resp);
+						if (resp.totalOccupancy > 1) $ns.pubnub.publish({
+							message: 'ready',
+							channel: ev.affectedChannels[0]
+						});
+					});
+				}
 			}
 		},
 		message(data) {
@@ -281,10 +313,11 @@
 			if (data.publisher === $ns.pubnub.getUUID()) return false;
 
 			// Player joined your game
-			if (hosting && data.message === 'ready') {
+			if ($ns.hosting && data.message === 'ready') {
 				startGame(true);
 			}
 
+			// Host sent over game data
 			if (data.message.start) {
 				cards = [...data.message.cards];
 				tokens = [...data.message.tokens];
@@ -292,8 +325,16 @@
 				missionSet = [...missions.slice(0, 4)];
 				startGame(true);
 			}
+
+			// Player chose a card
+			if (data.message.choosecard) mpdata = data;
+
+			// Player chose a mission
+			if (data.message.choosemission) chooseMission(data.message.mission, true);
 		}
 	});
+
+	let mpdata = null;
 </script>
 
 <main>
@@ -308,7 +349,7 @@
 					<h1>{winner.player}</h1>
 					<h3>{winner.type}</h3>
 				{:else}
-					<Pile endGame={endGame} cards={cards} />
+					<Pile endGame={endGame} cards={cards} mpdata={mpdata} />
 				{/if}
 			</main>
 
@@ -356,7 +397,7 @@
 						{:else}Host Lobby{/if}
 					</button>
 					{#if !$ns.hosting}
-						<button disabled={!$ns.selectedRoom} on:click={$ns.joinGame}>Join Lobby</button>
+						<button disabled={!$ns.selectedRoom} on:click={ns.joinGame}>Join Lobby</button>
 					{/if}
 				</aside>
 			</main>

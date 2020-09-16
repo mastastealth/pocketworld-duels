@@ -215,8 +215,9 @@ header {
 	font-size: 1.5em;
 }
 	.instant {
-		background: url('/assets/res.png') no-repeat -120px -3px;
+		background: url('/assets/res.png') no-repeat -120px 0;
 		background-size: 160px 80px;
+		height: 40px;
 		text-align: center;
 		width: 40px;
 	}

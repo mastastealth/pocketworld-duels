@@ -51,15 +51,17 @@ export const gs = writable({
 const { subscribe, set, update } = writable({
 	lobbies: [],
 	hosting: false,
+	online: false,
 	selectedRoom: null,
 	pubnub,
+	myid: pubnub.getUUID(),
 	get mychan() {
-		return `pwd-${pubnub.getUUID().slice(3, 10)}`;
+		return `pwd-${this.myid.slice(3, 10)}`;
 	},
 	get channel() {
 		return this.selectedRoom 
 			? `pwd-${this.selectedRoom.slice(3, 10)}`
-			: null;
+			: this.mychan;
 	}
 });
 
@@ -73,60 +75,60 @@ export const ns = {
 
 	/** Either hosts a new game or cancels a currently hosted one */
 	hostGame() {
-		if (self.hosting) {
-			console.info('Closing lobby.');
-			pubnub.unsubscribe({
-				channels: [`pwd-${self.mychan}`]
-			});
-	
-			pubnub.setState({
-				state: { hosting: false },
-				channels: ['pwd-lobby']
-			});
+		update(self => {
+			if (self.hosting) {
+				console.info('Closing lobby.');
+				pubnub.unsubscribe({
+					channels: [self.mychan]
+				});
+		
+				pubnub.setState({
+					state: { hosting: false },
+					channels: ['pwd-lobby']
+				});
 
-			update(self => {
+				
 				self.hosting = false;
+				self.online = false;
 				return self;
-			});
-		} else {
-			console.info('Opening lobby.');
-			const user = `${random(factions)} ${random(units)}`;
+			} else {
+				console.info(`Opening lobby ${self.mychan}.`);
+				const user = `${random(factions)} ${random(units)}`;
 
-			pubnub.subscribe({
-				channels: [`pwd-${self.mychan}`]
-			});
+				pubnub.subscribe({
+					channels: [self.mychan]
+				});
 
-			// Set presence to hosting
-			pubnub.setState({
-				state: { 
-					hosting: true,
-					user
-				},
-				channels: ['pwd-lobby']
-			}, (s, resp) => {
-				console.log(`Hosting as ${user}`, resp);
-			});
+				// Set presence to hosting
+				pubnub.setState({
+					state: { 
+						hosting: true,
+						user
+					},
+					channels: ['pwd-lobby']
+				}, (s, resp) => {
+					console.info(`Hosting as ${user}`);
+				});
 
-			update(self => {
 				self.hosting = true;
+				self.online = true;
 				return self;
-			});
-		}
+			}
+		});
 	},
 	joinGame() {
-		if (this.hosting) return false;
+		update(self => {
+			if (self.hosting) return false;
+			
+			// Join the host's channel
+			pubnub.subscribe({
+				channels: [self.channel]
+			});
 
-		// Join the host's channel
-		$ns.pubnub.subscribe({
-			channels: [this.channel]
+			self.online = true;
+			// TODO - Set a loading state of sorts?
+			return self;
 		});
-
-		$ns.pubnub.publish({
-			message: 'ready',
-			channel
-		});
-
-		// TODO - Set a loading state of sorts?
 	},
 	async updateLobbies() {
 		console.info('Updating lobbies.');
