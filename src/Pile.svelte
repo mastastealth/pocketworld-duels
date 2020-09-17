@@ -9,7 +9,8 @@
 	export let endGame = null;
 	export let cards = null;
 	export let mpdata = null;
-	let showModal = false;
+	export let swapCards = null;
+	export let changePlayer = null;
 
 	/**
 	 * Sorts an array of cards, depending on age, to a certain layout.
@@ -130,24 +131,26 @@
 	/** Closes the modal */
 	function deselectModal() {
 		if (
-			showModal
+			$gs.showModal
 			&& (
-				showModal.includes('token') 
-				|| showModal.includes('select-')
-				|| showModal === 'next'
+				$gs.showModal.includes('token') 
+				|| $gs.showModal.includes('select-')
+				|| $gs.showModal === 'next'
 			)
 		) return false;
 
-		if (showModal === "wonder" || !showModal) gs.set({
+		if ($gs.showModal === "wonder" || !$gs.showModal) gs.set({
 			...$gs,
-			selected: null
+			selected: null,
+			showModal: false
 		});
-
-		showModal = false;
 	}
 
 	function setModal(x) {
-		showModal = x;
+		gs.set({
+			...$gs,
+			showModal: x
+		});
 	}
 
 	/** The computed property that sorts the shuffled cards per age */
@@ -230,12 +233,12 @@
 		if (token.discount === "civ") p.civtoken = true;
 		if (token.discount === "wonder") p.wondertoken = true;
 
-		showModal = null;
 		gs.set({ 
 			...$gs, 
 			tokens,
 			[$gs.myturn ? 'p1' : 'p2']: p,
 			myturn: !$gs.myturn,
+			showModal: null
 		});
 	}
 
@@ -371,7 +374,7 @@
 					if (link && o.tokens.find(t => t.mylinks)) p.ingoo += 4;
 				}
 			} else {
-				showModal = false;
+				setModal(false);
 			}
 		} else if (sell) { // If selling card
 			p.ingoo += 2 + p.eco;
@@ -416,7 +419,7 @@
 		});
 
 		// Check for extra wonder/token actions
-		if (getToken) showModal = "token";
+		if (getToken) setModal("token");
 		if (wonder) wonderCheck(wonder);
 
 		// Check for special wins
@@ -435,11 +438,10 @@
 	 * @param {Object} The wonder that was bought and is being checked
 	 */
 	function wonderCheck(wonder) {
-		if (wonder.selecttoken) showModal = "token-special";
-		if (wonder.selectdiscard) showModal = "select-discard";
-		if (wonder.destroyres) showModal = "select-res";
-		if (wonder.destroyman) showModal = "select-man";
-
+		if (wonder.selecttoken) setModal("token-special");
+		if (wonder.selectdiscard) setModal("select-discard");
+		if (wonder.destroyres) setModal("select-res");
+		if (wonder.destroyman) setModal("select-man");
 	}
 
 	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
@@ -454,16 +456,15 @@
 		gs.set({
 			...$gs,
 			age,
-			cardsleft: 20
+			cardsleft: 20,
+			showModal: 'next'
 		});
 
 		const g = $gs.shuffle(more.guilds, process.env.isDev);
 		const nextdeck = age === 2 
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
-		cards = [...$gs.shuffle(nextdeck, process.env.isDev)];
-
-		showModal = 'next';
+		swapCards($gs.shuffle(nextdeck, process.env.isDev));
 	}
 
 	function destroyCard(card) {
@@ -504,15 +505,9 @@
 
 		showModal = false;
 	}
-
-	function changePlayer(p) {
-		// TODO - Check if you were allowed to make that decision
-		gs.set({ ...$gs, myturn: p === "p1" });
-		showModal = false;
-	}
 </script>
 
-{#if $gs.selected || showModal}
+{#if $gs.selected || $gs.showModal}
 	<div class="overlay" on:click|self={deselectModal}>
 		<Modal 
 			chooseCard={chooseCard}
@@ -520,7 +515,7 @@
 			destroyCard={destroyCard}
 			changePlayer={changePlayer}
 			canAfford={canAfford} 
-			showModal={showModal} 
+			showModal={$gs.showModal} 
 			setModal={setModal}
 		/>
 	</div>

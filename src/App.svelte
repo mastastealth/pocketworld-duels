@@ -99,8 +99,6 @@
 	 * @param choosemission - Set to true when triggered from an online opponent
 	 */
 	function chooseMission(m, choosemission = false) {
-		console.log(m);
-
 		// Relay in MP
 		if ($ns.online && !choosemission) $ns.pubnub.publish({
 			message: {
@@ -263,6 +261,25 @@
 		});
 	}
 
+	/** Sets the deck of cards being used */
+	function swapCards(deck) {
+		cards = [...deck];
+	}
+
+	/** Manually change player turn */
+	function changePlayer(p, choosep = false) {
+		if ($ns.online && !choosep) $ns.pubnub.publish({
+			message: { p: p === "p1" ? "p2" : "p1", choosep: true },
+			channel: $ns.channel
+		});
+
+		gs.set({ 
+			...$gs,
+			myturn: p === "p1",
+			showModal: false
+		});
+	}
+
 	// ===========================
 	// Prepare all the multiplayer stuff
 	// ===========================
@@ -331,6 +348,9 @@
 
 			// Player chose a mission
 			if (data.message.choosemission) chooseMission(data.message.mission, true);
+
+			// Player chose a who goes first
+			if (data.message.choosep) changePlayer(data.message.p, true);
 		}
 	});
 
@@ -349,7 +369,13 @@
 					<h1>{winner.player}</h1>
 					<h3>{winner.type}</h3>
 				{:else}
-					<Pile endGame={endGame} cards={cards} mpdata={mpdata} />
+					<Pile 
+						endGame={endGame} 
+						cards={cards} 
+						mpdata={mpdata}
+						swapCards={swapCards}
+						changePlayer={changePlayer}
+					/>
 				{/if}
 			</main>
 

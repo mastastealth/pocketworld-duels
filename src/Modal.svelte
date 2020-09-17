@@ -1,7 +1,7 @@
 <script>
 	import Card from './Card.svelte';
 	import Provisions from './Provisions.svelte';
-	import { gs } from './store/gameState';
+	import { gs, ns } from './store/gameState';
 
 	export let chooseCard = null;
 	export let chooseToken = null;
@@ -16,6 +16,7 @@
 	let need = null;
 	let adjustedCost = $gs.selected?.cost.length ? [...$gs.selected.cost] : false;
 	let adjustedWonderCost = false;
+	let canChooseAge = true;
 	const who = $gs[$gs.myturn ? 'p1' : 'p2'];
 	const notwho = $gs[$gs.myturn ? 'p2' : 'p1'];
 
@@ -23,6 +24,12 @@
 	const eco = who.cards.filter(c => c.provides);
 	const wonders = who.missions.filter(c => c.built && c.provides);
 	const provisions = [ ...eco, ...wonders ];
+
+	$: {
+		let wTotal = $gs.p1.warprogress - $gs.p2.warprogress;
+		canChooseAge = !$ns.online 
+		|| ($ns.online && (wTotal < 0 || (wTotal === 0 && $gs.myturn)));
+	}
 
 	// Computed for affording junk
 	$: affordable = calcCost($gs.selected, adjustedCost, res);
@@ -325,9 +332,13 @@
 			{/each}
 		</section>
 	{:else if showModal === "next"}
-		<h2>Choose who will start this age:</h2>
-		<button on:click={changePlayer("p1")}>Player 1</button>
-		<button on:click={changePlayer("p2")}>Player 2</button>
+		{#if canChooseAge}
+			<h2>Who will start this campaign?</h2>
+			<button on:click={changePlayer("p1")}>I will</button>
+			<button on:click={changePlayer("p2")}>They will</button>
+		{:else}
+			<h2>Opponent is choosing who goes first this campaign...</h2>
+		{/if}
 	{/if}
 </div>
 

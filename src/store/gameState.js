@@ -33,6 +33,7 @@ export const gs = writable({
 	selected: null,
 	discarded: [],
 	tokens: [],
+	showModal: false,
 	// Methods,
 	shuffle(arr, dontshuffle = false) {
 		const shuffled = [...arr];
