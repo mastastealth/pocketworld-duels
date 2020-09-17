@@ -5,7 +5,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
-    "test": "start yarn run dev & start yarn run cypress open"
+    "test": "start yarn run dev & start yarn run cypress open",
+    "test:cli": "start yarn run dev & start yarn run cypress run"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",

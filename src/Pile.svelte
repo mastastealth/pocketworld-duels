@@ -500,10 +500,9 @@
 			...$gs,
 			p1: $gs.myturn ? p : o,
 			p2: $gs.myturn ? o : p,
-			myturn: !$gs.myturn
+			myturn: !$gs.myturn,
+			showModal: false
 		});
-
-		showModal = false;
 	}
 </script>
 

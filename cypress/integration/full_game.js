@@ -4,7 +4,7 @@ describe('Starts a game', () => {
 		cy.visit('/');
 
 		// Start game by choosing missions
-		cy.contains('Start Game').click();
+		cy.contains('Start Local Game').click();
 		cy.get('.mission').should('have.length', 4);
 		cy.get('h2').should('have.text', 'Player 1 Select a Mission:');
 		cy.contains('The Bonepit Riots').click();
@@ -156,8 +156,8 @@ describe('Play through age 1', () => {
 
 describe('Play through age 2', () => {
 	it('Displays player turn modal', () => {
-		cy.get('.modal h2').should('have.text', 'Choose who will start this age:');
-		cy.contains('Player 1').click();
+		cy.get('.modal h2').should('have.text', 'Who will start this campaign?');
+		cy.contains('I will').click();
 		cy.get('.modal').should('not.exist');
 	});
 
@@ -288,7 +288,7 @@ describe('Play through age 2', () => {
 
 describe('Play through age 3', () => {
 	it ('Shuffles in 3 Guild cards', () => {
-		cy.contains('Player 1').click();
+		cy.contains('I will').click();
 		cy.get('[data-type="guild"]').should('have.length', 3);
 	});
 

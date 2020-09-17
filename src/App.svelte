@@ -50,9 +50,9 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	let tokens = [...$gs.shuffle(more.tokens)];
-	let missions = [...$gs.shuffle(more.wonders)];
-	let cards = $gs.shuffle(age1).slice(3);
+	let tokens = [...$gs.shuffle(more.tokens, process.env.isDev)];
+	let missions = [...$gs.shuffle(more.wonders, process.env.isDev)];
+	let cards = $gs.shuffle(age1, process.env.isDev).slice(3);
 	let missionSet = [...missions.slice(0, 4)];
 
 	let selectedMissions = [];
@@ -417,7 +417,7 @@
 				<aside>
 					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
 					{#if !$ns.hosting}
-						<button on:click={() => { startGame(false); }}>Start Game</button>
+						<button on:click={() => { startGame(false); }}>Start Local Game</button>
 					{/if}
 					<button on:click={ns.hostGame}>
 						{#if $ns.hosting}Cancel Host
