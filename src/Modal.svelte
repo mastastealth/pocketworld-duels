@@ -31,6 +31,8 @@
 		|| ($ns.online && (wTotal < 0 || (wTotal === 0 && $gs.myturn)));
 	}
 
+	$: canClick = !$ns.online || ($ns.online && $gs.myturn);
+
 	// Computed for affording junk
 	$: affordable = calcCost($gs.selected, adjustedCost, res);
 	$: affordableWonder = calcCost(selectedWonder, adjustedWonderCost, res);
@@ -197,27 +199,32 @@
 				>Complete Mission</button>
 			</aside>
 		</section>
-	{:else if showModal === "token"}
-		<h2>Choose a token:</h2>
+	{:else if showModal.includes("token")}
+		{#if canClick}
+			<h2>Choose a token:</h2>
+		{:else}
+			<h2>Opponent is choosing a token...</h2>
+		{/if}
 
-		{#each $gs.tokens.slice(0, 5) as token, i}
-			<button 
-				class="token"
-				disabled={token.taken || null}
-				data-id={token.id}
-				on:click={chooseToken(token, i)}
-			></button>
-		{/each}
-	{:else if showModal === "token-special"}
-		<h2>Choose a token:</h2>
-
-		{#each $gs.tokens.slice(5, 8) as token}
-			<button 
-				class="token"
-				data-id={token.id}
-				on:click={chooseToken(token)}
-			></button>
-		{/each}
+		{#if showModal === "token"}
+			{#each $gs.tokens.slice(0, 5) as token, i}
+				<button 
+					class="token"
+					disabled={!canClick || token.taken || null}
+					data-id={token.id}
+					on:click={chooseToken(token, i)}
+				></button>
+			{/each}
+		{:else}
+			{#each $gs.tokens.slice(5, 8) as token}
+				<button
+					class="token"
+					disabled={!canClick || null}
+					data-id={token.id}
+					on:click={chooseToken(token)}
+				></button>
+			{/each}
+		{/if}
 	{:else if showModal === "wonder"}
 		<h2>Choose a mission to complete:</h2>
 		<section class="purchase">
@@ -274,63 +281,75 @@
 			</aside>
 		</section>
 	{:else if showModal === "select-man"}
-		<h2>Choose a card to destroy:</h2>
+		{#if canClick}
+			<h2>Choose a card to destroy:</h2>
 
-		<section class="cards">
-			{#each notwho.cards.filter(c => c.type === "man") as card}
-				<div 
-					class="card-sm" 
-					data-res={card.res} 
-					data-type={card.type} 
-					on:click={destroyCard(card)}
-				></div>
-			{/each}
-		</section>
+			<section class="cards">
+				{#each notwho.cards.filter(c => c.type === "man") as card}
+					<div 
+						class="card-sm" 
+						data-res={card.res} 
+						data-type={card.type} 
+						on:click={destroyCard(card)}
+					></div>
+				{/each}
+			</section>
+		{:else}
+			<h2>Opponent is choosing a resource to destroy...</h2>
+		{/if}
 	{:else if showModal === "select-res"}
-		<h2>Choose a card to destroy:</h2>
+		{#if canClick}
+			<h2>Choose a card to destroy:</h2>
 
-		<section class="cards">
-			{#each notwho.cards.filter(c => c.type === "res") as card}
-				<div 
-					class="card-sm" 
-					data-res={card.res} 
-					data-type={card.type} 
-					on:click={destroyCard(card)}
-				>
-					<span class="emblems">
-						{#if card.rescount}<span class="extra">{card.rescount}</span>{/if}
-					</span>
-				</div>
-			{/each}
-		</section>
+			<section class="cards">
+				{#each notwho.cards.filter(c => c.type === "res") as card}
+					<div 
+						class="card-sm" 
+						data-res={card.res} 
+						data-type={card.type} 
+						on:click={destroyCard(card)}
+					>
+						<span class="emblems">
+							{#if card.rescount}<span class="extra">{card.rescount}</span>{/if}
+						</span>
+					</div>
+				{/each}
+			</section>
+		{:else}
+			<h2>Opponent is choosing a resource to destroy...</h2>
+		{/if}
 	{:else if showModal === "select-discard"}
-		<h2>Choose a card from the discard:</h2>
+		{#if canClick}
+			<h2>Choose a card from the discard:</h2>
 
-		<section class="cards">
-			{#each $gs.discarded as card}
-				<div 
-					class="card-sm"
-					data-type={card.type}
-					data-vp={card.vp}
-					data-res={card.res}
-					data-war={card.war}
-					data-trade={card.trade}
-					data-provides={prov(card)}
-					on:click={chooseCard({ card, free: true })}
-				>
-					<span class="emblems">
-						{#if card.sci}
-							<span>{card.sci?.[0]}</span>
-						{/if}
-						{#if card.rescount}
-							<span class="extra">{card.rescount}</span>
-						{:else if card.link}
-							<span class="extra">{card.link[0]}</span>
-						{/if}
-					</span>
-				</div>
-			{/each}
-		</section>
+			<section class="cards">
+				{#each $gs.discarded as card}
+					<div 
+						class="card-sm"
+						data-type={card.type}
+						data-vp={card.vp}
+						data-res={card.res}
+						data-war={card.war}
+						data-trade={card.trade}
+						data-provides={prov(card)}
+						on:click={chooseCard({ card, free: true })}
+					>
+						<span class="emblems">
+							{#if card.sci}
+								<span>{card.sci?.[0]}</span>
+							{/if}
+							{#if card.rescount}
+								<span class="extra">{card.rescount}</span>
+							{:else if card.link}
+								<span class="extra">{card.link[0]}</span>
+							{/if}
+						</span>
+					</div>
+				{/each}
+			</section>
+		{:else}
+			<h2>Opponent is choosing a card from discardpile...</h2>
+		{/if}
 	{:else if showModal === "next"}
 		{#if canChooseAge}
 			<h2>Who will start this campaign?</h2>

@@ -165,8 +165,8 @@
 		tallyPlayer('p1');
 		tallyPlayer('p2');
 
-		if ($gs.p1.score > $gs.p2.score) winner.player = 'Player 1 Wins';
-		if ($gs.p2.score > $gs.p1.score) winner.player = 'Player 2 Wins';
+		if ($gs.p1.score > $gs.p2.score) winner.player = 'You Win';
+		if ($gs.p2.score > $gs.p1.score) winner.player = 'They Win';
 
 		// Civilian cards handle tie breakers
 		if ($gs.p1.score === $gs.p2.score) {
@@ -176,8 +176,8 @@
 			$gs.p1.cards.forEach(c => { if (c.type === "civ") civ1 += c.vp });
 			$gs.p2.cards.forEach(c => { if (c.type === "civ") civ2 += c.vp });
 
-			if (civ1 > civ2) winner.player = 'Player 1 Wins';
-			if (civ2 > civ1) winner.player = 'Player 2 Wins';
+			if (civ1 > civ2) winner.player = 'You Win';
+			if (civ2 > civ1) winner.player = 'They Win';
 			if (civ1 === civ2) winner.player = 'Both Players Win';
 		}
 	}
@@ -280,6 +280,49 @@
 		});
 	}
 
+	/**
+	 * Fired after a player has chosen from one of the 2 token modals
+	 * @param {Object} The chosen token
+	 * @param {Number} The index of the chosen token, to mark as taken in UI
+	 * @param {Boolean} Indicates whether it came from the internets
+	 */ 
+	 function chooseToken(token, i = false, choosetoken = false) {
+		if ($ns.online && !choosetoken) $ns.pubnub.publish({
+			message: {
+				token,
+				i,
+				choosetoken: true
+			},
+			channel: $ns.channel
+		});
+
+		const tokens = [...$gs.tokens];
+		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
+	
+		if (i) tokens[i].taken = true;
+		p.tokens.push(i ? tokens[i] : token);
+
+		if (token.vp) p.vp += token.vp;
+		if (token.coin) p.ingoo += token.coin;
+		if (token.sci) p.sci.push(token.sci);
+
+		if (token.mywar) p.wartoken = true;
+		if (token.mymoney) p.ecotoken = true;
+		if (token.mylinks) p.linktoken = true;
+		if (token.mywonders) p.playtoken = true;
+
+		if (token.discount === "civ") p.civtoken = true;
+		if (token.discount === "wonder") p.wondertoken = true;
+
+		gs.set({ 
+			...$gs, 
+			tokens,
+			[$gs.myturn ? 'p1' : 'p2']: p,
+			myturn: !$gs.myturn,
+			showModal: null
+		});
+	}
+
 	// ===========================
 	// Prepare all the multiplayer stuff
 	// ===========================
@@ -351,6 +394,9 @@
 
 			// Player chose a who goes first
 			if (data.message.choosep) changePlayer(data.message.p, true);
+
+			// Player chose a token
+			if (data.message.choosetoken) chooseToken(data.message.token, data.message.i, true);
 		}
 	});
 
@@ -375,6 +421,7 @@
 						mpdata={mpdata}
 						swapCards={swapCards}
 						changePlayer={changePlayer}
+						chooseToken={chooseToken}
 					/>
 				{/if}
 			</main>

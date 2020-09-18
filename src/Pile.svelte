@@ -11,6 +11,7 @@
 	export let mpdata = null;
 	export let swapCards = null;
 	export let changePlayer = null;
+	export let chooseToken = null;
 
 	/**
 	 * Sorts an array of cards, depending on age, to a certain layout.
@@ -207,39 +208,6 @@
 		}
 
 		adjustScore({card, sell, build, adjustedCost, wonder, pro, free}); // Calculate earnings
-	}
-
-	/**
-	 * Fired after a player has chosen from one of the 2 token modals
-	 * @param {Object} The chosen token
-	 * @param {Number} The index of the chosen token, to mark as taken in UI
-	 */ 
-	function chooseToken(token, i = false) {
-		const tokens = [...$gs.tokens];
-		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
-	
-		if (i) tokens[i].taken = true;
-		p.tokens.push(i ? tokens[i] : token);
-
-		if (token.vp) p.vp += token.vp;
-		if (token.coin) p.ingoo += token.coin;
-		if (token.sci) p.sci.push(token.sci);
-
-		if (token.mywar) p.wartoken = true;
-		if (token.mymoney) p.ecotoken = true;
-		if (token.mylinks) p.linktoken = true;
-		if (token.mywonders) p.playtoken = true;
-
-		if (token.discount === "civ") p.civtoken = true;
-		if (token.discount === "wonder") p.wondertoken = true;
-
-		gs.set({ 
-			...$gs, 
-			tokens,
-			[$gs.myturn ? 'p1' : 'p2']: p,
-			myturn: !$gs.myturn,
-			showModal: null
-		});
 	}
 
 	/**
