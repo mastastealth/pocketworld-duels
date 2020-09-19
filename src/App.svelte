@@ -326,7 +326,7 @@
 	/** Choose a card to destroy on your opponent's side 
 	 * @param {Object} The chosen card
 	*/
-	function destroyCard(card) {
+	function destroyCard(card, destroycard = false) {
 		if ($ns.online && !destroycard) $ns.pubnub.publish({
 			message: {
 				card,
