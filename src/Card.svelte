@@ -121,12 +121,14 @@
 	.card[data-type="sci"],
 	.card[data-type="sci"] .ingoo li:before { background-color: var(--sci); }
 	.card[data-type="civ"] { 
-		background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/card.png'); 
-		background-blend-mode: color;
+		background-color: var(--civ);
+		background-image: url('/assets/card.png'); 
+		background-blend-mode: luminosity;
 	}
 		.card[data-type="civ"] .ingoo li:before {
-			background-image: linear-gradient(var(--civ), var(--civ)), url('/assets/bar.png'); 
-			background-blend-mode: color;
+			background-color: var(--civ);
+			background-image: url('/assets/bar.png'); 
+			background-blend-mode: luminosity;
 		}
 	.card[data-type="eco"],
 	.card[data-type="eco"] .ingoo li:before { background-color: var(--eco); }
