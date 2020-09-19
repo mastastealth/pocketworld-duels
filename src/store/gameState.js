@@ -23,7 +23,7 @@ function random(arr) {
 	return arr[Math.floor(Math.random() * Math.floor(arr.length))];
 }
 
-export const gs = writable({
+const initialGameState = {
 	state: 'menu',
 	age: 1,
 	p1: null,
@@ -34,6 +34,10 @@ export const gs = writable({
 	discarded: [],
 	tokens: [],
 	showModal: false,
+}
+
+export const gs = writable({
+	...initialGameState,
 	// Methods,
 	shuffle(arr, dontshuffle = false) {
 		const shuffled = [...arr];
@@ -49,11 +53,15 @@ export const gs = writable({
 	}
 });
 
-const { subscribe, set, update } = writable({
+const initialNetState = {
 	lobbies: [],
 	hosting: false,
 	online: false,
-	selectedRoom: null,
+	selectedRoom: null
+}
+
+const { subscribe, set, update } = writable({
+	...initialNetState,
 	pubnub,
 	myid: pubnub.getUUID(),
 	get mychan() {
@@ -71,8 +79,6 @@ export const ns = {
 	subscribe,
 	set,
 	update,
-
-	// Methods
 
 	/** Either hosts a new game or cancels a currently hosted one */
 	hostGame() {
@@ -117,6 +123,7 @@ export const ns = {
 			}
 		});
 	},
+	/** Join a game */
 	joinGame() {
 		update(self => {
 			if (self.hosting) return false;
@@ -131,6 +138,7 @@ export const ns = {
 			return self;
 		});
 	},
+	/** Refresh the lobby list by checking the state of all players in the lobby channel */
 	async updateLobbies() {
 		console.info('Updating lobbies.');
 
@@ -140,12 +148,14 @@ export const ns = {
 		});
 
 		const ppl = resp.channels["pwd-lobby"].occupants;
+		console.log(ppl)
 
 		update(self => {
 			self.lobbies = ppl.filter(l => l.state.hosting && l.state.user);
 			return self;
 		});
 	},
+	/** Sets the room that you plan to join */
 	selectRoom(lobby) {
 		update(self => {
 			if (self.hosting) return self;

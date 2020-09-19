@@ -12,6 +12,7 @@
 	export let swapCards = null;
 	export let changePlayer = null;
 	export let chooseToken = null;
+	export let destroyCard = null;
 
 	/**
 	 * Sorts an array of cards, depending on age, to a certain layout.
@@ -433,44 +434,6 @@
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
 		swapCards($gs.shuffle(nextdeck, process.env.isDev));
-	}
-
-	function destroyCard(card) {
-		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] }; // Do I need this one?
-		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };
-
-		// Loop through opponent cards to find right one to nix
-		o.cards.forEach((c, i) => {
-			if (card.id === c.id) {
-				const rescount = card.rescount || 1;
-
-				// Deduct resource
-				if (card.type === "res") {
-					o.res -= 1;
-		
-					if (card.res === "stone") o.stone -= 1 * rescount;
-					if (card.res === "wood") o.wood -= 1 * rescount;
-					if (card.res === "clay") o.clay -= 1 * rescount;
-				} else {
-					o.man -= 1;
-
-					if (card.res === "glass") o.glass -= 1 * rescount;
-					if (card.res === "paper") o.paper -= 1 * rescount;
-				}
-			
-				// Discard
-				o.cards.splice(i, 1);
-			}
-		});
-
-		// Apply it all
-		gs.set({
-			...$gs,
-			p1: $gs.myturn ? p : o,
-			p2: $gs.myturn ? o : p,
-			myturn: !$gs.myturn,
-			showModal: false
-		});
 	}
 </script>
 

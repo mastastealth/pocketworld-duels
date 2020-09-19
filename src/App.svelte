@@ -323,6 +323,55 @@
 		});
 	}
 
+	/** Choose a card to destroy on your opponent's side 
+	 * @param {Object} The chosen card
+	*/
+	function destroyCard(card) {
+		if ($ns.online && !destroycard) $ns.pubnub.publish({
+			message: {
+				card,
+				destroycard: true
+			},
+			channel: $ns.channel
+		});
+
+		let p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] }; // Do I need this one?
+		let o = { ...$gs[$gs.myturn ? 'p2' : 'p1'] };
+
+		// Loop through opponent cards to find right one to nix
+		o.cards.forEach((c, i) => {
+			if (card.id === c.id) {
+				const rescount = card.rescount || 1;
+
+				// Deduct resource
+				if (card.type === "res") {
+					o.res -= 1;
+		
+					if (card.res === "stone") o.stone -= 1 * rescount;
+					if (card.res === "wood") o.wood -= 1 * rescount;
+					if (card.res === "clay") o.clay -= 1 * rescount;
+				} else {
+					o.man -= 1;
+
+					if (card.res === "glass") o.glass -= 1 * rescount;
+					if (card.res === "paper") o.paper -= 1 * rescount;
+				}
+			
+				// Discard
+				o.cards.splice(i, 1);
+			}
+		});
+
+		// Apply it all
+		gs.set({
+			...$gs,
+			p1: $gs.myturn ? p : o,
+			p2: $gs.myturn ? o : p,
+			myturn: !$gs.myturn,
+			showModal: false
+		});
+	}
+
 	// ===========================
 	// Prepare all the multiplayer stuff
 	// ===========================
@@ -333,6 +382,7 @@
 
 	$ns.pubnub.addListener({
 		presence(ev) {
+			console.log(ev);
 			// Used to detect when newly hosted games are created, live
 			if (ev.action === "state-change") {
 				// console.log('Detected state change', ev)
@@ -397,6 +447,9 @@
 
 			// Player chose a token
 			if (data.message.choosetoken) chooseToken(data.message.token, data.message.i, true);
+
+			// Player chose a card to destroy
+			if (data.message.destroycard) destroyCard(data.message.card, true);
 		}
 	});
 
@@ -422,6 +475,7 @@
 						swapCards={swapCards}
 						changePlayer={changePlayer}
 						chooseToken={chooseToken}
+						destroyCard={destroyCard}
 					/>
 				{/if}
 			</main>
