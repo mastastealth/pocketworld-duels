@@ -381,7 +381,7 @@
 			...$gs,
 			p1: $gs.myturn ? p : o,
 			p2: $gs.myturn ? o : p,
-			myturn: getToken || playAgain || selectCard ? $gs.myturn : !$gs.myturn,
+			myturn: getToken || ($gs.cardsleft && playAgain) || selectCard ? $gs.myturn : !$gs.myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
 			discarded
