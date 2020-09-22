@@ -84,17 +84,19 @@
 
 		{#if card.link}
 			<div class="link-icon">
-					<i class="icon icon-{card.link}"></i>
+				<i class="icon icon-{card.link}"></i>
 			</div>
 		{/if}
 		{#if card.sci}
-			<div class="sci-icon" data-sci="card.sci">
+			<div class="sci-icon" data-sci={card.sci}>
 				<i class="icon icon-{card.sci}"></i>
 			</div>
 		{/if}
 	</header>
 
-	<main></main>
+	<main>
+		<footer></footer>
+	</main>
 </div>
 
 <style>
@@ -190,7 +192,6 @@
 	z-index: 1;
 }
 
-
 .provided { text-align: right; }
 	.provided .pog { display: inline-grid; }
 	.provided .pog:nth-of-type(1) { transform: translateX(50%); }
@@ -243,7 +244,7 @@ header {
 	width: 40px;
 }
 	.sci-icon { 
-		font-size: 1.5em; 
+		font-size: 1.75em; 
 		mix-blend-mode: overlay;
 	}
 

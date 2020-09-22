@@ -429,11 +429,11 @@
 			showModal: 'next'
 		});
 
-		const g = $gs.shuffle(more.guilds, process.env.isDev);
+		const g = gs.shuffle(more.guilds, process.env.isDev);
 		const nextdeck = age === 2 
 			? age2.slice(3)
 			: [...age3.slice(3), ...g.slice(4)];
-		swapCards($gs.shuffle(nextdeck, process.env.isDev));
+		swapCards(gs.shuffle(nextdeck, process.env.isDev));
 	}
 </script>
 

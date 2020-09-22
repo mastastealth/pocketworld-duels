@@ -36,8 +36,15 @@ const initialGameState = {
 	showModal: false,
 }
 
-export const gs = writable({
-	...initialGameState,
+export const { subscribe:sub, set:s, update: up } = writable({
+	...initialGameState
+});
+
+export const gs = {
+	subscribe: sub,
+	set: s,
+	update: up,
+
 	// Methods,
 	shuffle(arr, dontshuffle = false) {
 		const shuffled = [...arr];
@@ -50,8 +57,18 @@ export const gs = writable({
 		}
 
 		return shuffled;
+	},
+	resetGS() {
+		update(self => {
+			self.age = 1;
+			self.cardsleft = 20;
+			self.selected = null;
+			self.discarded = [];
+			self.showModal = false;
+			return self;
+		});
 	}
-});
+}
 
 const initialNetState = {
 	lobbies: [],

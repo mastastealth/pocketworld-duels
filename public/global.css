@@ -49,7 +49,7 @@ body {
 }
 	.card-sm:after { font-weight: bold; }
 	.card-sm[data-type="war"] { background: var(--war); }
-	.card-sm[data-type="sci"] { background: var(--sci); }
+	.card-sm[data-type="sci"] { background: #ddc310; }
 	.card-sm[data-type="civ"] { background: var(--civ); }
 	.card-sm[data-type="eco"] { background: var(--eco); }
 	.card-sm[data-type="res"] { background: var(--res); }
@@ -96,6 +96,15 @@ body {
 
 	.card-sm[data-war]:after { content: attr(data-war); }
 	.card-sm[data-provides="res"]:after { filter: sepia(1); }
+
+	.card-sm .emblem-sci {
+		color: #333;
+		font-size: 2em;
+		position: absolute;
+		top: 6px;
+		left: 2px;
+		mix-blend-mode: overlay;
+	}
 
 .token {
 	background: url('/assets/tokens.png') no-repeat;

@@ -336,12 +336,14 @@
 					>
 						<span class="emblems">
 							{#if card.sci}
-								<span>{card.sci?.[0]}</span>
+								<i class="emblem-sci icon icon-{card.sci}"></i>
 							{/if}
 							{#if card.rescount}
 								<span class="extra">{card.rescount}</span>
 							{:else if card.link}
-								<span class="extra">{card.link[0]}</span>
+								<span class="extra">
+									<i class="icon icon-{card.link}"></i>
+								</span>
 							{/if}
 						</span>
 					</div>

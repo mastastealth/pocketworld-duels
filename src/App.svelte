@@ -50,9 +50,9 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	let tokens = [...$gs.shuffle(more.tokens, process.env.isDev)];
-	let missions = [...$gs.shuffle(more.wonders, process.env.isDev)];
-	let cards = $gs.shuffle(age1, process.env.isDev).slice(3);
+	let tokens = [...gs.shuffle(more.tokens, process.env.isDev)];
+	let missions = [...gs.shuffle(more.wonders, process.env.isDev)];
+	let cards = gs.shuffle(age1, process.env.isDev).slice(3);
 	let missionSet = [...missions.slice(0, 4)];
 
 	let selectedMissions = [];
@@ -372,6 +372,12 @@
 		});
 	}
 
+	/** Resets the game state */
+	function resetGame(dc = false) {
+		// ...
+		// if (dc === true) // ...
+	}
+
 	// ===========================
 	// Prepare all the multiplayer stuff
 	// ===========================
@@ -467,6 +473,8 @@
 				{#if winner}
 					<h1>{winner.player}</h1>
 					<h3>{winner.type}</h3>
+					<button on:click={resetGame}>Play Again</button>
+					<button on:click={resetGame(true)}>Back to Lobby</button>
 				{:else}
 					<Pile 
 						endGame={endGame} 
