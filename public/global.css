@@ -1,4 +1,5 @@
-* { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: border-box; }
+
 html, body {
 	overflow: hidden;
 }
@@ -109,12 +110,14 @@ body {
 .token {
 	background: url('/assets/tokens.png') no-repeat;
 	background-size: cover;
+	border: 0 none;
 	border-radius: 100%;
 	color: white;
 	display: inline-grid;
 	font-size: 0.8em;
 	height: 90px;
 	place-items: center;
+	position: relative;
 	width: 90px;
 }
 	.token[disabled],
@@ -124,6 +127,16 @@ body {
 	}
 
 	.token:before { content: attr(data-id); }
+
+	.token:hover:after {
+		background: rgba(0, 0, 0, 0.8);
+		border-radius: 4px;
+		content: attr(data-desc);
+		padding: 10px;
+		position: absolute;
+		top: 100%; left: -50%;
+		width: 200%;
+	}
 
 @font-face {
 	font-family: 'icomoon';

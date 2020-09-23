@@ -110,53 +110,63 @@
 			"id": "agriculture",
 			"vp": 4,
 			"coin": 6,
-			"taken": false
+			"taken": false,
+			"desc": "Provides 4 VP and 6 Ingoos."
 		},
 		{
 			"id": "architecture",
 			"discount": "wonder",
-			"taken": false
+			"taken": false,
+			"desc": "Missions cost 2 less resources (of your choice)."
 		},
 		{
 			"id": "economy",
 			"mymoney": true,
-			"taken": false
+			"taken": false,
+			"desc": "All Ingoos spent by opponent for resources goes to you."
 		},
 		{
 			"id": "law",
 			"sci": "law",
-			"taken": false
+			"taken": false,
+			"desc": "Provides an extra Civlized Emblem."
 		},
 		{
 			"id": "masonry",
 			"discount": "civ",
-			"taken": false
+			"taken": false,
+			"desc": "Commonfolk cards cost 2 less resources (of your choice)."
 		},
 		{
 			"id": "mathematics",
 			"mytokens": true,
-			"taken": false
+			"taken": false,
+			"desc": "Choose 1 of 3 tokens from the discarded set."
 		},
 		{
 			"id": "philosophy",
 			"vp": 7,
-			"taken": false
+			"taken": false,
+			"desc": "Provides 7 VP."
 		},
 		{
 			"id": "strategy",
 			"mywar": true,
-			"taken": false
+			"taken": false,
+			"desc": "Gives 1 extra sugar per KSR card."
 		},
 		{
 			"id": "theology",
 			"mywonders": true,
-			"taken": false
+			"taken": false,
+			"desc": "All future Missions have the 'Play Again' effect."
 		},
 		{
 			"id": "urbanism",
-			"vp": 6,
+			"coin": 6,
 			"mylinks": true,
-			"taken": false
+			"taken": false,
+			"desc": "Provides 6 Ingoos and lets you earn 4 Ingoos for every card bought for free through a link."
 		}
 	],
 	"wonders": [

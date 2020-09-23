@@ -212,6 +212,7 @@
 					class="token"
 					disabled={!canClick || token.taken || null}
 					data-id={token.id}
+					data-desc={token.desc}
 					on:click={chooseToken(token, i)}
 				></button>
 			{/each}
@@ -221,6 +222,7 @@
 					class="token"
 					disabled={!canClick || null}
 					data-id={token.id}
+					data-desc={token.desc}
 					on:click={chooseToken(token)}
 				></button>
 			{/each}
@@ -489,4 +491,8 @@ h4 { margin: 0 0 10px; }
 			background: rgba(0, 0, 0, 0.5);
 			float: right; 
 		}
+
+.token {
+	margin: 0 5px;
+}
 </style>
