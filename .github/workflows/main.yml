@@ -7,5 +7,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: cypress-io/github-action@v2
         with:
+          start: yarn start 
           browser: chrome
           headless: true
