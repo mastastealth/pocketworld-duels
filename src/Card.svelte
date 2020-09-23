@@ -269,7 +269,6 @@ header {
 		background-size: 120px 60px;
 		display: block;
 		line-height: 30px;
-		margin-top: 40%;
 		text-align: center;
 		width: 30px;
 	}
@@ -304,6 +303,12 @@ header {
 			.ingoo .pog[data-res="wood"]:before { background-position: -40px 0; }
 			.ingoo .pog[data-res="paper"]:before { background-position: 0 -20px; }
 			.ingoo .pog[data-res="glass"]:before { background-position: -20px -20px; }
+
+.sci-icon,
+.ingoo {
+	display: grid;
+	place-content: center;
+}
 
 .res-list {
 	margin: 0;
