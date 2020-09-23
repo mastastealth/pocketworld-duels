@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "nollup -c --hot --port 5000 --content-base ./public",
+    "dev:rollup": "rollup -c -w",
     "start": "sirv public",
     "test": "start yarn run dev & start yarn run cypress open",
     "test:cli": "start yarn run dev & start yarn run cypress run"
@@ -13,14 +14,15 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.3",
     "cypress-commands": "^1.1.0",
+    "nollup": "^0.12.0",
     "rollup": "^2.3.4",
+    "rollup-plugin-hot": "^0.1.0",
     "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-svelte-hot": "^0.10.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "@rollup/plugin-json": "^4.1.0",
     "cypress": "^5.2.0",
     "sirv-cli": "^1.0.0"
   }

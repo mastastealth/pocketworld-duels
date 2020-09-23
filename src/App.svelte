@@ -6,9 +6,7 @@
 
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs, ns } from './store/gameState';
-
-	import age1 from './json/age1.json';
-	import more from './json/more.json';
+	import { age1, more } from './store/cards';
 
 	// Define the Player object and all its props
 	class PlayerObj {
@@ -50,9 +48,10 @@
 
 	const p1 = new PlayerObj(true);
 	const p2 = new PlayerObj();
-	let tokens = [...gs.shuffle(more.tokens, process.env.isDev)];
-	let missions = [...gs.shuffle(more.wonders, process.env.isDev)];
-	let cards = gs.shuffle(age1, process.env.isDev).slice(3);
+
+	let tokens = [...gs.shuffle($more.tokens, process.env.isDev)];
+	let missions = [...gs.shuffle($more.wonders, process.env.isDev)];
+	let cards = gs.shuffle($age1, process.env.isDev).slice(3);
 	let missionSet = [...missions.slice(0, 4)];
 
 	let selectedMissions = [];

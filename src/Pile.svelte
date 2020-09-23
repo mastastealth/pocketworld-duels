@@ -2,9 +2,7 @@
 	import Card from './Card.svelte';
 	import Modal from './Modal.svelte';
 	import { gs, ns } from './store/gameState';
-	import age2 from './json/age2.json';
-	import age3 from './json/age3.json';
-	import more from './json/more.json';
+	import { age2, age3, more } from './store/cards';
 
 	export let endGame = null;
 	export let cards = null;
@@ -429,10 +427,10 @@
 			showModal: 'next'
 		});
 
-		const g = gs.shuffle(more.guilds, process.env.isDev);
+		const g = gs.shuffle($more.guilds, process.env.isDev);
 		const nextdeck = age === 2 
-			? age2.slice(3)
-			: [...age3.slice(3), ...g.slice(4)];
+			? $age2.slice(3)
+			: [...$age3.slice(3), ...g.slice(4)];
 		swapCards(gs.shuffle(nextdeck, process.env.isDev));
 	}
 </script>
