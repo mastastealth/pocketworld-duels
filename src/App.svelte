@@ -493,6 +493,7 @@
 						class="token"
 						data-taken={token.taken || null}
 						data-id={token.id}
+						data-desc={token.desc}
 					></div>
 				{/each}
 			</aside>
@@ -632,6 +633,11 @@
 	grid-area: ts;
 	padding: 5vh 0;
 }
+	.token:after {
+		left: auto;
+		right: 110%;
+		top: 25%;
+	}
 
 :global(.pog) { 
 	background: url('/assets/pog.png') no-repeat;
