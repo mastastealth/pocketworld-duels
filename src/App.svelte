@@ -298,7 +298,7 @@
 		const tokens = [...$gs.tokens];
 		const p = { ...$gs[$gs.myturn ? 'p1' : 'p2'] };
 	
-		if (i) tokens[i].taken = true;
+		if (i !== false) tokens[i].taken = true;
 		p.tokens.push(i ? tokens[i] : token);
 
 		if (token.vp) p.vp += token.vp;

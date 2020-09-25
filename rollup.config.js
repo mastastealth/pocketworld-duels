@@ -22,7 +22,7 @@ function serve() {
 			if (!started) {
 				started = true
 				const flags = ['run', 'start', '--', '--dev']
-				if (spa) flags.push('--single');
+				// if (spa) flags.push('--single');
 
 				require('child_process').spawn('npm', flags, {
 					stdio: ['ignore', 'inherit', 'inherit'],
