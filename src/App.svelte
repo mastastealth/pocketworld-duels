@@ -46,8 +46,8 @@
 		}
 	}
 
-	const p1 = new PlayerObj(true);
-	const p2 = new PlayerObj();
+	let p1 = new PlayerObj(true);
+	let p2 = new PlayerObj();
 
 	let tokens = [...gs.shuffle($more.tokens, process.env.isDev)];
 	let missions = [...gs.shuffle($more.wonders, process.env.isDev)];
@@ -179,6 +179,8 @@
 			if (civ2 > civ1) winner.player = 'They Win';
 			if (civ1 === civ2) winner.player = 'Both Players Win';
 		}
+
+		return true;
 	}
 
 	/** Calculates the per player numbers */
@@ -373,7 +375,30 @@
 
 	/** Resets the game state */
 	function resetGame(dc = false) {
-		// ...
+		p1 = new PlayerObj(true);
+		p2 = new PlayerObj();
+
+		tokens = [...gs.shuffle($more.tokens, process.env.isDev)];
+		missions = [...gs.shuffle($more.wonders, process.env.isDev)];
+		cards = gs.shuffle($age1, process.env.isDev).slice(3);
+		missionSet = [...missions.slice(0, 4)];
+
+		selectedMissions = [];
+		winner = null;
+	
+		gs.set({
+			...$gs,
+			state: 'wonders',
+			p1,
+			p2,
+			tokens,
+			myturn: true,
+			age: 1,
+			cardsleft: 20,
+			discarded: [],
+			showModal: false
+		});
+
 		// if (dc === true) // ...
 	}
 
@@ -472,8 +497,8 @@
 				{#if winner}
 					<h1>{winner.player}</h1>
 					<h3>{winner.type}</h3>
-					<button on:click={resetGame}>Play Again</button>
-					<button on:click={resetGame(true)}>Back to Lobby</button>
+					<button on:click={() => { resetGame() }}>Play Again</button>
+					<button on:click={() => { resetGame(true) }}>Back to Lobby</button>
 				{:else}
 					<Pile 
 						endGame={endGame} 

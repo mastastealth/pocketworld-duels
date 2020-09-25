@@ -95,7 +95,7 @@
 	</header>
 
 	<main>
-		<footer></footer>
+		{#if card.label}<footer>{card.label}</footer>{/if}
 	</main>
 </div>
 
@@ -108,6 +108,8 @@
 	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
 	color: white;
 	cursor: pointer;
+	display: flex;
+	flex-direction: column;
 	height: calc((100vh - 200px) / 5);
 	min-height: 144px;
 	min-width: calc((100vh - 200px) / 5);
@@ -318,7 +320,16 @@ header {
 	.ingoo strong + .res-list { padding-top: 0; }
 
 main {
-	height: 5vh;
+	align-items: flex-end;
+	display: flex;
+	flex-grow: 1;
+	padding-bottom: 10px;
 	position: relative;
+}
+
+footer {
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
 }
 </style>

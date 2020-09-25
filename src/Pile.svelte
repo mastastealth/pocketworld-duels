@@ -375,11 +375,14 @@
 			) selectCard = true;
 		}
 
+		let myturn = !$gs.myturn;
+		if (getToken || ($gs.cardsleft - 1 > 0 && playAgain) || selectCard) myturn = true;
+
 		gs.set({
 			...$gs,
 			p1: $gs.myturn ? p : o,
 			p2: $gs.myturn ? o : p,
-			myturn: getToken || ($gs.cardsleft && playAgain) || selectCard ? $gs.myturn : !$gs.myturn,
+			myturn,
 			cardsleft: $gs.cardsleft - 1,
 			selected: null,
 			discarded
@@ -397,7 +400,8 @@
 		if (sciTotal === 6) endGame('sci');
 
 		// Last but not least
-		if (!getToken && !wonder && !$gs.cardsleft) nextAge();
+		const spWonder = wonder.selecttoken || wonder.selectdiscard || wonder.destroyres || wonder.destroyman;
+		if (!getToken && !spWonder && !$gs.cardsleft) nextAge();
 	}
 
 	/**
