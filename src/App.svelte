@@ -617,7 +617,7 @@
 		}
 
 		.menu .lobbies:empty:after {
-			content: 'No lobbies.';
+			content: 'No open lobbies.';
 		}
 
 		.menu .lobbies li {

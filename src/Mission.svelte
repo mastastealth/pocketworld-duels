@@ -169,6 +169,10 @@ h3 {
 			margin: 0 2px;
 		}
 
+		.mission.small .actions img {
+			width: 30px;
+		}
+
 		.mission.small .actions .pog:nth-of-type(2) { transform: translateX(-25%); }
 		.mission.small .actions .pog:nth-of-type(3) { transform: translateX(-50%); }
 
@@ -177,7 +181,7 @@ h3 {
 	width: 60px;
 }
 	.actions img {
-		width: 30px;
+		width: 40px;
 	}
 
 	.actions .pog:nth-of-type(2) { transform: translateY(-25%); }

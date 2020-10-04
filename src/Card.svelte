@@ -92,6 +92,18 @@
 				<i class="icon icon-{card.sci}"></i>
 			</div>
 		{/if}
+
+		{#if card.type === "guild"}
+			<div class="card-sm" data-type={card.earn.from}>
+				{#if card.earn.coin}
+					<div class="ingoo">
+						<strong>{card.earn.coin}</strong>
+					</div>
+				{/if}
+
+				{#if card.earn.vp}<div class="vp">{card.earn.vp}</div>{/if}
+			</div>
+		{/if}
 	</header>
 
 	<main>
@@ -311,6 +323,23 @@ header {
 	display: grid;
 	place-content: center;
 }
+
+.card-sm {
+	height: 30px;
+}
+	.card-sm[data-type="coin"] {
+		background: url('/assets/res.png') no-repeat -90px 1px;
+		background-size: 120px 60px;
+		border: 0 none;
+	}
+	.card-sm .vp, 
+	.card-sm .ingoo { 
+		position: absolute;
+		top: 0; left: 0; 
+	}
+
+	.card-sm .vp { transform: scale(0.65) translateX(10%); }
+	.card-sm .ingoo { transform: scale(0.75) translateX(-80%); }
 
 .res-list {
 	margin: 0;

@@ -49,6 +49,7 @@ body {
 	width: 32px;
 }
 	.card-sm:after { font-weight: bold; }
+	.card-sm[data-type="wonder"] { background: #e4501a; }
 	.card-sm[data-type="war"] { background: var(--war); }
 	.card-sm[data-type="sci"] { background: #ddc310; }
 	.card-sm[data-type="civ"] { background: var(--civ); }
