@@ -37,106 +37,103 @@
 	data-sci={card.sci}
 	on:click={!card.taken && myturn ? selectCard(card) : noFn}
 >
-	<header>
-		{#if card.cost}
-			<div class="ingoo">
-				{#if typeof card.cost === 'number' || coinCost}
-					<strong>{coinCost || card.cost}</strong>
-				{/if}
-				{#if card.cost.length}
-					<ul class="res-list">
-						<li>
-							{#each fullCost as cost}
-								<div class="pog" data-res={cost}></div>
-							{/each}
-						</li>
-						{#if card.linkcost}
-							<li>
-								<i class="icon icon-{card.linkcost}"></i>
-							</li>
-						{/if}
-					</ul>
-				{/if}
-			</div>
-		{/if}
-
-		{#if card.res || card.trade}
-			<div class="pog"></div>
-			{#if card.rescount === 2}<div class="pog"></div>{/if}
-			{#if card.rescount === 3}<div class="pog"></div>{/if}
-		{:else if card.provides}
-			<div class="provided">
-				<span class="pog" data-res={card.provides[0]}></span>
-				<span class="pog" data-res={card.provides[1]}></span>
-				{#if card.provides.length === 3}
-					<span class="pog" data-res={card.provides[2]}></span>
-				{/if}
-			</div>
-		{:else if card.vp}
-			<div class="vp">{card.vp}</div>
-		{:else if card.instant}
-			<div class="instant">{card.instant}</div>
-		{:else if card.war}
-			{#each warLen(card.war) as star}
-				<img src="/assets/star.png" alt="⭐" class="star">
-			{/each}
-		{/if}
-
-		{#if card.link}
-			<div class="link-icon">
-				<i class="icon icon-{card.link}"></i>
-			</div>
-		{/if}
-		{#if card.sci}
-			<div class="sci-icon" data-sci={card.sci}>
-				<i class="icon icon-{card.sci}"></i>
-			</div>
-		{/if}
-
-		{#if card.type === "guild"}
-			<div class="card-sm" data-type={card.earn.from}>
-				{#if card.earn.coin}
+	<div class="content">
+		<div class="front">
+			<header>
+				{#if card.cost}
 					<div class="ingoo">
-						<strong>{card.earn.coin}</strong>
+						{#if typeof card.cost === 'number' || coinCost}
+							<strong>{coinCost || card.cost}</strong>
+						{/if}
+						{#if card.cost.length}
+							<ul class="res-list">
+								<li>
+									{#each fullCost as cost}
+										<div class="pog" data-res={cost}></div>
+									{/each}
+								</li>
+								{#if card.linkcost}
+									<li>
+										<i class="icon icon-{card.linkcost}"></i>
+									</li>
+								{/if}
+							</ul>
+						{/if}
 					</div>
 				{/if}
-
-				{#if card.earn.vp}<div class="vp">{card.earn.vp}</div>{/if}
-			</div>
-		{/if}
-	</header>
-
-	<main>
-		{#if card.label}<footer>{card.label}</footer>{/if}
-	</main>
+		
+				{#if card.res || card.trade}
+					<div class="pog"></div>
+					{#if card.rescount === 2}<div class="pog"></div>{/if}
+					{#if card.rescount === 3}<div class="pog"></div>{/if}
+				{:else if card.provides}
+					<div class="provided">
+						<span class="pog" data-res={card.provides[0]}></span>
+						<span class="pog" data-res={card.provides[1]}></span>
+						{#if card.provides.length === 3}
+							<span class="pog" data-res={card.provides[2]}></span>
+						{/if}
+					</div>
+				{:else if card.vp}
+					<div class="vp">{card.vp}</div>
+				{:else if card.instant}
+					<div class="instant">{card.instant}</div>
+				{:else if card.war}
+					{#each warLen(card.war) as star}
+						<img src="/assets/star.png" alt="⭐" class="star">
+					{/each}
+				{/if}
+		
+				{#if card.link}
+					<div class="link-icon">
+						<i class="icon icon-{card.link}"></i>
+					</div>
+				{/if}
+				{#if card.sci}
+					<div class="sci-icon" data-sci={card.sci}>
+						<i class="icon icon-{card.sci}"></i>
+					</div>
+				{/if}
+		
+				{#if card.type === "guild"}
+					<div class="card-sm" data-type={card.earn.from}>
+						{#if card.earn.coin}
+							<div class="ingoo">
+								<strong>{card.earn.coin}</strong>
+							</div>
+						{/if}
+		
+						{#if card.earn.vp}<div class="vp">{card.earn.vp}</div>{/if}
+					</div>
+				{/if}
+			</header>
+		
+			<main>
+				{#if card.label}<footer>{card.label}</footer>{/if}
+			</main>
+		</div>
+		<div class="back"></div>
+	</div>
 </div>
 
 <style>
 .card {
-	background: url('/assets/card.png');
-	background-size: 100% 200%;
-	background-blend-mode: hard-light;
-	border-radius: 5px;
-	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
 	color: white;
 	cursor: pointer;
-	display: flex;
-	flex-direction: column;
 	height: calc((100vh - 200px) / 5);
 	min-height: 144px;
 	min-width: calc((100vh - 200px) / 5);
+	perspective: 500px;
 	position: relative;
-	transform: translateZ(1px);
 	user-select: none;
 	width: 80%;
-	will-change: contents;
 	z-index: 1;
 }
-	.card[data-type="war"],
+	.card[data-type="war"] .content,
 	.card[data-type="war"] .ingoo li:before { background-color: var(--war); }
-	.card[data-type="sci"],
+	.card[data-type="sci"] .content,
 	.card[data-type="sci"] .ingoo li:before { background-color: var(--sci); }
-	.card[data-type="civ"] { 
+	.card[data-type="civ"] .content { 
 		background-color: var(--civ);
 		background-image: url('/assets/card.png'); 
 		background-blend-mode: luminosity;
@@ -146,31 +143,29 @@
 			background-image: url('/assets/bar.png'); 
 			background-blend-mode: luminosity;
 		}
-	.card[data-type="eco"],
+	.card[data-type="eco"] .content,
 	.card[data-type="eco"] .ingoo li:before { background-color: var(--eco); }
-	.card[data-type="res"],
+	.card[data-type="res"] .content,
 	.card[data-type="res"] .ingoo li:before { background-color: var(--res); }
-	.card[data-type="man"],
+	.card[data-type="man"] .content,
 	.card[data-type="man"] .ingoo li:before { 
 		background-position: left bottom; 
 		background-blend-mode: none;
 	}
-	.card[data-type="guild"] { background-color: var(--guild); }
+	.card[data-type="guild"] .content { background-color: var(--guild); }
 
-	.card[data-blocked] { 
+	/* .card[data-blocked] { 
 		filter: grayscale(0.5) saturate(60%);
 		pointer-events: none;
 	}
 	.card[data-blocked] .pog { 
 		filter: grayscale(0.1) brightness(75%);
-	}
+	} */
 
-	.card[data-hidden] { 
-		background: url('/assets/card_bg.png') no-repeat right bottom;
-		background-size: auto 200%;
-		filter: none;
+	.card[data-hidden] .content { 
+		transform: rotateY( 180deg );
 	}
-	.card[data-hidden] * { display: none !important; }
+	.card[data-hidden] .front * { display: none !important; }
 
 	.card[data-taken] { 
 		opacity: 0; 
@@ -204,6 +199,35 @@
 	bottom: 1px; left: 20%;
 	text-align: center;
 	z-index: 1;
+}
+
+.card .content {
+	background: url('/assets/card.png');
+	background-size: 100% 200%;
+	background-blend-mode: hard-light;
+	border-radius: 5px;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	position: absolute;
+	transition: transform 0.5s;
+	transform-style: preserve-3d;
+	width: 100%;
+}
+
+.card .front,
+.card .back {
+	backface-visibility: hidden;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.card .back {
+	background: url('/assets/card_bg.png') no-repeat right bottom;
+	background-size: auto 200%;
+	transform: rotateY( 180deg );
 }
 
 .provided { text-align: right; }

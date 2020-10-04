@@ -479,17 +479,17 @@
 	width: 100%;
 }
 
-	.pile[data-age="1"] :global(.card[data-hidden]) {
+	.pile[data-age="1"] :global(.card[data-hidden] .back) {
 		background-color: rgb(230, 79, 9);
 		background-blend-mode: hard-light;
 	}
 
-	.pile[data-age="2"] :global(.card[data-hidden]) {
+	.pile[data-age="2"] :global(.card[data-hidden] .back) {
 		background-color: rgb(27, 105, 230);
 		background-blend-mode: hard-light;
 	}
 
-	.pile[data-age="3"] :global(.card[data-hidden]) {
+	.pile[data-age="3"] :global(.card[data-hidden] .back) {
 		background-color: rgb(29, 149, 59);
 		background-blend-mode: hard-light;
 	}
