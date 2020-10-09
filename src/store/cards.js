@@ -736,62 +736,62 @@ export const more = readable({
 	],
 	"tokens": [
 		{
-			"id": "agriculture",
+			"id": "fox",
 			"vp": 4,
 			"coin": 6,
 			"taken": false,
 			"desc": "Provides 4 VP and 6 Ingoos."
 		},
 		{
-			"id": "architecture",
+			"id": "boar",
 			"discount": "wonder",
 			"taken": false,
 			"desc": "Missions cost 2 less resources (of your choice)."
 		},
 		{
-			"id": "economy",
+			"id": "bellafide",
 			"mymoney": true,
 			"taken": false,
 			"desc": "All Ingoos spent by opponent for resources goes to you."
 		},
 		{
-			"id": "law",
+			"id": "archimedes",
 			"sci": "law",
 			"taken": false,
 			"desc": "Provides an extra Civlized Emblem."
 		},
 		{
-			"id": "masonry",
+			"id": "hopper",
 			"discount": "civ",
 			"taken": false,
 			"desc": "Commonfolk cards cost 2 less resources (of your choice)."
 		},
 		{
-			"id": "mathematics",
+			"id": "badger",
 			"mytokens": true,
 			"taken": false,
 			"desc": "Choose 1 of 3 tokens from the discarded set."
 		},
 		{
-			"id": "philosophy",
+			"id": "mill",
 			"vp": 7,
 			"taken": false,
 			"desc": "Provides 7 VP."
 		},
 		{
-			"id": "strategy",
+			"id": "quartermaster",
 			"mywar": true,
 			"taken": false,
 			"desc": "Gives 1 extra sugar per KSR card."
 		},
 		{
-			"id": "theology",
+			"id": "owl",
 			"mywonders": true,
 			"taken": false,
 			"desc": "All future Missions have the 'Play Again' effect."
 		},
 		{
-			"id": "urbanism",
+			"id": "wolf",
 			"coin": 6,
 			"mylinks": true,
 			"taken": false,
