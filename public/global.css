@@ -144,8 +144,8 @@ body {
 		.token[data-id="wolf"]:before { background-position: -360px 0; }
 		.token[data-id="hopper"]:before { background-position: -450px 0; }
 		.token[data-id="bellafide"]:before { background-position: -540px 2px; }
-		.token[data-id="quartermaster"]:before { background-position: -630px 2px; }
-		.token[data-id="archimedes"]:before { background-position: -720px 0; }
+		.token[data-id="archimedes"]:before { background-position: -630px 0; }
+		.token[data-id="quartermaster"]:before { background-position: -720px 2px; }
 		.token[data-id="mill"]:before { background-position: -810px 0; }
 
 	.token:hover:after {
