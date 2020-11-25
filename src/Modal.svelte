@@ -191,7 +191,7 @@
 					on:click={chooseCard({ card: $gs.selected, adjustedCost, pro: { provisions, res } })}
 				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
 
-				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade</button>
+				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade for 2</button>
 
 				<button
 					disabled={enoughWonders}

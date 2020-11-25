@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;700&display=swap');
+
 *, *:before, *:after { box-sizing: border-box; }
 
 html, body {
@@ -15,7 +17,7 @@ body {
 	/* background-blend-mode: multiply; */
 	background-size: cover;
 	color: #333;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Titillium Web', "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
 /* :root {
@@ -184,7 +186,7 @@ body {
 	padding: 5px;
 	position: fixed;
 	width: 100%;
-	z-index: 99;
+	z-index: 999;
 }
 
 .alert {
@@ -196,11 +198,13 @@ body {
 }
 	.alert img { 
 		float: left;
-		margin-right: 10px;
 		margin-top: 10px;
 		width: 32px;
 	}
-	.alert p { margin: 0 0 10px; padding: 10px 0; }
+	.alert p { 
+		margin: 0 0 10px;
+		padding: 10px 0 10px 45px;
+	}
 	.alert footer { 
 		border-top: 1px solid rgba(255, 255, 255, 0.25);
 		padding-top: 10px;

@@ -2,6 +2,7 @@
 	import Card from './Card.svelte';
 	import Modal from './Modal.svelte';
 	import { gs, ns } from './store/gameState';
+	import { aStore } from './store/alertStore';
 	import { age2, age3, more } from './store/cards';
 
 	export let endGame = null;
@@ -126,6 +127,32 @@
 			...$gs,
 			selected: card
 		});
+
+		let str = "";
+		aStore.removeAlert();
+
+		switch(card.type) {
+			case "res":
+			case "man":
+				str = "Brown or Gray cards give you the special resource(s) indicated by the icon(s) at the top.";
+				break;
+			case "eco":
+				str = "Blue cards allow you to buy the indicated resource for a fixed cost or provide an immediate amount of Ingoos.";
+				break;
+			case "war":
+				str = "Green cards increase your sugar (shown in left bar). Sugar will earn you food at certain levels, as well as cause your opponent to lose Ingoos, and enough can earn you complete victory.";
+				break;
+			case "civ":
+				str = "Red cards directly provide food.";
+				break;
+			case "sci":
+				str = "Yellow cards primarily provide a Civlized Emblem (large yellow icon in corner). Every matching pair of Emblems earns you a token.";
+				break;
+		}
+
+		aStore.addAlert(str, card.type);
+		if (card.cost.length) aStore.addAlert('Some cards require you to have a certain amount of resource(s). You can pay for a resource you don\'t have for 2 Ingoos (+1 for each of that resource your opponent has).', 'cost');
+		if (card.link) aStore.addAlert('Cards with the small white icon in the top right provide a "link". This means that in the next campaign, a card with a matching link as a "cost" will be free.', 'link');
 	}
 
 	/** Closes the modal */
@@ -144,6 +171,8 @@
 			selected: null,
 			showModal: false
 		});
+
+		aStore.removeAlert();
 	}
 
 	function setModal(x) {
@@ -207,6 +236,7 @@
 		}
 
 		adjustScore({card, sell, build, adjustedCost, wonder, pro, free}); // Calculate earnings
+		aStore.removeAlert();
 	}
 
 	/**
@@ -389,7 +419,11 @@
 		});
 
 		// Check for extra wonder/token actions
-		if (getToken) setModal("token");
+		if (getToken) {
+			setModal("token");
+			aStore.addAlert('Tokens generally provide a passive ability for the rest of the game. Once a token is obtained, it is no longer available as an option for your opponent.', 'token');
+		}
+
 		if (wonder) wonderCheck(wonder);
 
 		// Check for special wins

@@ -62,9 +62,7 @@
 	let winner = null;
 
 	function startGame(mp = false) {
-		aStore.addAlert('1 This is an informative piece of text explaining a thing about the game.');
-		aStore.addAlert('2 This is an informative piece of text explaining a thing about the game.');
-		aStore.addAlert('3 This is an informative piece of text explaining a thing about the game.');
+		aStore.addAlert('Welcome to Pocketworld Duels! The game will start after each player alternates in choosing 4 missions. Missions display a cost on the left and their reward on the right.');
 
 		console.info('Starting Game.')
 		let myturn = true;
@@ -101,11 +99,13 @@
 	}
 
 	/**
-	 * Selects a mission, durin the start of the game.
+	 * Selects a mission, during the start of the game.
 	 * @param m - The mission object
 	 * @param choosemission - Set to true when triggered from an online opponent
 	 */
 	function chooseMission(m, choosemission = false) {
+		aStore.removeAlert();
+
 		// Relay in MP
 		if ($ns.online && !choosemission) $ns.pubnub.publish({
 			message: {
@@ -142,6 +142,8 @@
 					...$gs,
 					state: 'started'
 				});
+
+				aStore.addAlert('There will be 3 "Campaigns" for players to obtain cards and try to earn the most Food to win. Players can alternatively win with enough Sugar or Civilized Emblems.');
 
 				break;
 		}
@@ -495,21 +497,23 @@
 </script>
 
 <main>
-	<div class="alerts">
-		{#each $aStore.alerts as alert, i }
-			<div 
-				class="alert" 
-				in:fly="{{ y: -100, duration: 300, easing: quintOut }}"
-				out:fly="{{ y: -100, duration: 300, easing: quintOut }}"
-			>
-				<img src="assets/andy.png" alt="Andy's Face" />
-				<p>{alert.msg}</p>
-				<footer>
-					<button on:click={() => { aStore.removeAlert(i) }}>Got It</button>
-				</footer>
-			</div>
-		{/each}
-	</div>
+	{#if $aStore.andy}
+		<div class="alerts">
+			{#each $aStore.alerts as alert, i }
+				<div 
+					class="alert" 
+					in:fly="{{ y: -100, duration: 300, easing: quintOut }}"
+					out:fly="{{ y: -100, duration: 300, easing: quintOut }}"
+				>
+					<img src="assets/andy.png" alt="Andy's Face" />
+					<p>{alert.msg}</p>
+					<footer>
+						<button on:click={() => { aStore.removeAlert(i) }}>Got It</button>
+					</footer>
+				</div>
+			{/each}
+		</div>
+	{/if}
 
 	<div class="game">
 		{#if $gs.p2}<Player className="you" player={$gs.p2} turn={!$gs.myturn} />{/if}
