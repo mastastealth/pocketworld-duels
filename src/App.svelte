@@ -6,7 +6,11 @@
 
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs, ns } from './store/gameState';
+	import { aStore } from './store/alertStore';
 	import { age1, more } from './store/cards';
+
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	// Define the Player object and all its props
 	class PlayerObj {
@@ -58,6 +62,10 @@
 	let winner = null;
 
 	function startGame(mp = false) {
+		aStore.addAlert('1 This is an informative piece of text explaining a thing about the game.');
+		aStore.addAlert('2 This is an informative piece of text explaining a thing about the game.');
+		aStore.addAlert('3 This is an informative piece of text explaining a thing about the game.');
+
 		console.info('Starting Game.')
 		let myturn = true;
 
@@ -487,6 +495,22 @@
 </script>
 
 <main>
+	<div class="alerts">
+		{#each $aStore.alerts as alert, i }
+			<div 
+				class="alert" 
+				in:fly="{{ y: -100, duration: 300, easing: quintOut }}"
+				out:fly="{{ y: -100, duration: 300, easing: quintOut }}"
+			>
+				<img src="assets/andy.png" alt="Andy's Face" />
+				<p>{alert.msg}</p>
+				<footer>
+					<button on:click={() => { aStore.removeAlert(i) }}>Got It</button>
+				</footer>
+			</div>
+		{/each}
+	</div>
+
 	<div class="game">
 		{#if $gs.p2}<Player className="you" player={$gs.p2} turn={!$gs.myturn} />{/if}
 

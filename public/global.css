@@ -37,6 +37,7 @@ body {
 	--res: rgb(122, 89, 45);
 	--man: #666;
 	--guild: #6f0cd3;
+	--tnt: #e4501a;
 }
 
 .card-sm {
@@ -49,7 +50,7 @@ body {
 	width: 32px;
 }
 	.card-sm:after { font-weight: bold; }
-	.card-sm[data-type="wonder"] { background: #e4501a; }
+	.card-sm[data-type="wonder"] { background: var(--tnt); }
 	.card-sm[data-type="war"] { background: var(--war); }
 	.card-sm[data-type="sci"] { background: #ddc310; }
 	.card-sm[data-type="civ"] { background: var(--civ); }
@@ -177,6 +178,41 @@ body {
 		color: #999;
 		cursor: not-allowed;
 		filter: grayscale(1);
+	}
+
+.alerts {
+	padding: 5px;
+	position: fixed;
+	width: 100%;
+	z-index: 99;
+}
+
+.alert {
+	background: var(--tnt);
+	color: white;
+	margin: 0 auto 5px;
+	padding: 10px;
+	max-width: 480px;
+}
+	.alert img { 
+		float: left;
+		margin-right: 10px;
+		margin-top: 10px;
+		width: 32px;
+	}
+	.alert p { margin: 0 0 10px; padding: 10px 0; }
+	.alert footer { 
+		border-top: 1px solid rgba(255, 255, 255, 0.25);
+		padding-top: 10px;
+		text-align: right; 
+	}
+	.alert button {
+		background: transparent;
+		border: 1px solid white;
+		border-radius: 4px;
+		color: white;
+		height: 30px;
+		width: 80px;
 	}
 
 @font-face {

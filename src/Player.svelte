@@ -1,11 +1,10 @@
 <script>
 	import Mission from './Mission.svelte';
+	import { aStore } from './store/alertStore';
 
 	export let className = "";
 	export let player = {};
 	export let turn = null;
-
-	let andy = true;
 
 	function prov(c) {
 		if (!c.provides) return null;
@@ -64,8 +63,8 @@
 		{/each}
 	</div>
 
-	{#if andy}
-		<div class="andy" on:click={() => { andy = false}}></div>
+	{#if $aStore.andy}
+		<div class="andy" on:click={aStore.killAndy}></div>
 	{/if}
 </section>
 
