@@ -46,9 +46,10 @@
 	in:fly="{{ x: -200, duration: 300, easing: quintOut }}"
 >
 	<aside class="marker" style="top: calc((100% / 19) * {markerPos})"></aside>
-	{#if !$top5}<aside class="penalty top-5"></aside>{/if}
-	{#if !$top2}<aside class="penalty top-2"></aside>{/if}
+	<aside class="penalty top-5 {$top5 ? 'got' : ''}"></aside>
+	<aside class="penalty top-2 {$top2 ? 'got' : ''}"></aside>
 
+	<div class="step">👑</div>
 	<div class="step"></div>
 	<div class="step"></div>
 	<div class="step"></div>
@@ -66,11 +67,13 @@
 	<div class="step"></div>
 	<div class="step"></div>
 	<div class="step"></div>
-	<div class="step"></div>
-	<div class="step"></div>
+	<div class="step">👑</div>
 
-	{#if !$bot2}<aside class="penalty bot-2"></aside>{/if}
-	{#if !$bot5}<aside class="penalty bot-5"></aside>{/if}
+	<aside class="penalty got top"></aside>
+	<aside class="penalty got bot"></aside>
+
+	<aside class="penalty bot-2 {$bot2 ? 'got' : ''}"></aside>
+	<aside class="penalty bot-5 {$bot5 ? 'got' : ''}"></aside>
 </aside>
 
 <style>
@@ -114,8 +117,15 @@
 	width: 50%;
 }
 	.penalty.top-2 { top: calc((100% / 19) * 4); }
+	.penalty.top { top: calc((100% / 19) * 7); }
+	.penalty.bot { top: calc((100% / 19) * 10); }
 	.penalty.bot-2 { top: calc((100% / 19) * 12); }
 	.penalty.bot-5 { top: calc((100% / 19) * 15); }
+
+	.penalty.top,
+	.penalty.bot {
+		height: calc((100% / 19) * 2);
+	}
 
 	.penalty:not(.top-2):not(.bot-2):after,
 	.penalty.bot-5:after { content: '-5'; font-size: 1.2em; }
@@ -131,9 +141,33 @@
 		width: 40px;
 	}
 
+	.got {
+		background: transparent;
+		border: 1px dashed green;
+	}
+
+	.got:not(.top-2):not(.bot-2):after,
+	.got.bot-5:after { content: '10'; }
+
+	.got.top-2:after,
+	.got.bot-2:after { content: '5'; }
+
+	.penalty.got.top:after,
+	.penalty.got.bot:after {
+		content: '2';
+		text-indent: 3px;
+	}
+
+	.got:after {
+		background: url('/assets/food.png') no-repeat center;
+		background-size: 100% auto;
+	}
+
 .step {
 	border: 1px dashed black;
+	display: grid;
 	flex: 1;
+	place-content: center;
 	width: 100%;
 }
 	.step:nth-of-type(10) { background: rgba(255, 255, 255, 0.2); }

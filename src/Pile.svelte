@@ -334,8 +334,8 @@
 				p.sci.push(card.sci);
 			}
 			if (card.type === "war") {
-				p.warprogress += card.war;
-				p.war += 1;
+				p.warprogress += card.war; // Actual war value
+				p.war += 1; // Amount of war cards
 			}
 
 			// Special bonus

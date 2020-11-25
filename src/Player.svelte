@@ -1,10 +1,25 @@
 <script>
 	import Mission from './Mission.svelte';
 	import { aStore } from './store/alertStore';
+	import { gs } from './store/gameState';
 
 	export let className = "";
-	export let player = {};
+	export let player = { score: 0 };
 	export let turn = null;
+
+	$: war = className === "me" 
+		? $gs.p1.warprogress - $gs.p2.warprogress
+		: $gs.p2.warprogress - $gs.p1.warprogress;
+	
+	$: warFood = war > 0 && war < 3
+		? 2
+		: war > 0 && war < 6
+			? 5
+			: war > 5
+				? 10
+				: 0;
+
+	$: score = player.score + warFood;
 
 	function prov(c) {
 		if (!c.provides) return null;
@@ -18,7 +33,7 @@
 
 <section class="player {className}" data-myturn={turn ? '' : null}>
 	<aside class="score">
-		{player.score}
+		{score}
 		<span class="ingoo">
 			{player.ingoo}
 		</span>
