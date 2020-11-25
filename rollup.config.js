@@ -52,7 +52,7 @@ export default {
 			},
 			hot: hot && {
 				optimistic: true,
-				noPreserveState: false,
+				noPreserveState: false
 			},
 		}),
 		replace({

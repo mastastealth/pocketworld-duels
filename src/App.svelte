@@ -551,14 +551,14 @@
 				<aside>
 					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
 					{#if !$ns.hosting}
-						<button on:click={() => { startGame(false); }}>Start Local Game</button>
+						<button class="btn-board" on:click={() => { startGame(false); }}>Start Local Game</button>
 					{/if}
-					<button on:click={ns.hostGame}>
+					<button class="btn-board" on:click={ns.hostGame}>
 						{#if $ns.hosting}Cancel Host
 						{:else}Host Lobby{/if}
 					</button>
 					{#if !$ns.hosting}
-						<button disabled={!$ns.selectedRoom} on:click={ns.joinGame}>Join Lobby</button>
+						<button class="btn-board" disabled={!$ns.selectedRoom} on:click={ns.joinGame}>Join Lobby</button>
 					{/if}
 				</aside>
 			</main>

@@ -5,6 +5,8 @@
 	export let player = {};
 	export let turn = null;
 
+	let andy = true;
+
 	function prov(c) {
 		if (!c.provides) return null;
 
@@ -61,6 +63,10 @@
 			<Mission mission={mission} smallMode={true} />
 		{/each}
 	</div>
+
+	{#if andy}
+		<div class="andy" on:click={() => { andy = false}}></div>
+	{/if}
 </section>
 
 <style>
@@ -174,4 +180,41 @@
 	width: calc(100% - 200px);
 	z-index: -1;
 }
+
+.andy {
+	background: url('assets/andy.png') no-repeat;
+	background-size: 100%;
+	height: 64px;
+	position: absolute;
+	top: -35px;
+	transition: transform 0.3s;
+	right: 0;
+	width: 64px;
+	z-index: -1;
+}
+	.andy:before {
+		content: '';
+		opacity: 0;
+		padding: 10px;
+		position: absolute;
+		top: -25%; right: 110%;
+		transition: opacity 0.2s;
+		width: 320px;
+	}
+
+	.andy:hover { transform: translateY(-15px); }
+	.andy:hover:before {
+		background: rgba(1, 1, 255, 0.4);
+		border-radius: 4px 4px 0 4px;
+		content: 'Have you played before? If so, click on my face to kill me and disable help mode.';
+		opacity: 1;
+	}
+
+	.andy:active {
+		filter: hue-rotate(-45deg);
+	}
+	.andy:active:before {
+		content: 'HOW COULD YOU DO THIS TO ME?';
+		font-weight: bold;
+	}
 </style>
