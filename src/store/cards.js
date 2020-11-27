@@ -2,177 +2,181 @@ import { readable } from 'svelte/store';
 
 export const age1 = readable([
 	{
-		"id": "claypit",
-		"cost": 1,
-		"type": "res",
-		"res": "clay"
+		id: "claypit",
+		cost: 1,
+		type: "res",
+		res: "clay"
 	},
 	{
-		"id": "stoneres",
-		"cost": 3,
-		"type": "eco",
-		"trade": "stone"
+		id: "stoneres",
+		cost: 3,
+		type: "eco",
+		trade: "stone"
 	},
 	{
-		"id": "palisade",
-		"cost": 2,
-		"type": "war",
-		"war": 1,
-		"link": "shield"
+		id: "palisade",
+		cost: 2,
+		type: "war",
+		war: 1,
+		link: "shield",
+		label: "Nomads of the North"
 	},
 	{
-		"id": "garrison",
-		"cost": ["clay"],
-		"type": "war",
-		"war": 1,
-		"link": "hammer"
+		id: "garrison",
+		cost: ["clay"],
+		type: "war",
+		war: 1,
+		link: "hammer",
+		label: "The Volunteers"
 	},
 	{
-		"id": "pharmacist",
-		"cost": 2,
-		"type": "sci",
-		"sci": "bowl",
-		"link": "mountain"
+		id: "pharmacist",
+		cost: 2,
+		type: "sci",
+		sci: "bowl",
+		link: "mountain"
 	},
 	{
-		"id": "glassworks",
-		"cost": 1,
-		"type": "man",
-		"res": "glass"
+		id: "glassworks",
+		cost: 1,
+		type: "man",
+		res: "glass"
 	},
 	{
-		"id": "tavern",
-		"cost": 0,
-		"type": "eco",
+		id: "tavern",
+		cost: 0,
+		type: "eco",
 		"instant": 4,
-		"link": "cup"
+		link: "cup"
 	},
 	{
-		"id": "apothecary",
-		"cost": ["glass"],
-		"type": "sci",
-		"sci": "wheel",
-		"vp": 1
+		id: "apothecary",
+		cost: ["glass"],
+		type: "sci",
+		sci: "wheel",
+		vp: 1
 	},
 	{
-		"id": "loggingcamp",
-		"cost": 1,
-		"type": "res",
-		"res": "wood"
+		id: "loggingcamp",
+		cost: 1,
+		type: "res",
+		res: "wood"
 	},
 	{
-		"id": "press",
-		"cost": 1,
-		"type": "man",
-		"res": "paper"
+		id: "press",
+		cost: 1,
+		type: "man",
+		res: "paper"
 	},
 	{
-		"id": "stonepit",
-		"cost": 1,
-		"type": "res",
-		"res": "stone"
+		id: "stonepit",
+		cost: 1,
+		type: "res",
+		res: "stone"
 	},
 	{
-		"id": "quarry",
-		"cost": 0,
-		"type": "res",
-		"res": "stone"
+		id: "quarry",
+		cost: 0,
+		type: "res",
+		res: "stone"
 	},
 	{
-		"id": "baths",
-		"cost": ["stone"],
-		"type": "civ",
-		"vp": 3,
-		"link": "wine"
+		id: "baths",
+		cost: ["stone"],
+		type: "civ",
+		vp: 3,
+		link: "wine"
 	},
 	{
-		"id": "clayreserve",
-		"cost": 3,
-		"type": "eco",
-		"trade": "clay"
+		id: "clayreserve",
+		cost: 3,
+		type: "eco",
+		trade: "clay"
 	},
 	{
-		"id": "guardtower",
-		"cost": 0,
-		"type": "war",
-		"war": 1
+		id: "guardtower",
+		cost: 0,
+		type: "war",
+		war: 1,
+		label: "Engineers for Hire"
 	},
 	{
-		"id": "theater",
-		"cost": 0,
-		"type": "civ",
-		"vp": 3,
-		"link": "happy"
+		id: "theater",
+		cost: 0,
+		type: "civ",
+		vp: 3,
+		link: "happy"
 	},
 	{
-		"id": "claypool",
-		"cost": 0,
-		"type": "res",
-		"res": "clay"
+		id: "claypool",
+		cost: 0,
+		type: "res",
+		res: "clay"
 	},
 	{
-		"id": "altar",
-		"cost": 0,
-		"type": "civ",
-		"link": "can",
-		"vp": 3
+		id: "altar",
+		cost: 0,
+		type: "civ",
+		link: "can",
+		vp: 3
 	},
 	{
-		"id": "lumberyard",
-		"cost": 0,
-		"type": "res",
-		"res": "wood"
+		id: "lumberyard",
+		cost: 0,
+		type: "res",
+		res: "wood"
 	},
 	{
-		"id": "stable",
-		"cost": ["wood"],	
-		"type": "war",
-		"war": 1,
-		"link": "flag"
+		id: "stable",
+		cost: ["wood"],	
+		type: "war",
+		war: 1,
+		link: "flag",
+		label: "The Distillery Brothers"
 	},
 	{
-		"id": "woodreserve",
-		"cost": 3,
-		"type": "eco",
-		"trade": "wood"
+		id: "woodreserve",
+		cost: 3,
+		type: "eco",
+		trade: "wood"
 	},
 	{
-		"id": "scriptorium",
-		"cost": 2,
-		"type": "sci",
-		"sci": "quill",
-		"link": "tree"
+		id: "scriptorium",
+		cost: 2,
+		type: "sci",
+		sci: "quill",
+		link: "tree"
 	},
 	{
-		"id": "workshop",
-		"cost": ["paper"],
-		"type": "sci",
-		"sci": "level",
-		"vp": 1
+		id: "workshop",
+		cost: ["paper"],
+		type: "sci",
+		sci: "level",
+		vp: 1
 	}
 ]);
 
 export const age2 = readable([
 	{
-		"id": "statue",
-		"cost": [
+		id: "statue",
+		cost: [
 			"clay",
 			"clay"
 		],
-		"linkcost": "happy",
-		"type": "civ",
-		"link": "shop",
-		"vp": 4
+		linkcost: "happy",
+		type: "civ",
+		link: "shop",
+		vp: 4
 	},
 	{
-		"id": "caravansery",
-		"cost": [
+		id: "caravansery",
+		cost: [
 			"glass",
 			"paper",
 			"coin",
 			"coin"
 		],
-		"type": "eco",
+		type: "eco",
 		"provides": [
 			"wood",
 			"clay",
@@ -180,449 +184,459 @@ export const age2 = readable([
 		]
 	},
 	{
-		"id": "forum",
-		"cost": [
+		id: "forum",
+		cost: [
 			"clay",
 			"coin",
 			"coin",
 			"coin"
 		],
-		"type": "eco",
+		type: "eco",
 		"provides": [
 			"paper",
 			"glass"
 		]
 	},
 	{
-		"id": "feather",
-		"cost": [
+		id: "feather",
+		cost: [
 			"wood",
 			"wood",
 			"glass"
 		],
-		"type": "civ",
-		"vp": 5
+		type: "civ",
+		vp: 5
 	},
 	{
-		"id": "archeryrange",
-		"cost": [
+		id: "archeryrange",
+		cost: [
 			"stone",
 			"wood",
 			"paper"
 		],
-		"type": "war",
-		"war": 2,
-		"link": "target"
+		type: "war",
+		war: 2,
+		link: "target",
+		label: "The Freight Union"
 	},
 	{
-		"id": "shelfquarry",
-		"cost": 2,
-		"type": "res",
-		"res": "stone",
+		id: "shelfquarry",
+		cost: 2,
+		type: "res",
+		res: "stone",
 		"rescount": 2
 	},{
-		"id": "walls",
-		"cost": [
+		id: "walls",
+		cost: [
 			"stone",
 			"stone"
 		],
-		"type": "war",
-		"war": 2
+		type: "war",
+		war: 2,
+		label: "Bullet Hive"
 	},
 	{
-		"id": "brickyard",
-		"cost": 2,
-		"type": "res",
-		"res": "clay",
+		id: "brickyard",
+		cost: 2,
+		type: "res",
+		res: "clay",
 		"rescount": 2
 	},
 	{
-		"id": "dryingroom",
-		"cost": 0,
-		"type": "man",
-		"res": "paper"
+		id: "dryingroom",
+		cost: 0,
+		type: "man",
+		res: "paper"
 	},
 	{
-		"id": "barracks",
-		"cost": 3,
-		"linkcost": "hammer",
-		"type": "war",
-		"war": 1
+		id: "barracks",
+		cost: 3,
+		linkcost: "hammer",
+		type: "war",
+		war: 1,
+		label: "Wing Demons"
 	},
 	{
-		"id": "dispensary",
-		"cost": [
+		id: "dispensary",
+		cost: [
 			"clay",
 			"clay",
 			"stone"
 		],
-		"linkcost": "mountain",
-		"type": "sci",
-		"sci": "bowl",
-		"vp": 2
+		linkcost: "mountain",
+		type: "sci",
+		sci: "bowl",
+		vp: 2
 	},
 	{
-		"id": "aqueduct",
-		"cost": [
+		id: "aqueduct",
+		cost: [
 			"stone",
 			"stone",
 			"stone"
 		],
-		"linkcost": "wine",
-		"type": "civ",
-		"vp": 5
+		linkcost: "wine",
+		type: "civ",
+		vp: 5
 	},
 	{
-		"id": "library",
-		"cost": [
+		id: "library",
+		cost: [
 			"wood",
 			"stone",
 			"glass"
 		],
-		"linkcost": "tree",
-		"type": "sci",
-		"sci": "quill",
-		"vp": 2
+		linkcost: "tree",
+		type: "sci",
+		sci: "quill",
+		vp: 2
 	},
 	{
-		"id": "rostrum",
-		"cost": [
+		id: "rostrum",
+		cost: [
 			"wood",
 			"stone"
 		],
-		"type": "civ",
-		"vp": 4,
-		"link": "feather"
+		type: "civ",
+		vp: 4,
+		link: "feather"
 	},
 	{
-		"id": "brewery",
-		"cost": 0,
-		"type": "eco",
+		id: "brewery",
+		cost: 0,
+		type: "eco",
 		"instant": 6,
-		"link": "drink"
+		link: "drink"
 	},
 	{
-		"id": "temple",
-		"cost": [
+		id: "temple",
+		cost: [
 			"wood",
 			"paper"
 		],
-		"linkcost": "can",
-		"type": "civ",
-		"vp": 4,
-		"link": "clock"
+		linkcost: "can",
+		type: "civ",
+		vp: 4,
+		link: "clock"
 	},
 	{
-		"id": "sawmill",
-		"cost": 2,
-		"type": "res",
-		"res": "wood",
+		id: "sawmill",
+		cost: 2,
+		type: "res",
+		res: "wood",
 		"rescount": 2
 	},
 	{
-		"id": "horsebreeders",
-		"cost": [
+		id: "horsebreeders",
+		cost: [
 			"wood",
 			"clay"
 		],
-		"linkcost": "flag",
-		"type": "war",
-		"war": 1
+		linkcost: "flag",
+		type: "war",
+		war: 1,
+		label: "The Glorious AFB"
 	},
 	{
-		"id": "laboratory",
-		"cost": [
+		id: "laboratory",
+		cost: [
 			"wood",
 			"glass",
 			"glass"
 		],
-		"type": "sci",
-		"sci": "level",
-		"vp": 1,
-		"link": "snow"
+		type: "sci",
+		sci: "level",
+		vp: 1,
+		link: "snow"
 	},
 	{
-		"id": "glassblower",
-		"cost": 0,
-		"type": "man",
-		"res": "glass"
+		id: "glassblower",
+		cost: 0,
+		type: "man",
+		res: "glass"
 	},
 	{
-		"id": "paradeground",
-		"cost": [
+		id: "paradeground",
+		cost: [
 			"glass",
 			"clay",
 			"clay"
 		],
-		"type": "war",
-		"war": 2,
-		"link": "fire"
+		type: "war",
+		war: 2,
+		link: "fire",
+		label: "Morning Light Croakers"
 	},
 	{
-		"id": "customshouse",
-		"cost": 4,
-		"type": "eco",
-		"trade": [
+		id: "customshouse",
+		cost: 4,
+		type: "eco",
+		trade: [
 			"paper",
 			"glass"
 		]
 	},
 	{
-		"id": "school",
-		"cost": [
+		id: "school",
+		cost: [
 			"wood",
 			"paper",
 			"paper"
 		],
-		"type": "sci",
-		"sci": "wheel",
-		"vp": 1,
-		"link": "flower"
+		type: "sci",
+		sci: "wheel",
+		vp: 1,
+		link: "flower"
 	}
 ]);
 
 export const age3 = readable([
 	{
-		"id": "study",
-		"cost": [
+		id: "study",
+		cost: [
 			"wood",
 			"wood",
 			"glass",
 			"paper"
 		],
-		"type": "sci",
-		"sci": "sundial",
-		"vp": 3
+		type: "sci",
+		sci: "sundial",
+		vp: 3
 	},
 	{
-		"id": "arsenal",
-		"cost": [
+		id: "arsenal",
+		cost: [
 			"clay",
 			"clay",
 			"clay",
 			"wood",
 			"wood"
 		],
-		"type": "war",
-		"war": 3
+		type: "war",
+		war: 3,
+		label: "Thermal Airsniper"
 	},
 	{
-		"id": "obelisk",
-		"cost": [
+		id: "obelisk",
+		cost: [
 			"stone",
 			"stone",
 			"glass"
 		],
-		"type": "civ",
-		"vp": 5
+		type: "civ",
+		vp: 5
 	},
 	{
-		"id": "lighthouse",
-		"cost": [
+		id: "lighthouse",
+		cost: [
 			"clay",
 			"clay",
 			"glass"
 		],
-		"linkcost": "cup",
-		"type": "eco",
-		"vp": 3,
+		linkcost: "cup",
+		type: "eco",
+		vp: 3,
 		"instaby": {
-			"coin": 1,
-			"type": "eco"
+			coin: 1,
+			type: "eco"
 		}
 	},
 	{
-		"id": "circus",
-		"cost": [
+		id: "circus",
+		cost: [
 			"clay",
 			"clay",
 			"stone",
 			"stone"
 		],
-		"linkcost": "fire",
-		"type": "war",
-		"war": 2
+		linkcost: "fire",
+		type: "war",
+		war: 2,
+		label: "Uncle Butter"
 	},
 	{
-		"id": "gardens",
-		"cost": [
+		id: "gardens",
+		cost: [
 			"wood",
 			"wood",
 			"clay",
 			"clay"
 		],
-		"linkcost": "shop",
-		"type": "civ",
-		"vp": 6
+		linkcost: "shop",
+		type: "civ",
+		vp: 6
 	},
 	{
-		"id": "pantheon",
-		"cost": [
+		id: "pantheon",
+		cost: [
 			"wood",
 			"clay",
 			"paper",
 			"paper"
 		],
-		"linkcost": "clock",
-		"type": "civ",
-		"vp": 6
+		linkcost: "clock",
+		type: "civ",
+		vp: 6
 	},
 	{
-		"id": "university",
-		"cost": [
+		id: "university",
+		cost: [
 			"clay",
 			"glass",
 			"paper"
 		],
-		"linkcost": "flower",
-		"type": "sci",
-		"sci": "armillary",
-		"vp": 2
+		linkcost: "flower",
+		type: "sci",
+		sci: "armillary",
+		vp: 2
 	},
 	{
-		"id": "observatory",
-		"cost": [
+		id: "observatory",
+		cost: [
 			"stone",
 			"paper",
 			"paper"
 		],
-		"linkcost": "snow",
-		"type": "sci",
-		"sci": "armillary",
-		"vp": 2
+		linkcost: "snow",
+		type: "sci",
+		sci: "armillary",
+		vp: 2
 	},
 	{
-		"id": "fortifications",
-		"cost": [
+		id: "fortifications",
+		cost: [
 			"stone",
 			"stone",
 			"clay",
 			"paper"
 		],
-		"linkcost": "shield",
-		"type": "war",
-		"war": 2
+		linkcost: "shield",
+		type: "war",
+		war: 2,
+		label: "Kasha, Farmhand"
 	},
 	{
-		"id": "pretorium",
-		"cost": 8,
-		"type": "war",
-		"war": 3
+		id: "pretorium",
+		cost: 8,
+		type: "war",
+		war: 3,
+		label: "The Matriark"
 	},
 	{
-		"id": "siegeworkshop",
-		"cost": [
+		id: "siegeworkshop",
+		cost: [
 			"wood",
 			"wood",
 			"wood",
 			"glass"
 		],
-		"linkcost": "target",
-		"type": "war",
-		"war": 2
+		linkcost: "target",
+		type: "war",
+		war: 2,
+		label: "Drumfire Cannon"
 	},
 	{
-		"id": "palace",
-		"cost": [
+		id: "palace",
+		cost: [
 			"wood",
 			"stone",
 			"clay",
 			"glass",
 			"glass"
 		],
-		"type": "civ",
-		"vp": 7
+		type: "civ",
+		vp: 7
 	},
 	{
-		"id": "townhall",
-		"cost": [
+		id: "townhall",
+		cost: [
 			"wood",
 			"wood",
 			"stone",
 			"stone",
 			"stone"
 		],
-		"type": "civ",
-		"vp": 7
+		type: "civ",
+		vp: 7
 	},
 	{
-		"id": "arena",
-		"cost": [
+		id: "arena",
+		cost: [
 			"wood",
 			"clay",
 			"stone"
 		],
-		"linkcost": "drink",
-		"type": "eco",
-		"vp": 3,
+		linkcost: "drink",
+		type: "eco",
+		vp: 3,
 		"instaby": {
-			"coin": 2,
-			"type": "wonder"
+			coin: 2,
+			type: "wonder"
 		}
 	},
 	{
-		"id": "chamberofcommerce",
-		"cost": [
+		id: "chamberofcommerce",
+		cost: [
 			"paper",
 			"paper"
 		],
-		"type": "eco",
-		"vp": 3,
+		type: "eco",
+		vp: 3,
 		"instaby": {
-			"coin": 3,
-			"type": "man"
+			coin: 3,
+			type: "man"
 		}
 	},
 	{
-		"id": "senate",
-		"cost": [
+		id: "senate",
+		cost: [
 			"clay",
 			"clay",
 			"stone",
 			"paper"
 		],
-		"linkcost": "feather",
-		"type": "civ",
-		"vp": 5
+		linkcost: "feather",
+		type: "civ",
+		vp: 5
 	},
 	{
-		"id": "academy",
-		"cost": [
+		id: "academy",
+		cost: [
 			"stone",
 			"wood",
 			"glass",
 			"glass"
 		],
-		"type": "sci",
-		"sci": "sundial",
-		"vp": 3
+		type: "sci",
+		sci: "sundial",
+		vp: 3
 	},
 	{
-		"id": "armory",
-		"cost": [
+		id: "armory",
+		cost: [
 			"stone",
 			"stone",
 			"glass"
 		],
-		"type": "eco",
-		"vp": 3,
+		type: "eco",
+		vp: 3,
 		"instaby": {
-			"coin": 1,
-			"type": "war"
+			coin: 1,
+			type: "war"
 		}
 	},
 	{
-		"id": "port",
-		"cost": [
+		id: "port",
+		cost: [
 			"wood",
 			"glass",
 			"paper"
 		],
-		"type": "eco",
-		"vp": 3,
+		type: "eco",
+		vp: 3,
 		"instaby": {
-			"coin": 2,
-			"type": "res"
+			coin: 2,
+			type: "res"
 		}
 	}
 ]);
@@ -630,326 +644,326 @@ export const age3 = readable([
 export const more = readable({
 	"guilds": [
 		{
-			"id": "shipowners",
-			"cost": [
+			id: "shipowners",
+			cost: [
 				"clay",
 				"stone",
 				"glass",
 				"paper"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "res",
-				"vp": 1,
-				"coin": 1
+			type: "guild",
+			earn: {
+				from: "res",
+				vp: 1,
+				coin: 1
 			}
 		},
 		{
-			"id": "magistrates",
-			"cost": [
+			id: "magistrates",
+			cost: [
 				"wood",
 				"wood",
 				"clay",
 				"paper"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "civ",
-				"vp": 1,
-				"coin": 1
+			type: "guild",
+			earn: {
+				from: "civ",
+				vp: 1,
+				coin: 1
 			}
 		},
 		{
-			"id": "scientist",
-			"cost": [
+			id: "scientist",
+			cost: [
 				"wood",
 				"wood",
 				"clay",
 				"clay"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "sci",
-				"vp": 1,
-				"coin": 1
+			type: "guild",
+			earn: {
+				from: "sci",
+				vp: 1,
+				coin: 1
 			}
 		},
 		{
-			"id": "tacticians",
-			"cost": [
+			id: "tacticians",
+			cost: [
 				"clay",
 				"stone",
 				"stone",
 				"paper"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "war",
-				"vp": 1,
-				"coin": 1
+			type: "guild",
+			earn: {
+				from: "war",
+				vp: 1,
+				coin: 1
 			}
 		},
 		{
-			"id": "merchants",
-			"cost": [
+			id: "merchants",
+			cost: [
 				"clay",
 				"wood",
 				"glass",
 				"paper"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "eco",
-				"vp": 1,
-				"coin": 1
+			type: "guild",
+			earn: {
+				from: "eco",
+				vp: 1,
+				coin: 1
 			}
 		},
 		{
-			"id": "builders",
-			"cost": [
+			id: "builders",
+			cost: [
 				"clay",
 				"wood",
 				"stone",
 				"stone",
 				"glass"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "wonder",
-				"vp": 2
+			type: "guild",
+			earn: {
+				from: "wonder",
+				vp: 2
 			}
 		},
 		{
-			"id": "moneylenders",
-			"cost": [
+			id: "moneylenders",
+			cost: [
 				"wood",
 				"wood",
 				"stone",
 				"stone"
 			],
-			"type": "guild",
-			"earn": {
-				"from": "coin",
-				"vp": 1
+			type: "guild",
+			earn: {
+				from: "coin",
+				vp: 1
 			}
 		}
 	],
 	"tokens": [
 		{
-			"id": "fox",
-			"vp": 4,
-			"coin": 6,
-			"taken": false,
-			"desc": "Provides 4 VP and 6 Ingoos."
+			id: "fox",
+			vp: 4,
+			coin: 6,
+			taken: false,
+			desc: "Provides 4 VP and 6 Ingoos."
 		},
 		{
-			"id": "boar",
-			"discount": "wonder",
-			"taken": false,
-			"desc": "Missions cost 2 less resources (of your choice)."
+			id: "boar",
+			discount: "wonder",
+			taken: false,
+			desc: "Missions cost 2 less resources (of your choice)."
 		},
 		{
-			"id": "bellafide",
-			"mymoney": true,
-			"taken": false,
-			"desc": "All Ingoos spent by opponent for resources goes to you."
+			id: "bellafide",
+			mymoney: true,
+			taken: false,
+			desc: "All Ingoos spent by opponent for resources goes to you."
 		},
 		{
-			"id": "archimedes",
-			"sci": "law",
-			"taken": false,
-			"desc": "Provides an extra Civlized Emblem."
+			id: "archimedes",
+			sci: "law",
+			taken: false,
+			desc: "Provides an extra Civlized Emblem."
 		},
 		{
-			"id": "hopper",
-			"discount": "civ",
-			"taken": false,
-			"desc": "Commonfolk cards cost 2 less resources (of your choice)."
+			id: "hopper",
+			discount: "civ",
+			taken: false,
+			desc: "Commonfolk cards cost 2 less resources (of your choice)."
 		},
 		{
-			"id": "badger",
-			"mytokens": true,
-			"taken": false,
-			"desc": "Choose 1 of 3 tokens from the discarded set."
+			id: "badger",
+			mytokens: true,
+			taken: false,
+			desc: "Choose 1 of 3 tokens from the discarded set."
 		},
 		{
-			"id": "mill",
-			"vp": 7,
-			"taken": false,
-			"desc": "Provides 7 VP."
+			id: "mill",
+			vp: 7,
+			taken: false,
+			desc: "Provides 7 VP."
 		},
 		{
-			"id": "quartermaster",
-			"mywar": true,
-			"taken": false,
-			"desc": "Gives 1 extra sugar per KSR card."
+			id: "quartermaster",
+			mywar: true,
+			taken: false,
+			desc: "Gives 1 extra sugar per KSR card."
 		},
 		{
-			"id": "owl",
-			"mywonders": true,
-			"taken": false,
-			"desc": "All future Missions have the 'Play Again' effect."
+			id: "owl",
+			mywonders: true,
+			taken: false,
+			desc: "All future Missions have the 'Play Again' effect."
 		},
 		{
-			"id": "wolf",
-			"coin": 6,
-			"mylinks": true,
-			"taken": false,
-			"desc": "Provides 6 Ingoos and lets you earn 4 Ingoos for every card bought for free through a link."
+			id: "wolf",
+			coin: 6,
+			mylinks: true,
+			taken: false,
+			desc: "Provides 6 Ingoos and lets you earn 4 Ingoos for every card bought for free through a link."
 		}
 	],
 	"wonders": [
 		{
-			"id": "bonepit",
-			"label": "The Bonepit Riots",
-			"cost": [
+			id: "bonepit",
+			label: "The Bonepit Riots",
+			cost: [
 				"paper",
 				"stone",
 				"stone",
 				"stone"
 			],
-			"vp": 9
+			vp: 9
 		},
 		{
-			"id": "coldmark",
-			"label": "Defense of the Cold Mark",
-			"cost": [
+			id: "coldmark",
+			label: "Defense of the Cold Mark",
+			cost: [
 				"glass",
 				"glass",
 				"clay",
 				"stone"
 			],
-			"vp": 6,
+			vp: 6,
 			"playagain": true
 		},
 		{
-			"id": "firebrand",
-			"label": "Fuel of Firebrand",
-			"cost": [
+			id: "firebrand",
+			label: "Fuel of Firebrand",
+			cost: [
 				"clay",
 				"stone",
 				"wood",
 				"wood"
 			],
-			"vp": 2,
+			vp: 2,
 			"playagain": true,
 			"provides": ["glass", "paper"]
 		},
 		{
-			"id": "levacaloo",
-			"label": "The Sand Kiln at Levacaloo",
-			"cost": [
+			id: "levacaloo",
+			label: "The Sand Kiln at Levacaloo",
+			cost: [
 				"paper",
 				"paper",
 				"clay",
 				"wood",
 				"stone"
 			],
-			"vp": 3,
-			"war": 1,
+			vp: 3,
+			war: 1,
 			"destroyres": true
 		},
 		{
-			"id": "noe",
-			"label": "Frozen in Noe",
-			"cost": [
+			id: "noe",
+			label: "Frozen in Noe",
+			cost: [
 				"paper",
 				"clay",
 				"clay",
 				"stone",
 				"stone"
 			],
-			"vp": 3,
-			"coin": 3,
+			vp: 3,
+			coin: 3,
 			"playagain": true,
 			"destroycoin": true
 		},
 		{
-			"id": "feast",
-			"label": "Victors Will Feast",
-			"cost": [
+			id: "feast",
+			label: "Victors Will Feast",
+			cost: [
 				"paper",
 				"glass",
 				"stone",
 				"wood"
 			],
-			"coin": 12,
+			coin: 12,
 			"playagain": true
 		},
 		{
-			"id": "sagemarro",
-			"label": "Sage Marro Speaks",
-			"cost": [
+			id: "sagemarro",
+			label: "Sage Marro Speaks",
+			cost: [
 				"glass",
 				"wood",
 				"stone",
 				"stone"
 			],
-			"vp": 3,
-			"war": 1,
+			vp: 3,
+			war: 1,
 			"destroyman": true
 		},
 		{
-			"id": "mightbe",
-			"label": "What Might Be",
-			"cost": [
+			id: "mightbe",
+			label: "What Might Be",
+			cost: [
 				"glass",
 				"clay",
 				"clay",
 				"clay"
 			],
-			"vp": 3,
-			"war": 2
+			vp: 3,
+			war: 2
 		},
 		{
-			"id": "blacksledge",
-			"label": "Black Sledge Uprising",
-			"cost": [
+			id: "blacksledge",
+			label: "Black Sledge Uprising",
+			cost: [
 				"wood",
 				"stone",
 				"paper",
 				"paper"
 			],
-			"vp": 4,
+			vp: 4,
 			"provides": ["wood", "stone", "clay"]
 		},
 		{
-			"id": "solawa",
-			"label": "Awash in Solawa",
-			"cost": [
+			id: "solawa",
+			label: "Awash in Solawa",
+			cost: [
 				"paper",
 				"glass",
 				"wood",
 				"wood",
 				"wood"
 			],
-			"vp": 4,
+			vp: 4,
 			"selecttoken": true
 		},
 		{
-			"id": "scrapetown",
-			"label": "Scrapetown Racket",
-			"cost": [
+			id: "scrapetown",
+			label: "Scrapetown Racket",
+			cost: [
 				"paper",
 				"glass",
 				"wood",
 				"wood"
 			],
-			"vp": 3,
+			vp: 3,
 			"playagain": true,
-			"coin": 6
+			coin: 6
 		},
 		{
-			"id": "snikaree",
-			"label": "Snikaree Liberation",
-			"cost": [
+			id: "snikaree",
+			label: "Snikaree Liberation",
+			cost: [
 				"paper",
 				"glass",
 				"glass",
 				"clay",
 				"clay"
 			],
-			"vp": 2,
+			vp: 2,
 			"selectdiscard": true
 		}
 	]

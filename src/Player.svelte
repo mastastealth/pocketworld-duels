@@ -202,7 +202,7 @@
 	position: absolute;
 	top: -35px;
 	transition: transform 0.3s;
-	right: 0;
+	left: 115px;
 	width: 64px;
 	z-index: -1;
 }
@@ -211,15 +211,15 @@
 		opacity: 0;
 		padding: 10px;
 		position: absolute;
-		top: -25%; right: 110%;
+		top: -25%; left: 110%;
 		transition: opacity 0.2s;
 		width: 320px;
 	}
 
 	.andy:hover { transform: translateY(-15px); }
 	.andy:hover:before {
-		background: rgba(1, 1, 255, 0.4);
-		border-radius: 4px 4px 0 4px;
+		background: rgba(1, 1, 255, 0.6);
+		border-radius: 4px 4px 4px 0;
 		content: 'Have you played before? If so, click on my face to kill me and disable help mode.';
 		opacity: 1;
 	}

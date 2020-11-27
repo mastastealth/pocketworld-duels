@@ -515,7 +515,7 @@
 		</div>
 	{/if}
 
-	<div class="game">
+	<div class="game {$gs.state === "menu" ? "not-playing" : "playing"}">
 		{#if $gs.p2}<Player className="you" player={$gs.p2} turn={!$gs.myturn} />{/if}
 
 		{#if $gs.state === "started"}
@@ -581,6 +581,7 @@
 					{#if !$ns.hosting}
 						<button class="btn-board" on:click={() => { startGame(false); }}>Start Local Game</button>
 					{/if}
+					<br>
 					<button class="btn-board" on:click={ns.hostGame}>
 						{#if $ns.hosting}Cancel Host
 						{:else}Host Lobby{/if}
@@ -607,6 +608,17 @@
 	grid-template-rows: 100px 1fr 100px;
 	height: 100vh;
 }
+	.game.not-playing:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		background: var(--eco);
+		mix-blend-mode: multiply;
+		z-index: -1;
+	}
 
 .table {
 	align-items: center;

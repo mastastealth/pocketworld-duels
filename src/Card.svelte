@@ -224,6 +224,11 @@
 	width: 100%;
 }
 
+.card .front {
+	display: flex;
+	flex-direction: column;
+}
+
 .card .back {
 	background: url('/assets/card_bg.png') no-repeat right bottom;
 	background-size: auto 200%;
@@ -381,7 +386,10 @@ main {
 }
 
 footer {
+	font-size: 12px;
+	mix-blend-mode: overlay;
 	text-align: center;
+	text-shadow: -1px -1px 1px black;
 	text-transform: uppercase;
 	width: 100%;
 }
