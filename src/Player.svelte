@@ -43,6 +43,7 @@
 		{#each player.cards as card}
 			<div 
 				class="card-sm" 
+				data-id={card.id}
 				data-type={card.type}
 				data-vp={card.vp}
 				data-res={card.res}
