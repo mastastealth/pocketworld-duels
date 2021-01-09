@@ -40,6 +40,8 @@ body {
 	--man: #666;
 	--guild: #6f0cd3;
 	--tnt: #e4501a;
+	/* Sizing */
+	--token: 90px;
 }
 
 .card-sm {
@@ -132,7 +134,7 @@ body {
 
 	.token:before { 
 		background: url('/assets/token_icons.png') no-repeat;
-		background-size: 900px 90px;
+		background-size: calc(var(--token) * 10) var(--token);
 		content: '';
 		filter: grayscale(100%);
 		height: 100%;
@@ -141,15 +143,15 @@ body {
 		position: absolute;
 		width: 100%;
 	}
-		.token[data-id="badger"]:before { background-position: -90px 0; }
-		.token[data-id="boar"]:before { background-position: -180px 0; }
-		.token[data-id="fox"]:before { background-position: -270px 0; }
-		.token[data-id="wolf"]:before { background-position: -360px 0; }
-		.token[data-id="hopper"]:before { background-position: -450px 0; }
-		.token[data-id="bellafide"]:before { background-position: -540px 2px; }
-		.token[data-id="archimedes"]:before { background-position: -630px 0; }
-		.token[data-id="quartermaster"]:before { background-position: -720px 2px; }
-		.token[data-id="mill"]:before { background-position: -810px 0; }
+		.token[data-id="badger"]:before { background-position: calc(var(--token) * -1) 0; }
+		.token[data-id="boar"]:before { background-position: calc(var(--token) * -2) 0; }
+		.token[data-id="fox"]:before { background-position: calc(var(--token) * -3) 0; }
+		.token[data-id="wolf"]:before { background-position: calc(var(--token) * -4) 0; }
+		.token[data-id="hopper"]:before { background-position: calc(var(--token) * -5) 0; }
+		.token[data-id="bellafide"]:before { background-position: calc(var(--token) * -6) 2px; }
+		.token[data-id="archimedes"]:before { background-position: calc(var(--token) * -7) 0; }
+		.token[data-id="quartermaster"]:before { background-position: calc(var(--token) * -8) 2px; }
+		.token[data-id="mill"]:before { background-position: calc(var(--token) * -9) 0; }
 
 	.token:hover:after {
 		background: rgba(0, 0, 0, 0.8);

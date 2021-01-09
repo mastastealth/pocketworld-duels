@@ -405,8 +405,12 @@
 			) selectCard = true;
 		}
 
-		let myturn = !$gs.myturn;
-		if (getToken || ($gs.cardsleft - 1 > 0 && playAgain) || selectCard) myturn = true;
+		let myturn = (
+			getToken 
+			|| ($gs.cardsleft - 1 > 0 && playAgain) 
+			|| selectCard
+		) ? $gs.myturn : !$gs.myturn;
+		// TODO - if (myturn !== $gs.myturn) notify(...);
 
 		gs.set({
 			...$gs,
