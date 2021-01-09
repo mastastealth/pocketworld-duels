@@ -24,6 +24,7 @@ export const aStore = {
 
 	addAlert(a, code = false) {
 		let alert = a.msg || { msg: a };
+		if (window.Cypress) return false;
 
 		update(self => {
 			if (
