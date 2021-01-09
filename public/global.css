@@ -42,7 +42,32 @@ body {
 	--tnt: #e4501a;
 	/* Sizing */
 	--token: 90px;
+	--pog: 40px;
+	--pog-icon: 30px;
 }
+
+.pog { 
+	background: url('/assets/pog.png') no-repeat;
+	background-size: 100% auto;
+	display: grid;
+	height: var(--pog);
+	position: relative;
+	width: var(--pog);
+}
+	.pog:before {
+		background: url('/assets/res.png') no-repeat;
+		background-size: calc(var(--pog-icon) * 4) calc(var(--pog-icon) * 2);
+		content: '';
+		height: var(--pog-icon);
+		margin: auto;
+		width: var(--pog-icon);
+		z-index: 1;
+	}
+		.pog[data-res="stone"]:before { background-position: calc(var(--pog-icon) * -1) 0; }
+		.pog[data-res="wood"]:before { background-position: calc(var(--pog-icon) * -2) 0; }
+		.pog[data-res="coin"]:before { background-position: calc((var(--pog-icon) * -3) + 1) 0; }
+		.pog[data-res="paper"]:before { background-position: 0 calc(var(--pog-icon) * -1); }
+		.pog[data-res="glass"]:before { background-position: calc(var(--pog-icon) * -1) calc(var(--pog-icon) * -1); }
 
 .card-sm {
 	border: 1px solid black;

@@ -576,6 +576,7 @@
 						</li>
 					{/each}
 				</ul>
+
 				<aside>
 					<img src="/assets/logo.png" alt="Pocketworld Duels" class="logo">
 					{#if !$ns.hosting}
@@ -590,6 +591,24 @@
 						<button class="btn-board" disabled={!$ns.selectedRoom} on:click={ns.joinGame}>Join Lobby</button>
 					{/if}
 				</aside>
+
+				<section class="goals">
+					<h3>3 Paths to <strong>Victory</strong>:</h3>
+					<ul>
+						<li> 
+							<span class="food"></span> 
+							Gather the <strong>most food</strong> by the end of the game.
+						</li>
+						<li> 
+							<span class="sugar"></span> 
+							Gather enough <strong>sugar</strong> to overrun your opponent.
+						</li>
+						<li> 
+							<span class="civ icon-sun"></span> 
+							Gather <strong>7 unique</strong> Civlized emblems.
+						</li>
+					</ul>
+				</section>
 			</main>
 		{/if}
 
@@ -634,7 +653,7 @@
 	}
 
 .menu {
-	gap: 10px;
+	gap: 20px;
 }
 	.menu .lobbies { 
 		background: url('/assets/board.png') no-repeat;
@@ -677,6 +696,48 @@
 		flex: 1;
 	}
 
+	.menu .goals {
+		background:  rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.25);
+		border-radius: 8px;
+		color: white;
+		flex: 1.5;
+		padding: 30px 20px;
+	}
+
+	.goals ul {
+		font-size: 1.2em;
+		list-style: none;
+	}
+
+	.goals strong{
+		color: var(--tnt);
+	}
+
+	.goals span {
+		display: inline-grid;
+		height: 30px;
+		margin-right: 5px;
+		vertical-align: middle;
+		width: 30px;
+	}
+		.goals .food { 
+			background: url('/assets/food.png') no-repeat left center;
+			background-size: 100% auto;
+		}
+
+		.goals .sugar { 
+			background: url('/assets/star.png') no-repeat left center;
+			background-size: 100% auto;
+		}
+
+		.goals .civ {
+			color: rgb(255, 243, 189);
+			font-size: 1.25em;
+			line-height: 26px;
+			text-align: center;
+		}
+
 .logo { 
 	display: block; 
 	margin-bottom: 20px;
@@ -703,27 +764,4 @@
 		right: 110%;
 		top: 25%;
 	}
-
-:global(.pog) { 
-	background: url('/assets/pog.png') no-repeat;
-	background-size: 100% auto;
-	display: grid;
-	height: 40px;
-	position: relative;
-	width: 40px;
-}
-	:global(.pog:before) {
-		background: url('/assets/res.png') no-repeat;
-		background-size: 120px 60px;
-		content: '';
-		height: 30px;
-		margin: auto;
-		width: 30px;
-		z-index: 1;
-	}
-		:global(.pog[data-res="stone"]:before) { background-position: -30px 0; }
-		:global(.pog[data-res="wood"]:before) { background-position: -60px 0; }
-		:global(.pog[data-res="coin"]:before) { background-position: -91px 0; }
-		:global(.pog[data-res="paper"]:before) { background-position: 0 -30px; }
-		:global(.pog[data-res="glass"]:before) { background-position: -30px -30px; }
 </style>
