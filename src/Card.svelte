@@ -154,10 +154,12 @@
 	}
 	.card[data-type="guild"] .content { background-color: var(--guild); }
 
-	/* .card[data-blocked] { 
+	.card[data-blocked] { 
 		filter: grayscale(0.5) saturate(60%);
 		pointer-events: none;
 	}
+
+	/*
 	.card[data-blocked] .pog { 
 		filter: grayscale(0.1) brightness(75%);
 	} */
