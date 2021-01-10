@@ -6,14 +6,14 @@ describe('Starts a game', () => {
 		// Start game by choosing missions
 		cy.contains('Start Local Game').click();
 		cy.get('.mission').should('have.length', 4);
-		cy.get('h2').should('have.text', 'Player 1 Select a Mission:');
+		cy.get('h2').should('have.text', 'Your Turn to Select a Mission:');
 		cy.contains('The Bonepit Riots').click();
 		cy.contains('Defense of the Cold Mark').click();
 		cy.contains('Fuel of Firebrand').click();
 		cy.contains('The Sand Kiln at Levacaloo').click();
 
 		// Changes to 2nd set of missions, starts with Player 2
-		cy.get('h2').should('have.text', 'Player 2 Select a Mission:');
+		cy.get('h2').should('have.text', 'Their Turn to Select a Mission:');
 		cy.get('.mission').should('have.length', 8);
 		cy.contains('Frozen in Noe').click();
 		cy.contains('Victors Will Feast').click();
