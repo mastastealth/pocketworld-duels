@@ -406,18 +406,23 @@
 		}
 
 		// Swap turn except on certain actions
-		let myturn = (
+		let myturn;
+		if (
 			getToken 
 			|| ($gs.cardsleft - 1 > 0 && playAgain) 
 			|| selectCard
-		) ? $gs.myturn : !$gs.myturn;
+		) { 
+			myturn = $gs.myturn;
+		} else {
+			myturn = !$gs.myturn;
 
-		// Turn notification
-		aStore.addAlert({
-			msg: myturn && !$gs.myturn 
-				? "It is now YOUR turn." 
-				: "It is your opponent's turn"
-		});
+			// Turn notification
+			aStore.addAlert({
+				msg: myturn
+					? "It is now YOUR turn." 
+					: "It is your opponent's turn"
+			});
+		}
 
 		document.title = myturn 
 			? `You have ${p.score} Food, ${p.ingoo} Ingoo.`

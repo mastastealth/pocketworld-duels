@@ -69,7 +69,7 @@
 
 	<div class="tokens">
 		{#each player.tokens as token}
-			<div class="token" data-id={token.id}></div>
+			<div class="token" data-id={token.id} data-desc={token.desc}></div>
 		{/each}
 	</div>
 
@@ -190,6 +190,10 @@
 		height: 60px;
 		width: 60px;
 	}
+		.player.me .token:hover:after {
+			top: auto;
+			bottom: 110%;
+		}
 
 .missions {
 	display: flex;
