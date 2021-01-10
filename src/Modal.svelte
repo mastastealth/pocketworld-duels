@@ -128,19 +128,23 @@
 	}
 </script>
 
-<div class="modal" data-modal="{showModal || null}">
+<div 
+	class="modal" 
+	data-modal="{showModal || null}"
+>
 	{#if !showModal}
 		<h2>What would you like to do?</h2>
 
-		<section class="purchase">
+		<section class="purchase" data-buy={!!$gs.selected.cost.length}>
 			<aside class="item">
 				<Card card={$gs.selected} />
 			</aside>
 	
 			<aside class="buy">
-				<div class="cost">
-					<h4>You Need:</h4>
-					{#if $gs.selected.cost.length}
+				{#if $gs.selected.cost.length}
+					<div class="cost">
+						<h4>You Need:</h4>
+
 						{#each $gs.selected.cost as res, i}
 							<span 
 								class="pog" 
@@ -149,13 +153,12 @@
 								on:click={reduceMe(i, res)}
 							></span>
 						{/each}
-					{:else}
-						{$gs.selected.cost} Ingoo
-					{/if}
-					{#if who.civtoken && $gs.selected.type === "civ" && $gs.selected.cost.length}
-						<small><i>You can disable 2 resources.</i></small>
-					{/if}
-				</div>
+
+						{#if who.civtoken && $gs.selected.type === "civ" && $gs.selected.cost.length}
+							<small><i>You can disable 2 resources.</i></small>
+						{/if}
+					</div>
+				{/if}
 
 				{#if $gs.selected.cost.length}
 					<div class="have">
@@ -186,17 +189,31 @@
 			</aside>
 
 			<aside class="options">
-				<button 
+				<button
+					class="btn-board"
+					data-free={affordable && !total}
 					disabled={affordable ? null : true}
 					on:click={chooseCard({ card: $gs.selected, adjustedCost, pro: { provisions, res } })}
-				>{!affordable || total > 0 ? `Buy for ${total}` : "Get for Free"}</button>
+				>
+					{#if !affordable || total > 0}
+						Buy for {total} <span class="ingoo"></span>
+					{:else}
+						Get for Free
+					{/if}
+				</button>
 
-				<button on:click={chooseCard({ card: $gs.selected, sell: true })}>Trade for 2</button>
+				<button 
+					class="btn-board"
+					data-trade
+					on:click={chooseCard({ card: $gs.selected, sell: true })}
+				>Trade for 2 <span class="ingoo"></span></button>
 
 				<button
+					class="btn-board"
+					data-mission
 					disabled={enoughWonders}
 					on:click={buildWonder}
-				>Complete Mission</button>
+				>Complete Mission...</button>
 			</aside>
 		</section>
 	{:else if showModal.includes("token")}
@@ -408,6 +425,10 @@ h4 { margin: 0 0 10px; }
 
 	.purchase .pog { display: inline-grid; }
 
+	.purchase[data-buy="false"] {
+		grid-template-columns: 1fr 20px 1fr;
+	}
+
 .buy div { margin-bottom: 10px; }
 .buy small { display: block; }
 
@@ -436,7 +457,7 @@ h4 { margin: 0 0 10px; }
 
 .options button { 
 	display: block; 
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 .cards {
@@ -495,4 +516,21 @@ h4 { margin: 0 0 10px; }
 .token {
 	margin: 0 5px;
 }
+
+[data-free="true"] {filter: hue-rotate(-20deg) saturate(200%); }
+[data-free="false"] {filter: hue-rotate(40deg) saturate(600%); }
+[data-trade] {filter: hue-rotate(20deg) saturate(600%); }
+[data-mission] {filter: hue-rotate(-110deg) saturate(200%); }
+
+.ingoo {
+	background: url('/assets/res.png') no-repeat -60px 1px;
+	background-size: 80px 40px;
+	display: inline-block;
+	height: 20px;
+	margin-left: 5px;
+	width: 20px;
+	vertical-align: middle;
+}
+	[data-free="false"] .ingoo { filter: hue-rotate(-30deg) saturate(50%); }
+	[data-trade] .ingoo { filter: hue-rotate(-10deg) saturate(50%); }
 </style>

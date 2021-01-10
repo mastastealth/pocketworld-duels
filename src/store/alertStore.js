@@ -22,27 +22,22 @@ export const aStore = {
 	set,
 	update,
 
-	addAlert(a, code = false) {
-		let alert = a.msg || { msg: a };
+	addAlert(a, code = false, time = 4) {
+		let alert = a.msg ? a : { msg: a };
 		if (window.Cypress) return false;
 
 		update(self => {
-			if (
-				(self.andy && !code) 
-				|| (self.andy && code && !self[code])
-			) {
-				self.alerts = [...self.alerts, alert];
-				if (code) self[code] = true;
-				return self;
-			} else {
-				return self;
-			}
-		});
-	},
-	removeAlert(i = 0) {
-		update(self => {
-			self.alerts.splice(i, 1);
-			self.alerts = [...self.alerts];
+			if (!code || (code && self.andy && !self[code])) self.alerts = [...self.alerts, alert];
+			if (code) self[code] = true;
+
+			setTimeout(() => {
+				update(self => {
+					if (self.alerts.length) self.alerts.splice(0, 1);
+					self.alerts = [...self.alerts];
+					return self;
+				});
+			}, time * 1000);
+
 			return self;
 		});
 	},

@@ -128,31 +128,34 @@
 			selected: card
 		});
 
-		let str = "";
-		aStore.removeAlert();
+		let msg = "";
 
 		switch(card.type) {
 			case "res":
 			case "man":
-				str = "Brown or Gray cards give you the special resource(s) indicated by the icon(s) at the top.";
+				msg = "Brown or Gray cards give you the special resource(s) indicated by the icon(s) at the top of the card.";
 				break;
 			case "eco":
-				str = "Blue cards allow you to buy the indicated resource for a fixed cost or provide an immediate amount of Ingoos.";
+				msg = "Blue cards allow you to buy the indicated resource for a fixed cost or provide an immediate amount of Ingoos.";
 				break;
 			case "war":
-				str = "Green cards increase your sugar (shown in left bar). Sugar will earn you food at certain levels, as well as cause your opponent to lose Ingoos, and enough can earn you complete victory.";
+				msg = "Green cards increase your sugar power (shown in left bar). At certain levels sugar will earn you food, cause your opponent to lose Ingoos, or earn you victory.";
 				break;
 			case "civ":
-				str = "Red cards directly provide food.";
+				msg = "Red cards directly provide food.";
 				break;
 			case "sci":
-				str = "Yellow cards primarily provide a Civlized Emblem (large yellow icon in corner). Every matching pair of Emblems earns you a token.";
+				msg = "Yellow cards primarily provide a Civlized Emblem (large yellow icon in corner). Every matching pair of Emblems earns you a token.";
 				break;
 		}
 
-		aStore.addAlert(str, card.type);
-		if (card.cost.length) aStore.addAlert('Some cards require you to have a certain amount of resource(s). You can pay for a resource you don\'t have for 2 Ingoos (+1 for each of that resource your opponent has).', 'cost');
-		if (card.link) aStore.addAlert('Cards with the small white icon in the top right provide a "link". This means that in the next campaign, a card with a matching link as a "cost" will be free.', 'link');
+		aStore.addAlert({
+			msg,
+			color: card.type !== 'sci' ? `var(--${card.type})` : '#e6a200'
+		}, card.type, 7);
+
+		if (!$aStore.alerts.length && card.cost.length) aStore.addAlert('Some cards require you to have a certain amount of resource(s). You can pay for a resource you don\'t have for 2 Ingoos (+1 for each of that resource your opponent has).', 'cost');
+		if (!$aStore.alerts.length && card.link) aStore.addAlert('Cards with the small white icon in the top right provide a "link". This means that in the next campaign, a card with a matching link as a "cost" will be free.', 'link');
 	}
 
 	/** Closes the modal */
@@ -171,8 +174,6 @@
 			selected: null,
 			showModal: false
 		});
-
-		aStore.removeAlert();
 	}
 
 	function setModal(x) {
@@ -236,7 +237,6 @@
 		}
 
 		adjustScore({card, sell, build, adjustedCost, wonder, pro, free}); // Calculate earnings
-		aStore.removeAlert();
 	}
 
 	/**
@@ -405,13 +405,25 @@
 			) selectCard = true;
 		}
 
+		// Swap turn except on certain actions
 		let myturn = (
 			getToken 
 			|| ($gs.cardsleft - 1 > 0 && playAgain) 
 			|| selectCard
 		) ? $gs.myturn : !$gs.myturn;
-		// TODO - if (myturn !== $gs.myturn) notify(...);
 
+		// Turn notification
+		aStore.addAlert({
+			msg: myturn && !$gs.myturn 
+				? "It is now YOUR turn." 
+				: "It is your opponent's turn"
+		});
+
+		document.title = myturn 
+			? `You have ${p.score} Food, ${p.ingoo} Ingoo.`
+			: `They have ${o.score} Food, ${o.ingoo} Ingoo.`
+
+		// Apply stuff
 		gs.set({
 			...$gs,
 			p1: $gs.myturn ? p : o,

@@ -177,7 +177,7 @@ describe('Play through age 2', () => {
 	});
 
 	it('Constructs a wonder, plays again', () => {
-		cy.contains('Complete Mission').click();
+		cy.contains('Complete Mission...').click();
 		cy.contains('Buy for 2').click();
 		cy.get('.player.you .score').should('have.text', '13 1');
 		cy.get('.player.you[data-myturn]').should('exist');
@@ -237,7 +237,7 @@ describe('Play through age 2', () => {
 
 	it('Selecting Levacaloo works', () => {
 		cy.get('[data-index="8"]').click();
-		cy.contains('Complete Mission').click();
+		cy.contains('Complete Mission...').click();
 
 		cy.get('.modal .cost .pog').should('have.length', 4);
 		cy.get('.pog[data-res="paper"][data-enough]').should('exist');
@@ -264,7 +264,7 @@ describe('Play through age 2', () => {
 	it('Should jack up rice on wood', () => {
 		cy.get('[data-index="0"]').click();
 		cy.contains('Buy for 6');
-		cy.contains('Complete Mission').click();
+		cy.contains('Complete Mission...').click();
 		cy.contains('Victors Will Feast').click();
 		cy.contains('Buy for 3').click();
 
@@ -315,7 +315,7 @@ describe('Play through age 3', () => {
 
 	it('Wonder provides resources', () => {
 		cy.get('[data-index="39"]').click();
-		cy.contains('Complete Mission').click();
+		cy.contains('Complete Mission...').click();
 		cy.contains('Buy for 2').click();
 		cy.get('.player.you .mission[data-built]').should('have.length', 2);
 
@@ -358,7 +358,7 @@ describe('Play through age 3', () => {
 		cy.contains('Buy for 6').click();
 
 		cy.get('[data-index="21"]').click();
-		cy.contains('Complete Mission').click();
+		cy.contains('Complete Mission...').click();
 		cy.get('.modal .current .pog[data-type="wonder"]').click();
 		cy.get('.player.me .score').should('have.text', '34 5');
 		cy.contains('Buy for 5').click();
