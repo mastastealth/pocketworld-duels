@@ -503,7 +503,7 @@
 				out:fly="{{ y: -100, duration: 300, easing: quintOut }}"
 				style="{alert.color ? `background: ${alert.color}` : null}"
 			>
-				<img src="assets/andy.png" alt="Andy's Face" />
+				<img src="/assets/andy.png" alt="Andy's Face" />
 				<p>{alert.msg}</p>
 			</div>
 		{/each}
