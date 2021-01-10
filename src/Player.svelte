@@ -80,7 +80,11 @@
 	</div>
 
 	{#if $aStore.andy}
-		<div class="andy" on:click={aStore.killAndy}></div>
+		<div class="andy" on:click={aStore.killAndy}>
+			{#if $aStore.tip}
+				<div class="says" data-hastip={!!$aStore.tip}>ℹ️ {$aStore.tip}</div>
+			{/if}
+		</div>
 	{/if}
 </section>
 
@@ -208,21 +212,32 @@
 	width: 64px;
 	z-index: -1;
 }
+	.andy .says,
 	.andy:before {
-		content: '';
+		border-radius: 4px 4px 4px 0;
 		opacity: 0;
 		padding: 10px;
 		position: absolute;
-		top: -25%; left: 110%;
+		bottom: 25%; left: 110%;
 		transition: opacity 0.2s;
 		width: 320px;
 	}
 
-	.andy:hover { transform: translateY(-15px); }
-	.andy:hover:before {
+	.andy .says {
+		background: rgba(0, 0, 0, 0.8);
+		bottom: 40%;
+		width: 400px;
+	}
+
+	.andy:before {
 		background: rgba(1, 1, 255, 0.6);
-		border-radius: 4px 4px 4px 0;
 		content: 'Have you played before? If so, click on my face to kill me and disable help mode.';
+	}
+
+	.andy:hover { transform: translateY(-15px); }
+
+	.andy:hover:before,
+	.andy .says[data-hastip="true"] {
 		opacity: 1;
 	}
 
@@ -230,7 +245,7 @@
 		filter: hue-rotate(-45deg);
 	}
 	.andy:active:before {
-		content: 'HOW COULD YOU DO THIS TO ME?';
+		content: 'HOW COULD YOU DO THIS TO ME? ';
 		font-weight: bold;
 	}
 </style>

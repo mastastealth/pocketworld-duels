@@ -1,6 +1,7 @@
 <script>
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import { aStore } from './store/alertStore';
 
 	export let card = {};
 	export let selectCard = () => {};
@@ -39,14 +40,26 @@
 >
 	<div class="content">
 		<div class="front">
-			<header>
+			<header 
+				on:mouseenter={() => {
+					if (card.type == 'civ' || card.res) aStore.setTip('card-res') 
+				}}
+				on:mouseleave={() => { aStore.setTip() }}
+			>
 				{#if card.cost}
 					<div class="ingoo">
 						{#if typeof card.cost === 'number' || coinCost}
-							<strong>{coinCost || card.cost}</strong>
+							<strong 
+								on:mouseenter={() => { aStore.setTip('card-cost') }}
+								on:mouseleave={() => { aStore.setTip() }}
+							>{coinCost || card.cost}</strong>
 						{/if}
 						{#if card.cost.length}
-							<ul class="res-list">
+							<ul 
+								class="res-list"
+								on:mouseenter={() => { aStore.setTip('card-cost2') }}
+								on:mouseleave={() => { aStore.setTip() }}
+							>
 								<li>
 									{#each fullCost as cost}
 										<div class="pog" data-res={cost}></div>
@@ -85,12 +98,21 @@
 				{/if}
 		
 				{#if card.link}
-					<div class="link-icon">
+					<div 
+						class="link-icon"
+						on:mouseenter={() => { aStore.setTip('card-icon') }}
+						on:mouseleave={() => { aStore.setTip() }}
+					>
 						<i class="icon icon-{card.link}"></i>
 					</div>
 				{/if}
 				{#if card.sci}
-					<div class="sci-icon" data-sci={card.sci}>
+					<div 
+						class="sci-icon" 
+						data-sci={card.sci}
+						on:mouseenter={() => { aStore.setTip('card-emblem') }}
+						on:mouseleave={() => { aStore.setTip() }}
+					>
 						<i class="icon icon-{card.sci}"></i>
 					</div>
 				{/if}

@@ -4,6 +4,8 @@
 	export let chooseMission = null;
 	export let smallMode = false;
 	export let myturn = false;
+
+	import { aStore } from './store/alertStore';
 </script>
 
 <div 
@@ -13,7 +15,11 @@
 	data-id={mission.id}
 	on:click={() => { if (!smallMode && myturn) chooseMission(mission)}}
 >
-	<aside class="cost">
+	<aside 
+		class="cost"
+		on:mouseenter={() => { aStore.setTip('mission-cost') }}
+		on:mouseleave={() => { aStore.setTip() }}
+	>
 		{#each mission.cost as cost}
 			<div class="pog" data-res={cost}></div>
 		{/each}
@@ -23,36 +29,75 @@
 
 	<aside class="actions">
 		{#if mission.coin}
-			<div class="ingoo">{mission.coin}</div>
+			<div class="ingoo"
+				on:mouseenter={() => { aStore.setTip('mission-ingoo') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>{mission.coin}</div>
 		{/if}
 		{#if mission.vp}
-			<div class="txt vp">{mission.vp}</div>
+			<div class="txt vp"
+				on:mouseenter={() => { aStore.setTip('mission-food') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>{mission.vp}</div>
 		{/if}
 		{#if mission.war}
-			<img src="/assets/star.png" alt="star" />
+			<img 
+				src="/assets/star.png" 
+				alt="star"
+				on:mouseenter={() => { aStore.setTip('mission-sugar') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			/>
 			{#if mission.war > 1}<img src="/assets/star.png" alt="star" />{/if}
 		{/if}
 		{#if mission.playagain}
-			<div class="txt">🔁</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-again') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>🔁</div>
 		{/if}
 		{#if mission.destroycoin}
-			<div class="txt">💥</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-descoin') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>💥</div>
 		{/if}
 		{#if mission.destroyres}
-			<div class="txt">☢️</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-desres') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>☢️</div>
 		{/if}
 		{#if mission.destroyman}
-			<div class="txt">💣</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-desman') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>💣</div>
 		{/if}
 		{#if mission.selecttoken}
-			<div class="txt">🙏</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-token') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>🙏</div>
 		{/if}
 		{#if mission.selectdiscard}
-			<div class="txt">🃏</div>
+			<div class="txt"
+				on:mouseenter={() => { aStore.setTip('mission-discard') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>🃏</div>
 		{/if}
 		{#if mission.provides}
-			<span class="pog" data-res={mission.provides[0]}></span>
-			<span class="pog" data-res={mission.provides[1]}></span>
+			<span 
+				class="pog" 
+				data-res={mission.provides[0]}
+				on:mouseenter={() => { aStore.setTip('mission-prov') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			></span>
+			<span 
+				class="pog" 
+				data-res={mission.provides[1]}
+				on:mouseenter={() => { aStore.setTip('mission-prov') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			></span>
 			{#if mission.provides.length === 3}
 				<span class="pog" data-res={mission.provides[2]}></span>
 			{/if}

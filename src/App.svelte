@@ -534,7 +534,11 @@
 				{/if}
 			</main>
 
-			<aside class="tokens">
+			<aside 
+				class="tokens"
+				on:mouseenter={() => { aStore.setTip('tokens') }}
+				on:mouseleave={() => { aStore.setTip() }}
+			>
 				{#each $gs.tokens.slice(0, 5) as token}
 					<div 
 						class="token"

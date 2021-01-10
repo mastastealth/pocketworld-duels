@@ -1,6 +1,7 @@
 <script>
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs } from './store/gameState';
+	import { aStore } from './store/alertStore';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
@@ -45,11 +46,20 @@
 	class="war-bar" 
 	in:fly="{{ x: -200, duration: 300, easing: quintOut }}"
 >
-	<aside class="marker" style="top: calc((100% / 19) * {markerPos})"></aside>
+	<aside 
+		class="marker" 
+		style="transform: translateY({(9 - markerPos) * -100}%)"
+		on:mouseenter={() => { aStore.setTip('warbar-marker') }}
+		on:mouseleave={() => { aStore.setTip() }}
+	></aside>
 	<aside class="penalty top-5 {$top5 ? 'got' : ''}"></aside>
 	<aside class="penalty top-2 {$top2 ? 'got' : ''}"></aside>
 
-	<div class="step">👑</div>
+	<div 
+		class="step"
+		on:mouseenter={() => { aStore.setTip('warbar-end') }}
+		on:mouseleave={() => { aStore.setTip() }}
+	>👑</div>
 	<div class="step"></div>
 	<div class="step"></div>
 	<div class="step"></div>
@@ -96,7 +106,8 @@
 	height: calc(100% / 19);
 	position: absolute;
 	left: 0;
-	top: var(--top);
+	top: calc((100% / 19) * 9);
+	transition: transform 0.3s;
 	width: 100%;
 	z-index: 1;
 }
