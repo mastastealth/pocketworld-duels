@@ -23,7 +23,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "cypress": "^5.2.0",
+    "cypress": "6.2.1",
     "sirv-cli": "^1.0.0"
   }
 }
