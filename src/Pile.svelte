@@ -177,6 +177,26 @@
 	}
 
 	function setModal(x) {
+		// Check if we're actually going to open the modal
+		// to destroy resources
+		if (x === "select-res" || x === "select-man") {
+			const opp = $gs.myturn ? $gs.p2 : $gs.p1;
+			const resCount = x === "select-res"
+				? opp.cards.filter(c => c.type === "res").length
+				: opp.cards.filter(c => c.type === "man").length;
+
+			if (!resCount) {
+				aStore.addAlert('Your opponent has no resources of this type to destroy. Continuing game...');
+
+				gs.set({
+					myturn: !$gs.myturn,
+					showModal: false
+				});
+
+				return false;
+			}
+		}
+
 		gs.set({
 			...$gs,
 			showModal: x
