@@ -76,7 +76,11 @@
 				{/if}
 		
 				{#if card.res || card.trade}
-					<div class="pog"></div>
+					<div 
+						class="pog"
+						on:mouseenter={() => { if (card.trade) aStore.setTip('card-trade') }}
+						on:mouseleave={() => { aStore.setTip() }}
+					></div>
 					{#if card.rescount === 2}<div class="pog"></div>{/if}
 					{#if card.rescount === 3}<div class="pog"></div>{/if}
 				{:else if card.provides}
