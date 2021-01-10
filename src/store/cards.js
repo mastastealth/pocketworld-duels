@@ -754,7 +754,7 @@ export const more = readable({
 			vp: 4,
 			coin: 6,
 			taken: false,
-			desc: "Provides 4 VP and 6 Ingoos."
+			desc: "Provides 4 food and 6 Ingoos."
 		},
 		{
 			id: "boar",
@@ -790,7 +790,7 @@ export const more = readable({
 			id: "mill",
 			vp: 7,
 			taken: false,
-			desc: "Provides 7 VP."
+			desc: "Provides 7 food."
 		},
 		{
 			id: "quartermaster",

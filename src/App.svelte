@@ -311,7 +311,7 @@
 		if (i !== false) tokens[i].taken = true;
 		p.tokens.push(i ? tokens[i] : token);
 
-		if (token.vp) p.vp += token.vp;
+		if (token.vp) p.score += token.vp;
 		if (token.coin) p.ingoo += token.coin;
 		if (token.sci) p.sci.push(token.sci);
 
@@ -550,7 +550,7 @@
 			</aside>
 		{:else if $gs.state === "wonders"}
 			<div class="table wonder-select">
-				<h2>Player {$gs.myturn ? 1 : 2} Select a Mission:</h2>
+				<h2>{$gs.myturn ? 'Your' : 'Their'} Turn to Select a Mission:</h2>
 
 				{#each missionSet as m}
 					<Mission 
