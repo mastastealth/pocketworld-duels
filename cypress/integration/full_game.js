@@ -44,7 +44,7 @@ describe('Play through age 1', () => {
 
 		// Buying card should be free
 		cy.get('[data-index="24"]').click();
-		cy.get('.modal .cost').should('have.text', 'You Need: 0 Ingoo ');
+		cy.get('.modal .cost').should('not.exist');
 		cy.get('.player.me .score .ingoo').should('have.text', '7');
 		cy.contains('Get for Free').click();
 		cy.get('.player.me .score .ingoo').should('have.text', '7');
@@ -224,7 +224,7 @@ describe('Play through age 2', () => {
 
 		cy.get('[data-index="14"]').click();
 		cy.get('.modal small').should('have.text', 'You can disable 2 resources.');
-		cy.get('.modal button[disabled]').should('have.text', 'Buy for 3');
+		cy.get('.modal button[disabled]').should('have.text', 'Buy for 3 ');
 		cy.get('.modal .cost [data-res="paper"]').click();
 		cy.contains('Get for Free').click();
 
@@ -333,7 +333,7 @@ describe('Play through age 3', () => {
 		// Displays wonder provision
 		cy.get('.modal .current .pog[data-type="wonder"]').should('have.length', 1);
 		cy.get('.modal .current .pog[data-res="glass"]').should('have.length', 1);
-		cy.get('.modal button[disabled]').should('have.text', 'Buy for 8');
+		cy.get('.modal button[disabled]').should('have.text', 'Buy for 8 ');
 		// Toggle provided resource
 		cy.get('.modal .current .pog[data-type="wonder"]').click();
 		cy.get('.modal .current .pog[data-res="paper"]').should('have.length', 1);
