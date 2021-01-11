@@ -3,15 +3,14 @@
 	import Modal from './Modal.svelte';
 	import { gs, ns } from './store/gameState';
 	import { aStore } from './store/alertStore';
-	import { age2, age3, more } from './store/cards';
 
 	export let endGame = null;
 	export let cards = null;
 	export let mpdata = null;
-	export let swapCards = null;
 	export let changePlayer = null;
 	export let chooseToken = null;
 	export let destroyCard = null;
+	export let nextAge = null;
 
 	/**
 	 * Sorts an array of cards, depending on age, to a certain layout.
@@ -488,29 +487,6 @@
 		if (wonder.selectdiscard) setModal("select-discard");
 		if (wonder.destroyres) setModal("select-res");
 		if (wonder.destroyman) setModal("select-man");
-	}
-
-	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
-	function nextAge() {
-		const age = $gs.age + 1;
-
-		if (age === 4) {
-			endGame();
-			return false;
-		}
-
-		gs.set({
-			...$gs,
-			age,
-			cardsleft: 20,
-			showModal: 'next'
-		});
-
-		const g = gs.shuffle($more.guilds, process.env.isDev);
-		const nextdeck = age === 2 
-			? $age2.slice(3)
-			: [...$age3.slice(3), ...g.slice(4)];
-		swapCards(gs.shuffle(nextdeck, process.env.isDev));
 	}
 </script>
 

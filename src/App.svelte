@@ -7,7 +7,7 @@
 	import { score, top5, top2, bot5, bot2 } from './store/warStore';
 	import { gs, ns } from './store/gameState';
 	import { aStore } from './store/alertStore';
-	import { age1, more } from './store/cards';
+	import { age1, age2, age3, more } from './store/cards';
 
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
@@ -330,6 +330,8 @@
 			myturn: !$gs.myturn,
 			showModal: null
 		});
+
+		if (!$gs.cardsleft) nextAge();
 	}
 
 	/** Choose a card to destroy on your opponent's side 
@@ -379,6 +381,29 @@
 			myturn: !$gs.myturn,
 			showModal: false
 		});
+	}
+
+	/** Shuffles a new deck of cards for the next age, or ends the game if finished */
+	function nextAge() {
+		const age = $gs.age + 1;
+
+		if (age === 4) {
+			endGame();
+			return false;
+		}
+
+		gs.set({
+			...$gs,
+			age,
+			cardsleft: 20,
+			showModal: 'next'
+		});
+
+		const g = gs.shuffle($more.guilds, process.env.isDev);
+		const nextdeck = age === 2 
+			? $age2.slice(3)
+			: [...$age3.slice(3), ...g.slice(4)];
+		swapCards(gs.shuffle(nextdeck, process.env.isDev));
 	}
 
 	/** Resets the game state */
@@ -530,6 +555,7 @@
 						changePlayer={changePlayer}
 						chooseToken={chooseToken}
 						destroyCard={destroyCard}
+						nextAge={nextAge}
 					/>
 				{/if}
 			</main>
