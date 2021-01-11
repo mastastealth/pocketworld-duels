@@ -206,7 +206,7 @@
 }
 
 .andy {
-	background: url('assets/andy.png') no-repeat;
+	background: url('/assets/andy.png') no-repeat;
 	background-size: 100%;
 	height: 64px;
 	position: absolute;

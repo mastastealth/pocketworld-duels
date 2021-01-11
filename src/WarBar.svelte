@@ -182,6 +182,9 @@
 	width: 100%;
 }
 	.step:nth-of-type(10) { background: rgba(255, 255, 255, 0.2); }
+
 	.step:nth-of-type(1),
 	.step:nth-of-type(19) { background: rgba(50, 255, 67, 0.2); }
+
+	.step:nth-child(odd) { background: rgba(0, 0, 0, 0.35); }
 </style>

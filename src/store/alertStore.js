@@ -10,7 +10,7 @@ const tips = {
 	'card-cost': "This is how much this card costs in Ingoo.",
 	'card-cost2': "You must have an equal or greater amount of the listed resources to get this card for free. For every resource you don't have, you will pay 2 Ingoo + 1 for every matching resource your opponent has, unless you have a Longcoats card to flatten the trade cost.",
 	'card-res': "This card will provide you with the amount of food or resource(s) displayed in the center.",
-	'card-trade': "Normally for every resource you don't have, you will pay 2 Ingoo + 1 for every matching resource your opponent has. This causes the trade free for the resource to be flat.",
+	'card-trade': "Normally for every resource you don't have, you will pay 2 Ingoo + 1 for every matching resource your opponent has. This causes the trade fee for the resource to be flat.",
 	'mission-cost': "These are the resources required to complete this mission. Missing resources can be paid for with Ingoo, at the typical trade rates.",
 	'mission-ingoo': "This mission will provide you with a one time bonus of Ingoo.",
 	'mission-food': "This mission will add to your food total.",
