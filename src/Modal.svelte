@@ -1,5 +1,6 @@
 <script>
 	import Card from './Card.svelte';
+	import Mission from './Mission.svelte';
 	import Provisions from './Provisions.svelte';
 	import { gs, ns } from './store/gameState';
 
@@ -249,7 +250,12 @@
 		<section class="purchase">
 			<aside class="item">
 				{#each who.missions.filter(m => !m.built) as mission}
-					<button on:click={() => { selectWonder(mission) }}>{mission.label}</button>
+					<button
+						data-selected={selectedWonder.id === mission.id}
+						on:click={() => { selectWonder(mission) }}
+					>
+						<Mission mission={mission} />
+					</button>
 				{/each}
 			</aside>
 	
@@ -288,6 +294,7 @@
 
 			<aside class="options">
 				<button 
+					class="btn-board"
 					disabled={affordableWonder ? null : true}
 					on:click={chooseCard({ 
 						card: $gs.selected, 
@@ -416,8 +423,19 @@ h4 { margin: 0 0 10px; }
 	grid-template-columns: 1fr 1fr 1fr;
 }
 	[data-modal="wonder"] .purchase { 
-		grid-template-columns: 2fr 1fr 100px;
+		grid-template-areas: 
+			"mission buy"
+			"mission opt";
+		grid-template-columns: 4fr 1fr;
+		grid-template-rows: auto 60px;
 	}
+		[data-modal="wonder"] .purchase .item {
+			grid-area: mission;
+			padding: 0 20px;
+		}
+
+		[data-modal="wonder"] .purchase .buy { grid-area: buy; }
+		[data-modal="wonder"] .purchase .options { grid-area: opt; }
 
 	.purchase aside {
 		text-align: left;
@@ -533,4 +551,19 @@ h4 { margin: 0 0 10px; }
 }
 	[data-free="false"] .ingoo { filter: hue-rotate(-30deg) saturate(50%); }
 	[data-trade] .ingoo { filter: hue-rotate(-10deg) saturate(50%); }
+
+.item button {
+	background: none;
+	border: 0 none;
+	padding: 5px;
+}
+	.item button[data-selected="false"] { 
+		filter: grayscale(30%) brightness(40%);
+	}
+
+button > :global(.mission[data-id]:first-child) {
+	height: 20vh;
+	margin: 0;
+	width: 100%;
+}
 </style>
