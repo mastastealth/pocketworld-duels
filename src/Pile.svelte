@@ -323,7 +323,7 @@
 		let selectCard = false;
 
 		// Mark as taken, so it disappears, regardless of action
-		finalCards[card.index].taken = true;
+		finalCards[card.index].taken = $gs.myturn ? 'p1' : 'p2';
 
 		if (!sell && !build) { // If buying card
 			p.cards = [...p.cards, card]; // Save cards into my deck
@@ -395,6 +395,7 @@
 		} else if (sell) { // If selling card
 			p.ingoo += 2 + p.eco;
 			discarded = [...$gs.discarded, card];
+			finalCards[card.index].taken = 'sold'
 		} else {
 			// Build wonder junk
 			p.missions = p.missions.map(w => {

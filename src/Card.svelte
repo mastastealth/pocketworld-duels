@@ -30,7 +30,7 @@
 	in:fly="{{ y: -200, duration: 300, delay: index * 50, easing: quintOut }}"
 	data-blocked={card.blocked ? true : null}
 	data-hidden={card.flipped ? true : null}
-	data-taken={card.taken ? true : null}
+	data-taken={card.taken || null}
 	data-index={card.index}
 	data-type={card.type}
 	data-res={card.res}
@@ -143,6 +143,21 @@
 </div>
 
 <style>
+@keyframes takeCardDown {
+	from { opacity: 1; transform: translate(0, 0); }
+	to { opacity: 0; transform: translate(-50%, 200%); }
+}
+
+@keyframes takeCardUp {
+	from { opacity: 1; transform: translate(0, 0); }
+	to { opacity: 0; transform: translate(-50%, -200%); }
+}
+
+@keyframes takeCardSide {
+	from { opacity: 1; transform: translateX(0); }
+	to { opacity: 0; transform: translate(300%); }
+}
+
 .card {
 	color: white;
 	cursor: pointer;
@@ -195,10 +210,21 @@
 	}
 	.card[data-hidden] .front * { display: none !important; }
 
-	.card[data-taken] { 
-		opacity: 0; 
-		pointer-events: none; 
+	.card[data-taken] {
+		animation-fill-mode: forwards !important;
+		/* opacity: 0; */
+		pointer-events: none;
 	}
+		.card[data-taken="p1"] { 
+			animation: takeCardDown 0.5s ease-in; 
+		}
+		.card[data-taken="p2"] { 
+			animation: takeCardUp 0.5s ease-in; 
+		}
+		.card[data-taken="sold"] { 
+			animation: takeCardSide 0.5s ease-in; 
+		}
+
 
 	.card:nth-child(n+7) { top: -40%; left: 50%; }
 	.card:nth-child(n+13) { top: -80%; left: 0; }
