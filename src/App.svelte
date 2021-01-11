@@ -55,8 +55,12 @@
 
 	let tokens = [...gs.shuffle($more.tokens, process.env.isDev)];
 	let missions = [...gs.shuffle($more.wonders, process.env.isDev)];
-	let cards = gs.shuffle($age1, process.env.isDev).slice(3);
 	let missionSet = [...missions.slice(0, 4)];
+
+	let cards = gs.shuffle($age1, process.env.isDev).slice(3);
+	const cardsGuild = gs.shuffle($more.guilds, process.env.isDev);
+	let cardsAge2 = gs.shuffle($age2.slice(3), process.env.isDev);
+	let cardsAge3 = gs.shuffle([...$age3.slice(3), ...cardsGuild.slice(4)], process.env.isDev);
 
 	let selectedMissions = [];
 	let winner = null;
@@ -77,6 +81,8 @@
 				$ns.pubnub.publish({
 					message: {
 						cards,
+						cardsAge2,
+						cardsAge3,
 						tokens,
 						missions,
 						start: true
@@ -399,11 +405,7 @@
 			showModal: 'next'
 		});
 
-		const g = gs.shuffle($more.guilds, process.env.isDev);
-		const nextdeck = age === 2 
-			? $age2.slice(3)
-			: [...$age3.slice(3), ...g.slice(4)];
-		swapCards(gs.shuffle(nextdeck, process.env.isDev));
+		swapCards(age === 2 ? cardsAge2 : cardsAge3);
 	}
 
 	/** Resets the game state */
@@ -493,6 +495,8 @@
 			// Host sent over game data
 			if (data.message.start) {
 				cards = [...data.message.cards];
+				cardsAge2 = [...data.message.cardsAge2];
+				cardsAge3 = [...data.message.cardsAge3];
 				tokens = [...data.message.tokens];
 				missions = [...data.message.missions];
 				missionSet = [...missions.slice(0, 4)];
