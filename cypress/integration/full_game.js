@@ -239,10 +239,10 @@ describe('Play through age 2', () => {
 		cy.get('[data-index="8"]').click();
 		cy.contains('Complete Mission...').click();
 
-		cy.get('.modal .cost .pog').should('have.length', 4);
+		cy.get('.modal .buy .cost .pog').should('have.length', 4);
 		cy.get('.pog[data-res="paper"][data-enough]').should('exist');
 		cy.contains('The Sand Kiln at Levacaloo').click();
-		cy.get('.modal .cost .pog').should('have.length', 5);
+		cy.get('.modal .buy .cost .pog').should('have.length', 5);
 		cy.get('.pog[data-res="stone"][data-enough]').should('exist');
 		cy.contains('Buy for 8').click();
 		cy.get('.modal .card-sm').should('have.length', 4);
