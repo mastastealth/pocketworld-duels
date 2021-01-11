@@ -81,17 +81,17 @@ describe('Play through age 1', () => {
 		cy.contains('Buy for 3').click();
 	});
 
-	it('Traded a card for money', () => {
+	it('Discarded a card for money', () => {
 		// P2 trades wood
 		cy.get('.player.you .score').should('have.text', '3 5');
 		cy.get('[data-index="13"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 		cy.get('.player.you .score').should('have.text', '3 7');
 
 		// P1 trades eco card, gets +1 more for it because of owned eco card
 		cy.get('.player.me .score').should('have.text', '5 1');
 		cy.get('[data-index="27"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 		cy.get('.player.me .score').should('have.text', '5 4');
 	});
 
@@ -151,7 +151,7 @@ describe('Play through age 1', () => {
 	it('Loads next age when cards depleted', () => {
 		cy.get('.card[data-type]:not([data-taken])').should('have.length', 1);
 		cy.get('[data-index="3"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 		cy.get('.card[data-type]').should('have.length', 20);
 	})
 });
@@ -168,7 +168,7 @@ describe('Play through age 2', () => {
 	it('Displays complex card costs', () => {
 		// P1 trades
 		cy.get('[data-index="26"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		// P2 preps mission completion
 		cy.get('[data-index="27"]').click();
@@ -183,7 +183,7 @@ describe('Play through age 2', () => {
 		cy.get('.player.you[data-myturn]').should('exist');
 
 		cy.get('[data-index="21"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 	});
 
 	it('Buys a card via links instead of resources or ingoo', () => {
@@ -229,10 +229,10 @@ describe('Play through age 2', () => {
 		cy.contains('Get for Free').click();
 
 		cy.get('[data-index="6"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		cy.get('[data-index="4"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 	});
 
 	it('Selecting Levacaloo works', () => {
@@ -272,7 +272,7 @@ describe('Play through age 2', () => {
 		cy.contains('Get for Free').click();
 
 		cy.get('[data-index="3"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 	});
 
 	it('Should not hit negatives when war nukes coins', () => {
@@ -286,7 +286,7 @@ describe('Play through age 2', () => {
 
 	it('Will load the last age, with 3 guild cards', () => {
 		cy.get('[data-index="2"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 		cy.get('.card[data-type]').should('have.length', 20);
 		cy.get('.card[data-type="guild"]').should('have.length', 3);
 	});
@@ -304,7 +304,7 @@ describe('Play through age 3', () => {
 		cy.contains('Buy for 7').click();
 
 		cy.get('[data-index="31"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		// Get the actual eco card: 2 ingoo per wonder
 		cy.get('[data-index="25"]').click();
@@ -320,7 +320,7 @@ describe('Play through age 3', () => {
 		cy.get('.player.you .mission[data-built]').should('have.length', 2);
 
 		cy.get('[data-index="33"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		cy.get('[data-index="32"]').click();
 		cy.get('.player.me .score').should('have.text', '21 10');
@@ -352,7 +352,7 @@ describe('Play through age 3', () => {
 		cy.contains('Get for Free').click();
 
 		cy.get('[data-index="14"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		cy.get('[data-index="28"]').click();
 		cy.contains('Buy for 6').click();
@@ -368,7 +368,7 @@ describe('Play through age 3', () => {
 
 	it('Finish with a war victory', () => {
 		cy.get('[data-index="15"]').click();
-		cy.contains('Trade').click();
+		cy.contains('Discard').click();
 
 		cy.get('[data-index="16"]').click();
 		cy.contains('Get for Free').click();

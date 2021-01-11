@@ -162,6 +162,7 @@
 	color: white;
 	cursor: pointer;
 	height: calc((100vh - 200px) / 5);
+	max-width: 300px;
 	min-height: 144px;
 	min-width: calc((100vh - 200px) / 5);
 	perspective: 500px;

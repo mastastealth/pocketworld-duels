@@ -207,7 +207,7 @@
 					class="btn-board"
 					data-trade
 					on:click={chooseCard({ card: $gs.selected, sell: true })}
-				>Trade for 2 <span class="ingoo"></span></button>
+				>Discard for 2 <span class="ingoo"></span></button>
 
 				<button
 					class="btn-board"
