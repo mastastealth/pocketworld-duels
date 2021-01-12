@@ -157,8 +157,8 @@
 	grid-template-rows: 1fr 1fr;
 	gap: 1px;
 }
-	.player.you .cards { padding: 5px 20px 10px 0; }
-	.player.me .cards { padding: 10px 20px 5px 0; }
+	.player.you .cards { padding: 5px 20px 5px 0; }
+	.player.me .cards { padding: 5px 20px 5px 0; }
 
 .emblems {
 	font-size: 10px;
@@ -221,15 +221,15 @@
 		border-radius: 4px 4px 4px 0;
 		opacity: 0;
 		padding: 10px;
+		pointer-events: none;
 		position: absolute;
-		bottom: 25%; left: 110%;
+		bottom: 65%; left: 110%;
 		transition: opacity 0.2s;
 		width: 320px;
 	}
 
 	.andy .says {
 		background: rgba(0, 0, 0, 0.8);
-		bottom: 40%;
 		width: 400px;
 	}
 

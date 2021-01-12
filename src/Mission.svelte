@@ -192,6 +192,7 @@ h3 {
 	justify-content: center;
 	padding: 0 5px;
 	position: relative;
+	transition: transform 0.3s;
 }
 	.mission.small .cost,
 	.mission.small .actions {
@@ -200,10 +201,20 @@ h3 {
 		width: auto;
 	}
 
-	.mission.small:not([data-built]):not(:hover) .actions,
+	.mission.small:not([data-built]):not(:hover) .actions {
+		display: none;
+	}
+
 	.mission.small:hover .cost,
 	.mission.small[data-built] .cost {
-		display: none;
+		position: absolute;
+		transform: translateY(-90%);
+	}
+
+	.player.you .mission.small:hover .cost,
+	.player.you .mission.small[data-built] .cost {
+		position: absolute;
+		transform: translateY(90%);
 	}
 
 	.mission.small .actions {

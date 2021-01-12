@@ -531,6 +531,7 @@ h4 { margin: 0 0 10px; }
 	}
 		.emblems span.extra { 
 			background: rgba(0, 0, 0, 0.5);
+			color: white;
 			float: right; 
 		}
 
