@@ -501,6 +501,7 @@
 			canAfford={canAfford} 
 			showModal={$gs.showModal} 
 			setModal={setModal}
+			deselectModal={deselectModal}
 		/>
 	</div>
 {/if}

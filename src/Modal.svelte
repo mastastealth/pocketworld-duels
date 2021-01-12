@@ -11,6 +11,7 @@
 	export let setModal = () => {};
 	export let canAfford = () => {};
 	export let destroyCard = () => {};
+	export let deselectModal = () => {};
 	
 	let selectedWonder;
 	let total = 0;
@@ -133,6 +134,7 @@
 	class="modal" 
 	data-modal="{showModal || null}"
 >
+	<span class="close" on:click|self={deselectModal}>×</span>
 	{#if !showModal}
 		<h2>What would you like to do?</h2>
 
@@ -376,7 +378,7 @@
 				{/each}
 			</section>
 		{:else}
-			<h2>Opponent is choosing a card from discardpile...</h2>
+			<h2>Opponent is choosing a card from discard pile...</h2>
 		{/if}
 	{:else if showModal === "next"}
 		{#if canChooseAge}
@@ -401,6 +403,7 @@ h4 { margin: 0 0 10px; }
 	max-width: 80vw;
 	min-width: 480px;
 	padding: 35px;
+	position: relative;
 	text-align: center;
 }
 
@@ -565,5 +568,13 @@ button > :global(.mission[data-id]:first-child) {
 	height: 20vh;
 	margin: 0;
 	width: 100%;
+}
+
+.close {
+	cursor: pointer;
+	font-size: 3em; 
+	opacity: 0.9;
+	position: absolute;
+	top: 5px; right: 35px;
 }
 </style>

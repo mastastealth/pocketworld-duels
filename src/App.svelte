@@ -555,7 +555,6 @@
 						endGame={endGame} 
 						cards={cards} 
 						mpdata={mpdata}
-						swapCards={swapCards}
 						changePlayer={changePlayer}
 						chooseToken={chooseToken}
 						destroyCard={destroyCard}
