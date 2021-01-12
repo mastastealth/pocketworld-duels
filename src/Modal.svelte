@@ -500,8 +500,8 @@ h4 { margin: 0 0 10px; }
 	}
 
 	.card-sm:before {
-		left: 14px;
-		top: 24px;
+		left: 10px;
+		top: 20px;
 	}
 
 	.card-sm:after {
