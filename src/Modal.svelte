@@ -552,8 +552,8 @@ h4 { margin: 0 0 10px; }
 	width: 20px;
 	vertical-align: middle;
 }
-	[data-free="false"] .ingoo { filter: hue-rotate(-30deg) saturate(50%); }
-	[data-trade] .ingoo { filter: hue-rotate(-10deg) saturate(50%); }
+	[data-free="false"] .ingoo { filter: hue-rotate(-30deg) saturate(20%); }
+	[data-trade] .ingoo { filter: hue-rotate(-10deg) saturate(20%); }
 
 .item button {
 	background: none;
