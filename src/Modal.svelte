@@ -383,8 +383,8 @@
 	{:else if showModal === "next"}
 		{#if canChooseAge}
 			<h2>Who will start this campaign?</h2>
-			<button on:click={changePlayer("p1")}>I will</button>
-			<button on:click={changePlayer("p2")}>They will</button>
+			<button class="btn-board" on:click={changePlayer("p1")}>I will</button>
+			<button class="btn-board" on:click={changePlayer("p2")}>They will</button>
 		{:else}
 			<h2>Opponent is choosing who goes first this campaign...</h2>
 		{/if}
@@ -405,6 +405,7 @@ h4 { margin: 0 0 10px; }
 	padding: 35px;
 	position: relative;
 	text-align: center;
+	user-select: none;
 }
 
 .modal :global(.card) {
@@ -536,6 +537,7 @@ h4 { margin: 0 0 10px; }
 		}
 
 .token {
+	cursor: pointer;
 	margin: 0 5px;
 }
 
@@ -578,4 +580,8 @@ button > :global(.mission[data-id]:first-child) {
 	position: absolute;
 	top: 5px; right: 35px;
 }
+	[data-modal="next"] .close,
+	[data-modal="token"] .close { 
+		display: none; 
+	}
 </style>
